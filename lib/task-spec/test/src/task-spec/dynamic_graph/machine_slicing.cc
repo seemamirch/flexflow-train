@@ -62,8 +62,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     };
 
     auto mk_value =
-        [](size_t src_node_id,
-           TensorSlotName src_slot_name,
+        [](size_t src_node_id, TensorSlotName src_slot_name,
            std::optional<ParallelTensorSpaceCoordinate> const &shard_coord)
         -> DynamicValueAttrs {
       return DynamicValueAttrs{
@@ -76,6 +75,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           /*parallel_tensor_shape=*/std::nullopt,
           /*shard_coord=*/shard_coord,
           /*mapping=*/std::nullopt,
+          /*mapping_parallel=*/std::nullopt,
           /*accessor=*/std::nullopt,
           /*role=*/std::nullopt,
       };

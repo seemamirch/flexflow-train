@@ -227,6 +227,9 @@ static Realm::Event spawn_dynamic_node_invocation(
       },
       [&](LossAttrs const &) { return spawn_task(); },
       [&](CopyAttrs const &) { return issue_copy(); },
+      [&](ReplicateNodeAttrs const &) {
+        return issue_copy();
+      }, // SM:TODO -> one sharded version
   });
 }
 

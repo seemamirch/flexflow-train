@@ -16,11 +16,17 @@ includes = [
   "pcg/machine_space_coordinate.dtg.h",
   "utils/bidict/bidict.h",
   "task-spec/dynamic_graph/dynamic_tensor_role.dtg.h",
+  "<unordered_map>",
+  "<unordered_set>",
 ]
 
 src_includes = [
   "utils/fmt/optional.h",
   "utils/json/optional.h",
+  "utils/hash/unordered_map.h",
+  "utils/hash/unordered_set.h",
+  "utils/fmt/unordered_map.h",
+  "utils/fmt/unordered_set.h",
 ]
 
 [[fields]]
@@ -38,6 +44,10 @@ type = "std::optional<::FlexFlow::ParallelTensorSpaceCoordinate>"
 [[fields]]
 name = "mapping"
 type = "std::optional<::FlexFlow::bidict<::FlexFlow::ParallelTensorSpaceCoordinate, ::FlexFlow::MachineSpaceCoordinate>>"
+
+[[fields]]
+name = "mapping_parallel"
+type = "std::optional<std::unordered_map<::FlexFlow::ParallelTensorSpaceCoordinate, std::unordered_set<::FlexFlow::MachineSpaceCoordinate>>>"
 
 [[fields]]
 name = "role"

@@ -63,6 +63,7 @@ DynamicValueAttrs
       /*shard_coord=*/shard_coord,
       /*mapping=*/
       tensor_binding,
+      /*mapping_parallel=*/std::nullopt,
       /*accessor=*/std::nullopt,
       /*role=*/std::nullopt,
   };

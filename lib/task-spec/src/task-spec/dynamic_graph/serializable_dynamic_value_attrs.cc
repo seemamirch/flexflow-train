@@ -10,6 +10,7 @@ SerializableDynamicValueAttrs
       /*parallel_tensor_shape=*/attrs.parallel_tensor_shape,
       /*shard_coord=*/attrs.shard_coord,
       /*mapping=*/attrs.mapping,
+      /*mapping_parallel=*/attrs.mapping_parallel,
       /*role=*/attrs.role,
   };
 }
@@ -21,6 +22,7 @@ DynamicValueAttrs dynamic_value_attrs_from_serializable(
       /*parallel_tensor_shape=*/attrs.parallel_tensor_shape,
       /*shard_coord=*/attrs.shard_coord,
       /*mapping=*/attrs.mapping,
+      /*mapping_parallel=*/attrs.mapping_parallel,
       /*accessor=*/std::nullopt,
       /*role=*/attrs.role,
   };

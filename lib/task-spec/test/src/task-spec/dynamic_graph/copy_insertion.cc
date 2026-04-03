@@ -163,8 +163,7 @@ TEST_SUITE(FF_TEST_SUITE) {
       };
     };
 
-    auto mk_value = [&](size_t src_node_id,
-                        TensorSlotName src_slot_name,
+    auto mk_value = [&](size_t src_node_id, TensorSlotName src_slot_name,
                         MappedOperatorTaskGroup const &mapping,
                         std::optional<TensorSlotName> const &use_slot_name)
         -> DynamicValueAttrs {
@@ -182,6 +181,7 @@ TEST_SUITE(FF_TEST_SUITE) {
                     [&](TensorSlotName s) {
                       return get_tensor_bindings_for_slot_name(mapping, s);
                     }),
+          /*mapping_parallel=*/std::nullopt,
           /*accessor=*/std::nullopt,
           /*role=*/std::nullopt,
       };

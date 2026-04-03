@@ -26,6 +26,7 @@ LossInsertionResult perform_loss_insertion(
       /*parallel_tensor_shape=*/logit_value.parallel_tensor_shape,
       /*shard_coord=*/logit_value.shard_coord,
       /*mapping=*/std::nullopt,
+      /*mapping_parallel=*/std::nullopt,
       /*accessor=*/std::nullopt,
       /*role=*/mk_dynamic_tensor_role_loss(),
   };
@@ -34,6 +35,7 @@ LossInsertionResult perform_loss_insertion(
       /*parallel_tensor_shape=*/logit_value.parallel_tensor_shape,
       /*shard_coord=*/logit_value.shard_coord,
       /*mapping=*/std::nullopt,
+      /*mapping_parallel=*/std::nullopt,
       /*accessor=*/std::nullopt,
       /*role=*/mk_dynamic_tensor_role_bwd(),
   };
