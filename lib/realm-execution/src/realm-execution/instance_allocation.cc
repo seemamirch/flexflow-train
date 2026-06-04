@@ -53,9 +53,10 @@ TensorInstanceBacking perform_instance_allocation(
       NOT_IMPLEMENTED();
     } else {
       if (!contains_key(result.backing, v)) {
-        MachineSpaceCoordinate device_coord = v.mapping.at(assert_unwrap(v.shard_coord));
+        MachineSpaceCoordinate device_coord =
+            assert_unwrap(v.mapping).at_l(assert_unwrap(v.shard_coord));
         result.backing.insert(std::pair{
-            v, perform_instance_allocation_for_value(assert_unwrap(device_coord), v, ctx)});
+            v, perform_instance_allocation_for_value(device_coord, v, ctx)});
       }
       return result.backing.at(v);
     }
