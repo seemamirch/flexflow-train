@@ -188,7 +188,7 @@ static Realm::Event spawn_dynamic_node_invocation(
 
   auto spawn_task = [&]() {
     Realm::Processor target_proc = ctx.map_device_coord_to_processor(
-        assert_unwrap(invocation.node_attrs.device_coord));
+        get_only(assert_unwrap(invocation.node_attrs.device_coords)));
     return spawn_op_task(ctx,
                          target_proc,
                          invocation,

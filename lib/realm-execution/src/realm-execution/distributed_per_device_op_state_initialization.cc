@@ -7,6 +7,7 @@
 #include "task-spec/dynamic_graph/dynamic_open_dataflow_graph.h"
 #include "task-spec/dynamic_graph/dynamic_value_attrs.dtg.h"
 #include "utils/containers/map_values.h"
+#include "utils/containers/maybe_get_only.h"
 #include "utils/containers/values.h"
 #include "utils/optional.h"
 #include <optional>
@@ -32,8 +33,16 @@ PerDeviceOpStateBacking perform_distributed_per_device_op_state_initialization(
                      DeviceSpecificPtr<PerDeviceOpState> *>
       device_state_map;
   for (DynamicNodeInvocation const &invocation : dg.invocations) {
-    Realm::Processor target_proc = ctx.map_device_coord_to_processor(
-        assert_unwrap(invocation.node_attrs.device_coord));
+    // Nodes mapped to multiple devices are always parallel operators and don't
+    // have any initialization to perform anyway
+    std::optional<MachineSpaceCoordinate> device_coord =
+        maybe_get_only(assert_unwrap(invocation.node_attrs.device_coords));
+    if (!device_coord.has_value()) {
+      continue;
+    }
+
+    Realm::Processor target_proc =
+        ctx.map_device_coord_to_processor(assert_unwrap(device_coord));
 
     TensorInstanceBacking tensor_backing =
         subset_tensor_instance_backing_for_invocation(tensor_instance_backing,

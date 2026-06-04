@@ -47,15 +47,15 @@ TensorInstanceBacking perform_instance_allocation(
   }
 
   TensorInstanceBacking result = make_empty_tensor_instance_backing();
-  auto allocate = [&](DynamicNodeAttrs const &n, DynamicValueAttrs const &v) {
+  auto allocate = [&](DynamicValueAttrs const &v) {
     if (contains_key(preallocated, v)) {
       // FIXME: Attach external instance to existing allocation and use that
       NOT_IMPLEMENTED();
     } else {
       if (!contains_key(result.backing, v)) {
-        MachineSpaceCoordinate device_coord = assert_unwrap(n.device_coord);
+        MachineSpaceCoordinate device_coord = v.mapping.at(assert_unwrap(v.shard_coord));
         result.backing.insert(std::pair{
-            v, perform_instance_allocation_for_value(device_coord, v, ctx)});
+            v, perform_instance_allocation_for_value(assert_unwrap(device_coord), v, ctx)});
       }
       return result.backing.at(v);
     }
@@ -63,10 +63,10 @@ TensorInstanceBacking perform_instance_allocation(
 
   for (DynamicNodeInvocation const &invocation : g.invocations) {
     for (DynamicValueAttrs const &input : values(invocation.inputs)) {
-      allocate(invocation.node_attrs, input);
+      allocate(input);
     }
     for (DynamicValueAttrs const &output : values(invocation.outputs)) {
-      allocate(invocation.node_attrs, output);
+      allocate(output);
     }
   }
 
