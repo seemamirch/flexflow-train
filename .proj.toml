@@ -8,7 +8,6 @@ cuda_launch_cmd = [
   "--",
 ]
 layout_ignore_paths = [
-  "lib/runtime",
   "lib/kernels",
   "lib/utils/test/common",
   "lib/compiler/ffi",
@@ -93,13 +92,6 @@ has-cpu-only-benchmarks = false
 has-cuda-tests = true
 has-cuda-benchmarks = false
 
-# [targets.local-pcg-execution]
-# type = "lib"
-# has-cpu-only-tests = true
-# has-cpu-only-benchmarks = false
-# has-cuda-tests = false
-# has-cuda-benchmarks = false
-
 [targets.models]
 type = "lib"
 has-cpu-only-tests = true
@@ -112,6 +104,14 @@ type = "bin"
 cuda = false
 
 [targets.substitution-to-dot]
+type = "bin"
+cuda = false
+
+[targets.sp-ization-benchmarking]
+type = "bin"
+cuda = false
+
+[targets.run-model]
 type = "bin"
 cuda = false
 
@@ -128,5 +128,4 @@ cuda = false
 # ]
 
 [cmake_flags_extra]
-FF_CUDA_ARCH = "60"
 CMAKE_CUDA_ARCHITECTURES = "60"

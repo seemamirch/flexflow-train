@@ -1,8 +1,12 @@
 ff_add_executable(
   NAME
     sp-ization-benchmarking
+  PRIVATE_INCLUDE
+    include/
   SRC_PATTERNS
     *.cc
+  PRIVATE_INCLUDE
+    include/
   DEPS
     utils
     rapidcheck

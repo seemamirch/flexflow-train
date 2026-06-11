@@ -4,7 +4,7 @@
 #include "utils/containers/binary_merge_maps_with.h"
 #include <libassert/assert.hpp>
 #include "utils/containers/keys.h"
-#include "utils/containers/intersection.h"
+#include "utils/containers/set_intersection.h"
 
 namespace FlexFlow {
 
@@ -16,7 +16,7 @@ std::map<K, V>
   std::set<K> lhs_keys = keys(lhs);
   std::set<K> rhs_keys = keys(rhs);
 
-  std::set<K> shared_keys = intersection(lhs_keys, rhs_keys);
+  std::set<K> shared_keys = set_intersection(lhs_keys, rhs_keys);
   ASSERT(shared_keys.empty());
 
   return binary_merge_maps_with(
