@@ -8,24 +8,24 @@
 
 namespace FlexFlow {
 
-std::unordered_set<BinaryTreePath>
+std::set<BinaryTreePath>
     abstracted_single_tensor_movement_get_dst_layers(
         AbstractedSingleTensorMovement const &);
 
 AbstractedSingleTensorMovement merge_abstracted_single_tensor_movements(
-    std::unordered_multiset<AbstractedSingleTensorMovement> const &);
+    std::multiset<AbstractedSingleTensorMovement> const &);
 
 AbstractedSingleTensorMovement
     abstracted_single_tensor_movement_from_communications(
         BinaryTreePath const &src_op_tree_path,
-        std::unordered_set<AbstractedSingleTensorCommunication> const
+        std::set<AbstractedSingleTensorCommunication> const
             &communications);
 
 TensorSetMovement concretize_abstracted_single_tensor_movement(
     AbstractedSingleTensorMovement const &,
-    std::unordered_map<BinaryTreePath, MachineSpaceStencil> const
+    std::map<BinaryTreePath, MachineSpaceStencil> const
         &pre_machine_stencils,
-    std::unordered_map<BinaryTreePath, MachineSpaceStencil> const
+    std::map<BinaryTreePath, MachineSpaceStencil> const
         &post_machine_stencils);
 
 } // namespace FlexFlow

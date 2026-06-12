@@ -4,11 +4,11 @@
 #include "utils/graph/digraph/digraph.h"
 #include "utils/graph/digraph/digraph_view.h"
 #include "utils/graph/series_parallel/sp_ization/node_role.dtg.h"
-#include <unordered_map>
+#include <map>
 
 namespace FlexFlow {
 
-std::unordered_map<Node, NodeRole>
+std::map<Node, NodeRole>
     get_initial_node_role_map(DiGraphView const &g);
 
 /**
@@ -20,7 +20,7 @@ std::unordered_map<Node, NodeRole>
 DiGraph contract_out_nodes_of_given_role(
     DiGraph g,
     NodeRole const &role,
-    std::unordered_map<Node, NodeRole> const &node_roles);
+    std::map<Node, NodeRole> const &node_roles);
 
 } // namespace FlexFlow
 

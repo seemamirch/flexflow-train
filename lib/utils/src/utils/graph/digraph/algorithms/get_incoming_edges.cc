@@ -2,12 +2,11 @@
 #include "utils/containers/group_by.h"
 #include "utils/containers/map_values.h"
 #include "utils/containers/set_of.h"
-#include "utils/nonempty_unordered_set/nonempty_unordered_set.h"
-#include "utils/containers/unordered_map_from_map.h"
+#include "utils/nonempty_set/nonempty_set.h"
 
 namespace FlexFlow {
 
-std::unordered_set<DirectedEdge> get_incoming_edges(DiGraphView const &g,
+std::set<DirectedEdge> get_incoming_edges(DiGraphView const &g,
                                                     Node const &n) {
   return g.query_edges(DirectedEdgeQuery{
       query_set<Node>::matchall(),
@@ -15,11 +14,11 @@ std::unordered_set<DirectedEdge> get_incoming_edges(DiGraphView const &g,
   });
 }
 
-std::unordered_map<Node, std::unordered_set<DirectedEdge>>
+std::map<Node, std::set<DirectedEdge>>
     get_incoming_edges(DiGraphView const &g,
-                       std::unordered_set<Node> const &ns) {
+                       std::set<Node> const &ns) {
 
-  std::map<Node, nonempty_set<DirectedEdge>> by_dst = 
+  std::map<Node, nonempty_set<DirectedEdge>> by_dst =
     group_by(g.query_edges(DirectedEdgeQuery{
                  query_set<Node>::matchall(),
                  query_set<Node>::match_values_in(set_of(ns)),
@@ -27,18 +26,18 @@ std::unordered_map<Node, std::unordered_set<DirectedEdge>>
              [](DirectedEdge const &e) { return e.dst; })
         .l_to_r();
 
-  std::map<Node, std::unordered_set<DirectedEdge>> result =
+  std::map<Node, std::set<DirectedEdge>> result =
       map_values(by_dst,
                  [](nonempty_set<DirectedEdge> const &s)
-                     -> std::unordered_set<DirectedEdge> {
-                   return s.unwrap_as_unordered_set();
+                     -> std::set<DirectedEdge> {
+                   return s.unwrap_as_set();
                  });
 
   for (Node const &n : ns) {
     result[n];
   }
 
-  return unordered_map_from_map(result);
+  return result;
 }
 
 } // namespace FlexFlow

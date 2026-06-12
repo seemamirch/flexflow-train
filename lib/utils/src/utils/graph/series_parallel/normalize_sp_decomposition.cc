@@ -6,7 +6,7 @@
 #include "utils/graph/series_parallel/non_normal_sp_decomposition.h"
 #include "utils/graph/series_parallel/series_parallel_decomposition.h"
 #include "utils/variant.h"
-#include "utils/containers/unordered_multiset_of.h"
+#include "utils/containers/multiset_of.h"
 
 namespace FlexFlow {
 
@@ -55,7 +55,7 @@ static SeriesParallelDecomposition
   if (normalized_children.size() == 1) {
     return get_only(normalized_children);
   }
-  return parallel_composition(unordered_multiset_of(normalized_children));
+  return parallel_composition(multiset_of(normalized_children));
 }
 
 SeriesParallelDecomposition

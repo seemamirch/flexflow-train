@@ -13,7 +13,7 @@ template <typename SlotName>
 DataflowGraphView dataflow_graph_from_kwarg_dataflow_graph(
     KwargDataflowGraphView<SlotName> const &kwarg_dg,
     std::function<std::vector<SlotName>(
-        std::unordered_set<SlotName> const &)> const &order_slots) {
+        std::set<SlotName> const &)> const &order_slots) {
   KwargDataflowGraphData<SlotName> kwarg_data =
       get_kwarg_dataflow_graph_data(kwarg_dg);
 

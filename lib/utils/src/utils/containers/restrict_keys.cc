@@ -8,8 +8,9 @@ using VT0 = value_type<0>;
 using VT1 = value_type<1>;
 
 template
-  std::unordered_map<VT0, VT1> restrict_keys(std::unordered_map<VT0, VT1> const &,
-                                             std::unordered_set<VT0> const &);
+  std::unordered_map<VT0, VT1> 
+    restrict_keys(std::unordered_map<VT0, VT1> const &,
+                  std::unordered_set<VT0> const &);
 
 using OV0 = ordered_value_type<0>;
 

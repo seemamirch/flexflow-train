@@ -14,7 +14,7 @@
 #include "utils/containers/contains_key.h"
 #include "utils/containers/make.h"
 #include "utils/containers/map_values.h"
-#include "utils/containers/unordered_set_of.h"
+#include "utils/containers/set_of.h"
 #include "utils/containers/values.h"
 #include "utils/exception.h"
 #include "utils/optional.h"
@@ -37,12 +37,12 @@ std::pair<Realm::RegionInstance, Realm::Event>
 
 TensorInstanceBacking perform_instance_allocation(
     DynamicOpenDataflowGraph const &g,
-    std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor> const
+    std::map<DynamicValueAttrs, DynamicTensorAccessor> const
         &preallocated,
     RealmContext &ctx) {
   ASSERT(no_tensors_are_allocated(g));
   ASSERT(tensors_are_ready_for_allocation(g));
-  for (DynamicValueAttrs const &v : unordered_keys(preallocated)) {
+  for (DynamicValueAttrs const &v : keys(preallocated)) {
     ASSERT(v.accessor == std::nullopt);
   }
 

@@ -15,8 +15,8 @@
 
 namespace FlexFlow {
 
-std::unordered_set<PatternNode> get_nodes(PCGPattern const &p) {
-  std::unordered_set<Node> raw_nodes = get_nodes(p.raw_graph);
+std::set<PatternNode> get_nodes(PCGPattern const &p) {
+  std::set<Node> raw_nodes = get_nodes(p.raw_graph);
 
   return transform(raw_nodes, [](Node const &n) { return PatternNode{n}; });
 }
@@ -88,8 +88,8 @@ OperatorAttributePattern get_operator_pattern(PCGPattern const &p,
   return p.raw_graph.at(n.raw_node);
 }
 
-std::unordered_set<PatternInput> get_inputs(PCGPattern const &p) {
-  std::unordered_set<KwargDataflowGraphInput<int>> raw_inputs =
+std::set<PatternInput> get_inputs(PCGPattern const &p) {
+  std::set<KwargDataflowGraphInput<int>> raw_inputs =
       get_all_kwarg_dataflow_graph_inputs(p.raw_graph);
 
   return transform(raw_inputs, [](KwargDataflowGraphInput<int> const &i) {
@@ -97,10 +97,10 @@ std::unordered_set<PatternInput> get_inputs(PCGPattern const &p) {
   });
 }
 
-std::unordered_map<TensorSlotName, PatternNodeOutput>
+std::map<TensorSlotName, PatternNodeOutput>
     get_pattern_node_outputs(PCGPattern const &pattern,
                              PatternNode const &node) {
-  std::unordered_map<TensorSlotName, KwargDataflowOutput<TensorSlotName>>
+  std::map<TensorSlotName, KwargDataflowOutput<TensorSlotName>>
       raw_outputs = get_outgoing_kwarg_dataflow_outputs_for_node(
           pattern.raw_graph, node.raw_node);
 

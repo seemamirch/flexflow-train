@@ -230,7 +230,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
       DynamicOpenDataflowGraph correct =
           dynamic_open_dataflow_graph_from_invocation_set(
-              std::unordered_set<DynamicNodeInvocation>{});
+              std::set<DynamicNodeInvocation>{});
 
       CHECK(dynamic_open_dataflow_graphs_are_isomorphic(result, correct));
     }

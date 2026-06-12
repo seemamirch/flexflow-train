@@ -6,19 +6,19 @@
 #include "utils/join_strings.h"
 #include <algorithm>
 #include <fmt/format.h>
-#include <unordered_map>
+#include <map>
 #include <vector>
 
 namespace fmt {
 
 template <typename K, typename V, typename Char>
 struct formatter<
-    ::std::unordered_map<K, V>,
+    ::std::map<K, V>,
     Char,
-    std::enable_if_t<!detail::has_format_as<::std::unordered_map<K, V>>::value>>
+    std::enable_if_t<!detail::has_format_as<::std::map<K, V>>::value>>
     : formatter<::std::string> {
   template <typename FormatContext>
-  auto format(::std::unordered_map<K, V> const &m, FormatContext &ctx) const
+  auto format(::std::map<K, V> const &m, FormatContext &ctx) const
       -> decltype(ctx.out()) {
     CHECK_FMTABLE(K);
     CHECK_FMTABLE(V);
@@ -38,7 +38,7 @@ struct formatter<
 namespace FlexFlow {
 
 template <typename K, typename V>
-std::ostream &operator<<(std::ostream &s, std::unordered_map<K, V> const &m) {
+std::ostream &operator<<(std::ostream &s, std::map<K, V> const &m) {
   CHECK_FMTABLE(K);
   CHECK_FMTABLE(V);
 

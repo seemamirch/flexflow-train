@@ -1,6 +1,6 @@
 #include "utils/graph/series_parallel/sp_ization/work_duplicating_sp_ization.h"
 #include "test/utils/rapidcheck.h"
-#include "utils/containers/generate_unordered_map.h"
+#include "utils/containers/generate_map.h"
 #include "utils/graph/algorithms.h"
 #include "utils/graph/digraph/algorithms/get_initial_nodes.h"
 #include "utils/graph/digraph/algorithms/get_terminal_nodes.h"
@@ -15,7 +15,7 @@
 
 using namespace FlexFlow;
 
-static std::pair<DiGraph, std::unordered_map<Node, float>>
+static std::pair<DiGraph, std::map<Node, float>>
     generate_random_2_terminal_weighted_dag(int max_num_nodes = 10,
                                             int max_num_edges = 20) {
   assert(max_num_nodes >= 2);
@@ -45,8 +45,8 @@ static std::pair<DiGraph, std::unordered_map<Node, float>>
     }
   }
 
-  std::unordered_map<Node, float> cost_map =
-      generate_unordered_map(get_nodes(g), [](Node const &) {
+  std::map<Node, float> cost_map =
+      generate_map(get_nodes(g), [](Node const &) {
         return static_cast<float>(*rc::gen::inRange(1, 101));
       });
 

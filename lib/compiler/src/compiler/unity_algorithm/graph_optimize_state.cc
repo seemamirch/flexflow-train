@@ -9,8 +9,10 @@
 #include "utils/containers/zip_values_strict.h"
 #include "utils/containers/zip_values_strict_with.h"
 #include "utils/hash/tuple.h"
-#include "utils/hash/unordered_map.h"
-#include "utils/hash/unordered_multiset.h"
+#include "utils/hash/map.h"
+#include "utils/hash/multiset.h"
+#include "utils/containers/transform.h"
+#include "utils/containers/multiset_of.h"
 
 namespace FlexFlow {
 
@@ -18,24 +20,24 @@ GraphOptimizeState::GraphOptimizeState(ParallelComputationGraph const &pcg,
                                        milliseconds_t runtime)
     : pcg(pcg), runtime(runtime) {}
 
-static std::unordered_multiset<std::tuple<
+static std::multiset<std::tuple<
     ParallelLayerAttrs,
-    std::unordered_map<
+    std::map<
         TensorSlotName,
         std::tuple<ParallelLayerAttrs, TensorSlotName, ParallelTensorAttrs>>,
-    std::unordered_map<TensorSlotName, ParallelTensorAttrs>>>
+    std::map<TensorSlotName, ParallelTensorAttrs>>>
     get_layer_signature_set(ParallelComputationGraph const &pcg) {
 
   auto get_layer_signature = [&](parallel_layer_guid_t l)
       -> std::tuple<ParallelLayerAttrs,
-                    std::unordered_map<TensorSlotName,
+                    std::map<TensorSlotName,
                                        std::tuple<ParallelLayerAttrs,
                                                   TensorSlotName,
                                                   ParallelTensorAttrs>>,
-                    std::unordered_map<TensorSlotName, ParallelTensorAttrs>> {
+                    std::map<TensorSlotName, ParallelTensorAttrs>> {
     ParallelLayerAttrs layer_attrs = get_parallel_layer_attrs(pcg, l);
 
-    std::unordered_map<
+    std::map<
         TensorSlotName,
         std::tuple<ParallelLayerAttrs, TensorSlotName, ParallelTensorAttrs>>
         inputs = map_values(
@@ -52,7 +54,7 @@ static std::unordered_multiset<std::tuple<
               };
             });
 
-    std::unordered_map<TensorSlotName, ParallelTensorAttrs> outputs =
+    std::map<TensorSlotName, ParallelTensorAttrs> outputs =
         map_values(get_outgoing_tensors(pcg, l),
                    [&](parallel_tensor_guid_t const &o) {
                      return get_parallel_tensor_attrs(pcg, o);
@@ -65,7 +67,7 @@ static std::unordered_multiset<std::tuple<
     };
   };
 
-  return transform(unordered_multiset_of(get_parallel_layers(pcg)),
+  return transform(multiset_of(pcg_get_parallel_layers(pcg)),
                    get_layer_signature);
 }
 

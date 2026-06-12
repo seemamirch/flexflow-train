@@ -26,9 +26,9 @@ TEST_SUITE(FF_TEST_SUITE) {
     auto dst = [&](MultiDiEdge const &e) { return g.get_multidiedge_dst(e); };
 
     SUBCASE("adds only those edges") {
-      std::unordered_set<MultiDiEdge> added =
+      std::set<MultiDiEdge> added =
           g.query_edges(multidiedge_query_all());
-      std::unordered_set<MultiDiEdge> returned = unordered_set_of(result);
+      std::set<MultiDiEdge> returned = set_of(result);
       CHECK(returned == added);
     }
 
@@ -37,7 +37,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     SUBCASE("returns unique edges") {
-      CHECK(unordered_set_of(result).size() == result.size());
+      CHECK(set_of(result).size() == result.size());
     }
 
     SUBCASE("edge 0") {

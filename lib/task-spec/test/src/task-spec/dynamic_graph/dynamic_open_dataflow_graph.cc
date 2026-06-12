@@ -129,7 +129,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         /*outputs=*/std::map<DynamicTensorSlot, DynamicValueAttrs>{},
     };
 
-    std::unordered_set<DynamicNodeInvocation> invocation_set = {
+    std::set<DynamicNodeInvocation> invocation_set = {
         invocation_1,
         invocation_2,
         invocation_3,

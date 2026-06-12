@@ -14,9 +14,9 @@ TEST_SUITE(FF_TEST_SUITE) {
 
       g.add_edge(DirectedEdge{n.at(0), n.at(1)});
 
-      std::unordered_map<Node, std::unordered_set<Node>> result =
+      std::map<Node, std::set<Node>> result =
           get_post_dominators_map(g);
-      std::unordered_map<Node, std::unordered_set<Node>> correct = {
+      std::map<Node, std::set<Node>> correct = {
           {n.at(0), {n.at(0), n.at(1)}},
           {n.at(1), {n.at(1)}},
       };
@@ -41,9 +41,9 @@ TEST_SUITE(FF_TEST_SUITE) {
                     DirectedEdge{n.at(8), n.at(9)},
                 });
 
-      std::unordered_map<Node, std::unordered_set<Node>> result =
+      std::map<Node, std::set<Node>> result =
           get_post_dominators_map(g);
-      std::unordered_map<Node, std::unordered_set<Node>> correct = {
+      std::map<Node, std::set<Node>> correct = {
           {n.at(0), {n.at(0), n.at(9)}},
           {n.at(1), {n.at(1), n.at(7), n.at(9)}},
           {n.at(2), {n.at(2), n.at(8), n.at(9)}},
@@ -76,7 +76,7 @@ TEST_SUITE(FF_TEST_SUITE) {
                     DirectedEdge{n.at(4), n.at(1)},
                 });
 
-      std::unordered_map<Node, std::unordered_set<Node>> correct = {
+      std::map<Node, std::set<Node>> correct = {
           {n.at(0), {n.at(0), n.at(1), n.at(5)}},
           {n.at(1), {n.at(1), n.at(5)}},
           {n.at(2), {n.at(1), n.at(2), n.at(4), n.at(5)}},
@@ -85,7 +85,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           {n.at(5), {n.at(5)}},
       };
 
-      std::unordered_map<Node, std::unordered_set<Node>> result =
+      std::map<Node, std::set<Node>> result =
           get_post_dominators_map(g);
 
       CHECK(result == correct);

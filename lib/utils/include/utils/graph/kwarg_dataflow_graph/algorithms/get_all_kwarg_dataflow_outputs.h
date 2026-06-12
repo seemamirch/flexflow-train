@@ -7,7 +7,7 @@
 namespace FlexFlow {
 
 template <typename SlotName>
-std::unordered_set<KwargDataflowOutput<SlotName>>
+std::set<KwargDataflowOutput<SlotName>>
     get_all_kwarg_dataflow_outputs(
         KwargDataflowGraphView<SlotName> const &view) {
   return view.query_outputs(kwarg_dataflow_output_query_all<SlotName>());

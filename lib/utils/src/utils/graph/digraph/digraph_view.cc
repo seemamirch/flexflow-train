@@ -2,11 +2,11 @@
 
 namespace FlexFlow {
 
-std::unordered_set<Node> DiGraphView::query_nodes(NodeQuery const &q) const {
+std::set<Node> DiGraphView::query_nodes(NodeQuery const &q) const {
   return this->get_ptr().query_nodes(q);
 }
 
-std::unordered_set<DirectedEdge>
+std::set<DirectedEdge>
     DiGraphView::query_edges(EdgeQuery const &query) const {
   return get_ptr().query_edges(query);
 }

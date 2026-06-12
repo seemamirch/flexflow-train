@@ -5,7 +5,7 @@
 
 namespace FlexFlow {
 
-std::unordered_map<DirectedEdge, int> get_edge_counts(MultiDiGraphView const &);
+std::map<DirectedEdge, int> get_edge_counts(MultiDiGraphView const &);
 
 } // namespace FlexFlow
 

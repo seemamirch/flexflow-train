@@ -3,14 +3,14 @@
 
 #include "utils/containers/contains_key.h"
 #include <string>
-#include <unordered_map>
+#include <map>
 #include <vector>
 
 namespace FlexFlow {
 
 template <typename T>
-std::unordered_map<T, int> get_element_counts(std::vector<T> const &v) {
-  std::unordered_map<T, int> counts;
+std::map<T, int> get_element_counts(std::vector<T> const &v) {
+  std::map<T, int> counts;
   for (T const &t : v) {
     if (!contains_key(counts, t)) {
       counts[t] = 0;
@@ -20,7 +20,7 @@ std::unordered_map<T, int> get_element_counts(std::vector<T> const &v) {
   return counts;
 }
 
-std::unordered_map<char, int> get_element_counts(std::string const &);
+std::map<char, int> get_element_counts(std::string const &);
 
 } // namespace FlexFlow
 

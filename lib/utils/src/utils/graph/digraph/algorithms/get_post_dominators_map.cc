@@ -4,7 +4,7 @@
 
 namespace FlexFlow {
 
-std::unordered_map<Node, std::unordered_set<Node>>
+std::map<Node, std::set<Node>>
     get_post_dominators_map(DiGraphView const &g) {
   return get_dominators_map(flipped(g));
 }

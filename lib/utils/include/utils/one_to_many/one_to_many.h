@@ -87,12 +87,12 @@ public:
     } else if (found_l.value() == l) {
       return;
     } else {
-      throw mk_runtime_error(
-          fmt::format("Existing mapping found for right value {}: tried to map "
-                      "to left value {}, but is already bound to left value {}",
-                      r,
-                      l,
-                      found_l.value()));
+      PANIC(
+          "Existing mapping found for right value {}: tried to map "
+          "to left value {}, but is already bound to left value {}",
+          r,
+          l,
+          found_l.value());
     }
   }
 
@@ -160,9 +160,9 @@ std::ostream &operator<<(std::ostream &s, OneToMany<L, R> const &m) {
 }
 
 template <typename L, typename R>
-std::unordered_set<std::pair<L, R>>
+std::set<std::pair<L, R>>
     unstructured_relation_from_one_to_many(OneToMany<L, R> const &one_to_many) {
-  return transform(unordered_set_of(one_to_many.r_to_l()),
+  return transform(set_of(one_to_many.r_to_l()),
                    [](std::pair<R, L> const &rl) -> std::pair<L, R> {
                      return std::pair{rl.second, rl.first};
                    });
@@ -170,7 +170,7 @@ std::unordered_set<std::pair<L, R>>
 
 template <typename L, typename R>
 OneToMany<L, R> one_to_many_from_unstructured_relation(
-    std::unordered_set<std::pair<L, R>> const &rel) {
+    std::set<std::pair<L, R>> const &rel) {
   OneToMany<L, R> result;
   for (auto const &lr : rel) {
     result.insert(lr);
@@ -188,7 +188,7 @@ struct adl_serializer<::FlexFlow::OneToMany<L, R>> {
     CHECK_IS_JSON_DESERIALIZABLE(L);
     CHECK_IS_JSON_DESERIALIZABLE(R);
 
-    std::unordered_set<std::pair<L, R>> s = j;
+    std::set<std::pair<L, R>> s = j;
 
     return ::FlexFlow::one_to_many_from_unstructured_relation(s);
   }

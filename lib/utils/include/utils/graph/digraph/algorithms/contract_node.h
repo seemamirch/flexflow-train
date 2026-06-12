@@ -12,9 +12,9 @@ struct ContractNodeView : public IDiGraphView {
                             Node const &into)
       : g(g), from(removed), to(into) {}
 
-  std::unordered_set<DirectedEdge>
+  std::set<DirectedEdge>
       query_edges(DirectedEdgeQuery const &) const override;
-  std::unordered_set<Node> query_nodes(NodeQuery const &) const override;
+  std::set<Node> query_nodes(NodeQuery const &) const override;
 
   ContractNodeView *clone() const override;
 

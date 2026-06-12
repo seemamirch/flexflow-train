@@ -57,26 +57,26 @@ void assert_pcg_pattern_match_is_valid_for_pattern_and_subpcg(
     PCGPatternMatch const &match,
     PCGPattern const &pattern,
     SubParallelComputationGraph const &spcg) {
-  std::unordered_set<parallel_layer_guid_t> spcg_nodes =
-      get_parallel_layers(spcg);
-  std::unordered_set<parallel_layer_guid_t> match_nodes =
+  std::set<parallel_layer_guid_t> spcg_nodes =
+      spcg_get_parallel_layers(spcg);
+  std::set<parallel_layer_guid_t> match_nodes =
       match.node_assignment.right_values();
   ASSERT(is_subseteq_of(match_nodes, spcg_nodes));
 
-  std::unordered_set<open_parallel_tensor_guid_t> spcg_values =
+  std::set<open_parallel_tensor_guid_t> spcg_values =
       get_parallel_tensors(spcg);
-  std::unordered_set<open_parallel_tensor_guid_t> match_values =
-      unordered_set_of(values(match.input_assignment));
+  std::set<open_parallel_tensor_guid_t> match_values =
+      set_of(values(match.input_assignment));
   ASSERT(is_subseteq_of(match_values, spcg_values));
 
-  std::unordered_set<PatternNode> pattern_nodes = get_nodes(pattern);
-  std::unordered_set<PatternNode> match_pattern_nodes =
+  std::set<PatternNode> pattern_nodes = get_nodes(pattern);
+  std::set<PatternNode> match_pattern_nodes =
       match.node_assignment.left_values();
   ASSERT(match_pattern_nodes == pattern_nodes);
 
-  std::unordered_set<PatternInput> pattern_inputs = get_inputs(pattern);
-  std::unordered_set<PatternInput> match_pattern_inputs =
-      unordered_keys(match.input_assignment);
+  std::set<PatternInput> pattern_inputs = get_inputs(pattern);
+  std::set<PatternInput> match_pattern_inputs =
+      keys(match.input_assignment);
   ASSERT(pattern_inputs == match_pattern_inputs);
 }
 

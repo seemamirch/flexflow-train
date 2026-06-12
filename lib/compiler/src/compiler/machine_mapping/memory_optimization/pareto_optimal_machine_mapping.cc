@@ -6,7 +6,7 @@ namespace FlexFlow {
 
 bool is_pareto_optimal_in(
     ParetoOptimalMachineMapping const &m,
-    std::unordered_set<ParetoOptimalMachineMapping> const &others) {
+    std::set<ParetoOptimalMachineMapping> const &others) {
   return is_pareto_optimal_in(
       m.cost, transform(others, [](ParetoOptimalMachineMapping const &m) {
         return m.cost;

@@ -7,7 +7,7 @@
 #include "pcg/device_id_t.dtg.h"
 #include "pcg/machine_specification.dtg.h"
 #include "pcg/parallel_computation_graph/parallel_computation_graph.dtg.h"
-#include <unordered_set>
+#include <set>
 
 namespace FlexFlow {
 

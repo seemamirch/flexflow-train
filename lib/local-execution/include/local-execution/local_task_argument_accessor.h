@@ -6,14 +6,14 @@
 #include "task-spec/dynamic_graph/dynamic_tensor_accessor.dtg.h"
 #include "task-spec/task_argument_accessor/itask_argument_accessor.h"
 #include "task-spec/task_argument_accessor/task_tensor_parameter.dtg.h"
-#include <unordered_map>
+#include <map>
 
 namespace FlexFlow {
 
 struct LocalTaskArgumentAccessor : public ITaskArgumentAccessor {
   explicit LocalTaskArgumentAccessor(
       Allocator const &allocator,
-      std::unordered_map<TaskTensorParameter, DynamicTensorAccessor> const
+      std::map<TaskTensorParameter, DynamicTensorAccessor> const
           &tensor_slots_backing,
       ProfilingSettings const &profiling_settings,
       device_handle_t const &ff_handle,
@@ -45,7 +45,7 @@ struct LocalTaskArgumentAccessor : public ITaskArgumentAccessor {
 
 private:
   Allocator allocator;
-  std::unordered_map<TaskTensorParameter, DynamicTensorAccessor>
+  std::map<TaskTensorParameter, DynamicTensorAccessor>
       tensor_slots_backing;
 
   ProfilingSettings profiling_settings;

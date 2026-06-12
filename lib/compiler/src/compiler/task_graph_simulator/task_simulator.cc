@@ -15,8 +15,8 @@
 #include "utils/containers/set_union.h"
 #include "utils/containers/transform.h"
 #include "utils/graph/digraph/digraph.h"
-#include "utils/hash/unordered_set.h"
-#include <unordered_set>
+#include "utils/hash/set.h"
+#include <set>
 
 namespace FlexFlow {
 
@@ -45,8 +45,8 @@ milliseconds_t task_simulator_estimate_forward_pass_time(
 
   auto is_allowed_to_run =
       [&](Node const &task,
-          std::unordered_set<Node> const &in_progress_tasks,
-          std::unordered_set<Node> const &finished_tasks) -> bool {
+          std::set<Node> const &in_progress_tasks,
+          std::set<Node> const &finished_tasks) -> bool {
     PCGTask current_task = task_graph.node_to_task.at_l(task);
 
     UnstructuredDeviceMapping device_map = get_unstructured_device_mapping(
@@ -61,9 +61,9 @@ milliseconds_t task_simulator_estimate_forward_pass_time(
       return task_graph.node_to_devices.at(n);
     };
 
-    std::unordered_set<device_id_t> devices_occupied =
+    std::set<device_id_t> devices_occupied =
         set_union(transform(in_progress_tasks, get_devices));
-    std::unordered_set<device_id_t> required_devices = unordered_set_of(get_devices(task));
+    std::set<device_id_t> required_devices = set_of(get_devices(task));
     return set_intersection(devices_occupied, required_devices).empty();
   };
 

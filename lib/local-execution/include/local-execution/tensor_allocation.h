@@ -16,7 +16,7 @@ DynamicValueAttrs perform_tensor_allocation_for_value(DynamicValueAttrs const &,
 
 DynamicOpenDataflowGraph perform_tensor_allocation(
     DynamicOpenDataflowGraph const &,
-    std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor> const
+    std::map<DynamicValueAttrs, DynamicTensorAccessor> const
         &preallocated,
     Allocator &);
 

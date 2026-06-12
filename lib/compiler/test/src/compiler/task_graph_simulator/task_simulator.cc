@@ -29,8 +29,8 @@
 #include "utils/nonnegative_int/nonnegative_int.h"
 #include <doctest/doctest.h>
 #include <optional>
-#include <unordered_map>
-#include <unordered_set>
+#include <map>
+#include <set>
 
 namespace FlexFlow {
 

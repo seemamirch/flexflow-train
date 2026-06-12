@@ -48,7 +48,7 @@
 #include "utils/fmt/set.h"
 #include "utils/stack_vector/stack_vector_of.h"
 #include <fmt/format.h>
-#include "utils/containers/binary_merge_disjoint_unordered_maps.h"
+#include "utils/containers/binary_merge_disjoint_maps.h"
 
 namespace FlexFlow {
 
@@ -82,7 +82,7 @@ tensor_guid_t ComputationGraphBuilder::create_input(
                       /*inputs=*/{},
                       /*weights=*/{},
                       /*outputs=*/
-                      std::unordered_map<TensorSlotName, CreateGrad>{
+                      std::map<TensorSlotName, CreateGrad>{
                           {
                               TensorSlotName::OUTPUT,
                               create_grad,
@@ -109,17 +109,17 @@ tensor_guid_t ComputationGraphBuilder::create_weight(
 
 static void check_incoming_tensor_roles(
     LayerAttrs const &layer,
-    std::unordered_set<TensorSlotName> const &input_slots,
-    std::unordered_set<TensorSlotName> const &weight_slots) {
-  std::unordered_map<TensorSlotName, IncomingTensorRole> correct =
+    std::set<TensorSlotName> const &input_slots,
+    std::set<TensorSlotName> const &weight_slots) {
+  std::map<TensorSlotName, IncomingTensorRole> correct =
       restrict_keys(get_incoming_tensor_roles(layer.op_attrs),
                     set_union(input_slots, weight_slots));
-  std::unordered_map<TensorSlotName, IncomingTensorRole> current =
-      binary_merge_disjoint_unordered_maps(
-          generate_unordered_map(
+  std::map<TensorSlotName, IncomingTensorRole> current =
+      binary_merge_disjoint_maps(
+          generate_map(
               input_slots,
               [](TensorSlotName) { return IncomingTensorRole::INPUT; }),
-          generate_unordered_map(weight_slots, [](TensorSlotName) {
+          generate_map(weight_slots, [](TensorSlotName) {
             return IncomingTensorRole::WEIGHT;
           }));
 
@@ -127,24 +127,24 @@ static void check_incoming_tensor_roles(
          "check_incoming_tensor_roles found deviation in incoming tensors");
 }
 
-std::unordered_map<TensorSlotName, tensor_guid_t>
+std::map<TensorSlotName, tensor_guid_t>
     ComputationGraphBuilder::add_layer(
         LayerAttrs const &layer,
-        std::unordered_map<TensorSlotName, tensor_guid_t> const &inputs,
-        std::unordered_map<TensorSlotName, InitializerAttrs> const
+        std::map<TensorSlotName, tensor_guid_t> const &inputs,
+        std::map<TensorSlotName, InitializerAttrs> const
             &weight_initializers,
-        std::optional<std::unordered_map<TensorSlotName, CreateGrad>> const
+        std::optional<std::map<TensorSlotName, CreateGrad>> const
             &outputs) {
-  ASSERT(are_disjoint(unordered_keys(inputs), unordered_keys(weight_initializers)));
-  check_incoming_tensor_roles(layer, unordered_keys(inputs), unordered_keys(weight_initializers));
+  ASSERT(are_disjoint(keys(inputs), keys(weight_initializers)));
+  check_incoming_tensor_roles(layer, keys(inputs), keys(weight_initializers));
 
-  std::unordered_map<TensorSlotName, TensorShape> input_shapes = map_values(
+  std::map<TensorSlotName, TensorShape> input_shapes = map_values(
       inputs, [&](tensor_guid_t const &t) { return this->get_shape(t); });
 
-  std::unordered_map<TensorSlotName, TensorShape> weight_shapes =
+  std::map<TensorSlotName, TensorShape> weight_shapes =
       get_weight_shapes(layer.op_attrs, input_shapes);
 
-  std::unordered_map<TensorSlotName, tensor_guid_t> weights =
+  std::map<TensorSlotName, tensor_guid_t> weights =
       zip_values_strict_with(
           weight_shapes,
           weight_initializers,
@@ -471,7 +471,7 @@ tensor_guid_t ComputationGraphBuilder::conv2d(
 
   LayerAttrs layer = LayerAttrs{ComputationGraphOpAttrs{attrs}, name};
 
-  std::unordered_map<TensorSlotName, InitializerAttrs> initializers =
+  std::map<TensorSlotName, InitializerAttrs> initializers =
       get_initializers(attrs,
                        this->get_shape(input),
                        maybe_kernel_initializer,
@@ -533,7 +533,7 @@ tensor_guid_t ComputationGraphBuilder::embedding(
 
   TensorShape input_shape = this->get_shape(input);
 
-  std::unordered_map<TensorSlotName, InitializerAttrs> initializers =
+  std::map<TensorSlotName, InitializerAttrs> initializers =
       get_initializers(attrs, initializer);
 
   return require_only_key(this->add_layer(layer,
@@ -687,7 +687,7 @@ tensor_guid_t ComputationGraphBuilder::batch_norm(
 
   TensorShape input_shape = this->get_shape(input);
 
-  std::unordered_map<TensorSlotName, InitializerAttrs> initializers =
+  std::map<TensorSlotName, InitializerAttrs> initializers =
       throw_if_unexpected(get_initializers(attrs));
 
   return require_only_key(this->add_layer(layer,
@@ -742,7 +742,7 @@ tensor_guid_t ComputationGraphBuilder::multihead_attention(
 
   LayerAttrs layer = LayerAttrs{ComputationGraphOpAttrs{attrs}, name};
 
-  std::unordered_map<TensorSlotName, InitializerAttrs> initializers =
+  std::map<TensorSlotName, InitializerAttrs> initializers =
       throw_if_unexpected(get_initializers(attrs,
                                            this->get_shape(query),
                                            this->get_shape(key),
@@ -779,7 +779,7 @@ TensorDims ComputationGraphBuilder::get_broadcast_target_dims(
 TensorDims ComputationGraphBuilder::get_broadcast_target_dims(
     std::vector<TensorDims> const &inputs_dims) {
   std::optional<TensorDims> maybe_result =
-      ::FlexFlow::get_broadcast_target_dims(unordered_set_of(inputs_dims));
+      ::FlexFlow::get_broadcast_target_dims(set_of(inputs_dims));
 
   if (maybe_result.has_value()) {
     return maybe_result.value();
@@ -813,7 +813,7 @@ tensor_guid_t ComputationGraphBuilder::dense(
 
   LayerAttrs layer = LayerAttrs{ComputationGraphOpAttrs{attrs}, name};
 
-  std::unordered_map<TensorSlotName, InitializerAttrs> initializers =
+  std::map<TensorSlotName, InitializerAttrs> initializers =
       throw_if_unexpected(get_initializers(attrs,
                                            this->get_shape(input),
                                            maybe_projection_initializer,
@@ -854,7 +854,7 @@ tensor_guid_t ComputationGraphBuilder::concat(
 
   return require_only_key(
       this->add_layer(
-          layer, unordered_map_from_pairs(zip(input_slot_names, inputs)), {}),
+          layer, map_from_pairs(zip(input_slot_names, inputs)), {}),
       TensorSlotName::OUTPUT);
 }
 
@@ -931,7 +931,7 @@ tensor_guid_t ComputationGraphBuilder::layer_norm(
 
   LayerAttrs layer = LayerAttrs{ComputationGraphOpAttrs{attrs}, name};
 
-  std::unordered_map<TensorSlotName, InitializerAttrs> initializers =
+  std::map<TensorSlotName, InitializerAttrs> initializers =
       get_initializers(attrs);
 
   return require_only_key(this->add_layer(layer,

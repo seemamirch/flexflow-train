@@ -1,5 +1,5 @@
 #include "utils/graph/digraph/algorithms/get_imm_post_dominator.h"
-#include "utils/containers/generate_unordered_map.h"
+#include "utils/containers/generate_map.h"
 #include "utils/containers/get_one_of.h"
 #include "utils/containers/get_only.h"
 #include "utils/containers/restrict_keys.h"
@@ -20,7 +20,7 @@ std::optional<Node> get_imm_post_dominator(DiGraphView const &g,
 
 std::optional<Node>
     get_imm_post_dominator(DiGraphView const &g,
-                           std::unordered_set<Node> const &nodes) {
+                           std::set<Node> const &nodes) {
 
   if (nodes.empty()) {
     throw mk_runtime_error("Cannot get imm_post_dominator of no nodes");
@@ -31,8 +31,8 @@ std::optional<Node>
   }
 
   Node contracted_node = get_one_of(nodes);
-  std::unordered_map<Node, Node> contraction =
-      generate_unordered_map(nodes, [&](Node const &) { return contracted_node; });
+  std::map<Node, Node> contraction =
+      generate_map(nodes, [&](Node const &) { return contracted_node; });
   return get_imm_post_dominator(apply_contraction(g, contraction),
                                 contracted_node);
 }

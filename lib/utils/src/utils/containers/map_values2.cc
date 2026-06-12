@@ -4,18 +4,18 @@
 
 namespace FlexFlow {
 
-using VT0 = value_type<0>;
-using VT1 = value_type<1>;
-using VT2 = value_type<2>;
+using K = value_type<0>;
+using V1 = value_type<1>;
+using V2 = value_type<2>;
 
-template std::unordered_map<VT0, VT2> map_values2(
-    std::unordered_map<VT0, VT1> const &,
-    std::function<VT2(VT0 const &, VT1 const &)> &&);
+template std::unordered_map<K, V2> map_values2(
+    std::unordered_map<K, V1> const &,
+    std::function<V2(K const &, V1 const &)> &&);
 
-using OT0 = ordered_value_type<0>;
+using O_K = ordered_value_type<0>;
 
-template std::map<OT0, VT2> map_values2(
-    std::map<OT0, VT1> const &,
-    std::function<VT2(OT0 const &, VT1 const &)> &&);
+template std::map<O_K, V2> map_values2(
+    std::map<O_K, V1> const &,
+    std::function<V2(O_K const &, V1 const &)> &&);
 
 } // namespace FlexFlow

@@ -1,6 +1,6 @@
 #include "utils/many_to_one/many_to_one.h"
 #include "test/utils/doctest/fmt/multiset.h"
-#include "test/utils/doctest/fmt/unordered_set.h"
+#include "test/utils/doctest/fmt/set.h"
 #include "utils/containers/multiset_of.h"
 #include <doctest/doctest.h>
 
@@ -39,17 +39,17 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     SUBCASE("at_r") {
-      std::unordered_set<int> result = m.at_r("two");
+      nonempty_set<int> result = m.at_r("two");
 
-      std::unordered_set<int> correct = {2, 20};
+      nonempty_set<int> correct = {2, 20};
 
       CHECK(result == correct);
     }
 
     SUBCASE("left_values") {
-      std::unordered_set<int> result = m.left_values();
+      std::set<int> result = m.left_values();
 
-      std::unordered_set<int> correct = {
+      std::set<int> correct = {
           1,
           10,
           100,
@@ -61,9 +61,9 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     SUBCASE("right_values") {
-      std::unordered_set<std::string> result = m.right_values();
+      std::set<std::string> result = m.right_values();
 
-      std::unordered_set<std::string> correct = {"one", "two"};
+      std::set<std::string> correct = {"one", "two"};
 
       CHECK(result == correct);
     }
@@ -141,7 +141,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
   TEST_CASE("many_to_one_from_unstructured_relation") {
     SUBCASE("relation is many-to-one") {
-      std::unordered_set<std::pair<int, std::string>> input = {
+      std::set<std::pair<int, std::string>> input = {
           {1, "odd"},
           {2, "even"},
           {3, "odd"},
@@ -158,7 +158,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     SUBCASE("relation is one-to-one") {
-      std::unordered_set<std::pair<int, std::string>> input = {
+      std::set<std::pair<int, std::string>> input = {
           {1, "one"},
           {2, "two"},
           {3, "three"},
@@ -176,7 +176,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     SUBCASE("relation is not many-to-one") {
-      std::unordered_set<std::pair<int, std::string>> input = {
+      std::set<std::pair<int, std::string>> input = {
           {1, "one"},
           {1, "ODD"},
           {2, "two"},

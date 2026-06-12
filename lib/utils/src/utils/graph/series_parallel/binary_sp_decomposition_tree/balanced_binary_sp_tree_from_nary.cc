@@ -2,7 +2,7 @@
 #include "utils/containers/get_only.h"
 #include "utils/containers/slice.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/unordered_multiset_of.h"
+#include "utils/containers/multiset_of.h"
 #include "utils/containers/vector_of.h"
 #include "utils/graph/series_parallel/binary_sp_decomposition_tree/binary_parallel_split.dtg.h"
 #include "utils/graph/series_parallel/binary_sp_decomposition_tree/binary_sp_decomposition_tree.dtg.h"

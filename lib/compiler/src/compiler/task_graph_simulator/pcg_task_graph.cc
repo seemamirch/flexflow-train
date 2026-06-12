@@ -13,8 +13,8 @@
 #include "pcg/parallel_computation_graph/parallel_layer_guid_t.dtg.h"
 #include "utils/bidict/bidict.h"
 #include "utils/graph/instances/adjacency_digraph.h"
-#include <unordered_map>
-#include <unordered_set>
+#include <map>
+#include <set>
 #include "utils/containers/set_of.h"
 
 namespace FlexFlow {
@@ -28,7 +28,7 @@ PCGTaskGraph
   bidict<Node, parallel_layer_guid_t> node_to_layer;
   std::map<Node, std::set<device_id_t>> node_to_devices;
 
-  for (parallel_layer_guid_t const &layer : get_parallel_layers(pcg)) {
+  for (parallel_layer_guid_t const &layer : pcg_get_parallel_layers(pcg)) {
     MachineView mv = machine_mapping.machine_views.at(layer);
     RuntimeOnlyOpCostEstimateKey op_key =
         get_mapped_runtime_only_op_cost_estimate_key_for_layer(pcg, layer, mv);

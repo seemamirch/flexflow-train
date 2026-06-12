@@ -417,10 +417,10 @@ static std::set<DynamicNodeInvocationShardingInfo>
   return transform(input_grad_tensor_shards, invocation_sharding_info_for_input_grad_tensor_shard);
 }
 
-std::unordered_set<DynamicNodeInvocation>
+std::set<DynamicNodeInvocation>
     perform_shard_expansion_for_invocation(DynamicNodeInvocation const &i) {
 
-  std::unordered_set<DynamicNodeInvocationShardingInfo>
+  std::set<DynamicNodeInvocationShardingInfo>
     shard_expansion_info = generate_shard_expansion_for_invocation(i);
 
   return transform(
@@ -509,22 +509,22 @@ DynamicNodeInvocation apply_dynamic_node_invocation_sharding_info(
   return result;
 }
 
-std::unordered_set<DynamicNodeInvocationShardingInfo>
+std::set<DynamicNodeInvocationShardingInfo>
   generate_shard_expansion_for_invocation(DynamicNodeInvocation const &i)
 {
   require_invocation_is_ready_for_shard_expansion(i);
 
   if (i.node_attrs.op_attrs.value().is_copy()) {
-    return unordered_set_of(generate_shard_expansion_for_copy(i));
+    return set_of(generate_shard_expansion_for_copy(i));
   }
 
   if (training_op_attrs_has_op_type(i.node_attrs.op_attrs.value(), OperatorType::REPLICATE)) {
     DynamicTaskType task_type = assert_unwrap(i.node_attrs.task_type);
     switch (task_type) {
       case DynamicTaskType::FWD:
-        return unordered_set_of(generate_shard_expansion_for_fwd_replicate(i));
+        return set_of(generate_shard_expansion_for_fwd_replicate(i));
       case DynamicTaskType::BWD:
-        return unordered_set_of(generate_shard_expansion_for_bwd_replicate(i));
+        return set_of(generate_shard_expansion_for_bwd_replicate(i));
       default:
         PANIC("Unexpected task type for Replicate: {}", task_type);
     }
@@ -532,7 +532,7 @@ std::unordered_set<DynamicNodeInvocationShardingInfo>
 
   MappedOperatorTaskGroup mapping = assert_unwrap(i.node_attrs.mapping);
 
-  std::unordered_set<MachineSpaceCoordinate> shard_machine_coords =
+  std::set<MachineSpaceCoordinate> shard_machine_coords =
       mapping.get_shard_bindings().left_values();
 
   return transform(

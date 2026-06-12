@@ -7,8 +7,8 @@
 #include "pcg/mapped_parallel_computation_graph/mapped_parallel_computation_graph.h"
 #include "utils/bidict/algorithms/bidict_from_map.h"
 #include "utils/containers/are_disjoint.h"
-#include "utils/containers/unordered_keys.h"
-#include "utils/containers/binary_merge_disjoint_unordered_maps.h"
+#include "utils/containers/keys.h"
+#include "utils/containers/binary_merge_disjoint_maps.h"
 
 namespace FlexFlow {
 
@@ -16,11 +16,11 @@ MappedParallelComputationGraph
     mapped_pcg_from_pcg_and_mapping(ParallelComputationGraph const &pcg,
                                     MachineMapping const &mapping) {
 
-  std::unordered_set<parallel_layer_guid_t> pcg_layers =
-      get_parallel_layers(pcg);
+  std::set<parallel_layer_guid_t> pcg_layers =
+      pcg_get_parallel_layers(pcg);
 
-  std::unordered_set<parallel_layer_guid_t> mapped_layers =
-      unordered_keys(mapping.machine_views);
+  std::set<parallel_layer_guid_t> mapped_layers =
+      keys(mapping.machine_views);
 
   ASSERT(mapped_layers == pcg_layers);
 
@@ -29,7 +29,7 @@ MappedParallelComputationGraph
     ComputationGraphOpAttrs op_attrs = assert_unwrap(
         compgraph_op_attrs_from_pcg_op_attrs(pcg_get_op_attrs(pcg, l)));
 
-    std::unordered_map<TensorSlotName, ParallelTensorDimDegrees>
+    std::map<TensorSlotName, ParallelTensorDimDegrees>
         inputs_dim_degrees = get_incoming_input_degrees(pcg, l);
 
     ASSERT(contains_key(mapping.machine_views, l));
@@ -39,8 +39,8 @@ MappedParallelComputationGraph
         op_attrs, inputs_dim_degrees, machine_view);
   };
 
-  std::unordered_map<parallel_layer_guid_t, MappedOperatorTaskGroup>
-      mapped_op_task_groups = generate_unordered_map(mapped_layers, mapping_for_layer);
+  std::map<parallel_layer_guid_t, MappedOperatorTaskGroup>
+      mapped_op_task_groups = generate_map(mapped_layers, mapping_for_layer);
 
   return mapped_pcg_from_pcg_and_mapped_op_task_groups(pcg,
                                                        mapped_op_task_groups);
@@ -49,12 +49,12 @@ MappedParallelComputationGraph
 MachineMapping combine_disjoint_mappings(MachineMapping const &m1,
                                          MachineMapping const &m2) {
   return MachineMapping{
-      binary_merge_disjoint_unordered_maps(m1.machine_views, m2.machine_views),
+      binary_merge_disjoint_maps(m1.machine_views, m2.machine_views),
   };
 }
 
 bool nodes_are_disjoint(MachineMapping const &m1, MachineMapping const &m2) {
-  return are_disjoint(unordered_keys(m1.machine_views), unordered_keys(m2.machine_views));
+  return are_disjoint(keys(m1.machine_views), keys(m2.machine_views));
 }
 
 std::optional<MachineMapping> get_machine_mapping_from_machine_mapping_result(

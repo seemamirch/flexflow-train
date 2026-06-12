@@ -2,12 +2,12 @@
 
 namespace FlexFlow {
 
-std::unordered_set<Node>
+std::set<Node>
     MultiDiGraphView::query_nodes(NodeQuery const &q) const {
   return this->get_interface().query_nodes(q);
 }
 
-std::unordered_set<MultiDiEdge>
+std::set<MultiDiEdge>
     MultiDiGraphView::query_edges(MultiDiEdgeQuery const &q) const {
   return this->get_interface().query_edges(q);
 }

@@ -2,7 +2,7 @@
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_GRAPH_SERIAL_PARALLLEL_GET_ANCESTORS_H
 
 #include "utils/graph/series_parallel/series_parallel_decomposition.dtg.h"
-#include <unordered_set>
+#include <set>
 
 namespace FlexFlow {
 
@@ -42,7 +42,7 @@ namespace FlexFlow {
  *   n5   | {n0, n1, n2, n3, n4}
  *
  */
-std::unordered_set<Node> get_ancestors(SeriesParallelDecomposition const &sp,
+std::set<Node> get_ancestors(SeriesParallelDecomposition const &sp,
                                        Node const &node);
 
 } // namespace FlexFlow

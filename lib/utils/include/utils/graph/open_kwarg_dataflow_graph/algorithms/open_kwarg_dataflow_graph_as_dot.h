@@ -7,6 +7,7 @@
 #include "utils/graph/open_kwarg_dataflow_graph/algorithms/view_as_closed_kwarg_dataflow_graph_by_materializing_inputs.h"
 #include "utils/graph/open_kwarg_dataflow_graph/open_kwarg_dataflow_graph_view.h"
 #include "utils/graph/open_kwarg_dataflow_graph/open_kwarg_dataflow_value.dtg.h"
+#include "utils/containers/set_of.h"
 
 namespace FlexFlow {
 
@@ -32,8 +33,8 @@ std::string open_kwarg_dataflow_graph_as_dot(
         return j;
       };
 
-  std::function<std::vector<SlotName>(std::unordered_set<SlotName> const &)>
-      order_slots = [](std::unordered_set<SlotName> const &unordered) {
+  std::function<std::vector<SlotName>(std::set<SlotName> const &)>
+      order_slots = [](std::set<SlotName> const &unordered) {
         return sorted(unordered);
       };
 
@@ -50,7 +51,7 @@ std::string open_kwarg_dataflow_graph_as_dot(
         &render_value,
     std::function<nlohmann::json(SlotName const &)> const &render_slot_name,
     std::function<std::vector<SlotName>(
-        std::unordered_set<SlotName> const &)> const &order_slots) {
+        std::set<SlotName> const &)> const &order_slots) {
   std::pair<KwargDataflowGraphView<std::optional<SlotName>>,
             bidict<KwargDataflowGraphInput<GraphInputName>, Node>>
       closed_g_and_mapping =
@@ -104,11 +105,11 @@ std::string open_kwarg_dataflow_graph_as_dot(
   };
 
   std::function<std::vector<std::optional<SlotName>>(
-      std::unordered_set<std::optional<SlotName>> const &)>
+      std::set<std::optional<SlotName>> const &)>
       closed_order_slots =
-          [&](std::unordered_set<std::optional<SlotName>> const &unsorted)
+          [&](std::set<std::optional<SlotName>> const &unsorted)
       -> std::vector<std::optional<SlotName>> {
-    std::unordered_set<SlotName> not_nullopt = filtrans(
+    std::set<SlotName> not_nullopt = filtrans(
         unsorted,
         [](std::optional<SlotName> const &s) -> std::optional<SlotName> {
           return s;

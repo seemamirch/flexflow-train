@@ -2,12 +2,12 @@
 
 namespace FlexFlow {
 
-std::unordered_set<DataflowGraphInput>
+std::set<DataflowGraphInput>
     OpenDataflowGraphView::get_inputs() const {
   return this->get_interface().get_inputs();
 }
 
-std::unordered_set<OpenDataflowEdge>
+std::set<OpenDataflowEdge>
     OpenDataflowGraphView::query_edges(OpenDataflowEdgeQuery const &q) const {
   return this->get_interface().query_edges(q);
 }

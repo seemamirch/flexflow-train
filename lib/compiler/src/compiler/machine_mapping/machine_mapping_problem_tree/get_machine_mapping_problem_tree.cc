@@ -20,7 +20,7 @@ bool is_valid_machine_mapping_problem_tree(
 
         auto contains_paths =
             [](MachineMappingProblemTree const &t,
-               std::unordered_set<BinaryTreePath> const &paths) {
+               std::set<BinaryTreePath> const &paths) {
               return all_of(paths, [&](BinaryTreePath const &p) {
                 return mm_problem_tree_get_subtree_at_path(t, p).has_value();
               });

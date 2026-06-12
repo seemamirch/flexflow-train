@@ -3,8 +3,8 @@
 
 #include "utils/graph/node/node.dtg.h"
 #include <random>
-#include <unordered_map>
-#include <unordered_set>
+#include <map>
+#include <set>
 
 namespace FlexFlow {
 
@@ -55,10 +55,10 @@ struct GaussianNoise {
 };
 
 template <typename Dist>
-std::unordered_map<Node, float>
-    make_cost_map(std::unordered_set<Node> const &nodes,
+std::map<Node, float>
+    make_cost_map(std::set<Node> const &nodes,
                   Dist const &distribution) {
-  std::unordered_map<Node, float> cost_map;
+  std::map<Node, float> cost_map;
   for (Node const &node : nodes) {
     cost_map[node] = distribution();
   }
@@ -66,10 +66,10 @@ std::unordered_map<Node, float>
 }
 
 template <typename Noise>
-std::unordered_map<Node, float>
-    add_noise_to_cost_map(std::unordered_map<Node, float> cost_map,
+std::map<Node, float>
+    add_noise_to_cost_map(std::map<Node, float> cost_map,
                           Noise const &noise) {
-  std::unordered_map<Node, float> noisy_cost_map;
+  std::map<Node, float> noisy_cost_map;
   for (auto const &[node, cost] : cost_map) {
     noisy_cost_map[node] = noise() * cost;
   }

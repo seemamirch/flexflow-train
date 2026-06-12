@@ -204,7 +204,7 @@ TEST_SUITE(FF_TEST_SUITE) {
                                            /*nesterov=*/false,
                                            /*weight_decay=*/0.001}};
 
-      std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor>
+      std::map<DynamicValueAttrs, DynamicTensorAccessor>
           input_tensors;
 
       DistributedFfHandle device_handle =
@@ -433,7 +433,7 @@ TEST_SUITE(FF_CUDA_TEST_SUITE) {
           GenericTensorAccessorW label_tensor =
               allocator.allocate_tensor(label_tensor_shape);
 
-          std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor>
+          std::map<DynamicValueAttrs, DynamicTensorAccessor>
               input_tensors;
 
           DistributedFfHandle device_handle = create_distributed_ff_handle(

@@ -7,7 +7,7 @@
 #include "utils/containers/restrict_keys.h"
 #include "utils/containers/set_intersection.h"
 #include "utils/containers/set_minus.h"
-#include <unordered_map>
+#include <map>
 
 namespace FlexFlow {
 

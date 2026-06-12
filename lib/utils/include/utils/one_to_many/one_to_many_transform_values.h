@@ -14,7 +14,7 @@ template <typename L,
 OneToMany<L, R2> one_to_many_transform_values(OneToMany<L, R1> const &input,
                                               F f) {
   return one_to_many_from_unstructured_relation(transform(
-      unordered_set_of(input.relation()),
+      set_of(input.relation()),
       [&](std::pair<L, R1> const &p) -> std::pair<L, R2> {
         return {p.first, f(p.second)};
       }));

@@ -252,7 +252,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           MappedParallelComputationGraph mpcg =
               make_test_mpcg_for_device_type(DeviceType::CPU);
 
-          std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor>
+          std::map<DynamicValueAttrs, DynamicTensorAccessor>
               input_tensors;
 
           OptimizerAttrs optimizer_attrs = OptimizerAttrs{
@@ -276,8 +276,7 @@ TEST_SUITE(FF_TEST_SUITE) {
               /*loss=*/std::nullopt,
               /*input_tensors=*/input_tensors,
               /*profiling_settings=*/ProfilingSettings{0, 0},
-              /*device_handle=*/device_handle,
-              /*iteration_config=*/FFIterationConfig{1_p});
+              /*device_handle=*/device_handle);
 
           // begin training loop
           int num_epochs = 1;
@@ -285,8 +284,7 @@ TEST_SUITE(FF_TEST_SUITE) {
             perform_all_passes_for_pcg_instance(
                 /*instance=*/pcg_instance,
                 /*profiling_settings=*/ProfilingSettings{0, 0},
-                /*device_handle=*/device_handle,
-                /*iteration_config=*/FFIterationConfig{1_p});
+                /*device_handle=*/device_handle);
           }
         });
     result.wait();
@@ -318,7 +316,7 @@ TEST_SUITE(FF_CUDA_TEST_SUITE) {
               },
           };
 
-          std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor>
+          std::map<DynamicValueAttrs, DynamicTensorAccessor>
               input_tensors;
 
           DistributedFfHandle device_handle = create_distributed_ff_handle(
@@ -333,8 +331,7 @@ TEST_SUITE(FF_CUDA_TEST_SUITE) {
               /*loss=*/std::nullopt,
               /*input_tensors=*/input_tensors,
               /*profiling_settings=*/ProfilingSettings{0, 0},
-              /*device_handle=*/device_handle,
-              /*iteration_config=*/FFIterationConfig{1_p});
+              /*device_handle=*/device_handle);
 
           // begin training loop
           int num_epochs = 1;
@@ -342,8 +339,7 @@ TEST_SUITE(FF_CUDA_TEST_SUITE) {
             perform_all_passes_for_pcg_instance(
                 /*instance=*/pcg_instance,
                 /*profiling_settings=*/ProfilingSettings{0, 0},
-                /*device_handle=*/device_handle,
-                /*iteration_config=*/FFIterationConfig{1_p});
+                /*device_handle=*/device_handle);
           }
         });
     result.wait();

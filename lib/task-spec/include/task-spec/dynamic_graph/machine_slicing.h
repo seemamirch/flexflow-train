@@ -5,7 +5,7 @@
 
 namespace FlexFlow {
 
-std::unordered_set<DynamicNodeInvocation>
+std::set<DynamicNodeInvocation>
     perform_machine_slicing_for_invocation(DynamicNodeInvocation const &,
                                            MachineSpaceCoordinate const &);
 

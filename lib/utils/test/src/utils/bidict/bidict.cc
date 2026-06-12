@@ -1,6 +1,6 @@
 #include "utils/bidict/bidict.h"
 #include "test/utils/doctest/check_without_stringify.h"
-#include "test/utils/doctest/fmt/unordered_map.h"
+#include "test/utils/doctest/fmt/map.h"
 #include "test/utils/doctest/fmt/vector.h"
 #include "test/utils/rapidcheck.h"
 #include <doctest/doctest.h>
@@ -84,16 +84,16 @@ TEST_SUITE(FF_TEST_SUITE) {
       CHECK(dict.size() == 2);
     }
 
-    SUBCASE("implicitly convert to std::unordered_map") {
-      std::unordered_map<int, std::string> res = dict;
-      std::unordered_map<int, std::string> expected = {{1, "one"}, {2, "two"}};
+    SUBCASE("implicitly convert to std::map") {
+      std::map<int, std::string> res = dict;
+      std::map<int, std::string> expected = {{1, "one"}, {2, "two"}};
       CHECK(res == expected);
     }
 
     SUBCASE("bidict::begin") {
       auto it = dict.begin();
-      CHECK(it->first == 2);
-      CHECK(it->second == "two");
+      CHECK(it->first == 1);
+      CHECK(it->second == "one");
     }
 
     SUBCASE("bidict::end") {
@@ -104,7 +104,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
     SUBCASE("fmt::to_string(bidict<int, std::string>)") {
       std::string result = fmt::to_string(dict);
-      std::string correct = fmt::to_string(dict.as_unordered_map());
+      std::string correct = fmt::to_string(dict.as_map());
       CHECK(result == correct);
     }
   }

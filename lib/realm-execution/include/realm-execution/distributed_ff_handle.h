@@ -4,7 +4,7 @@
 #include "realm-execution/device_specific_managed_per_device_ff_handle.h"
 #include "realm-execution/realm.h"
 #include "realm-execution/realm_context.h"
-#include <unordered_map>
+#include <map>
 
 namespace FlexFlow {
 
@@ -16,7 +16,7 @@ struct DistributedFfHandle {
 public:
   DistributedFfHandle() = delete;
   explicit DistributedFfHandle(
-      std::unordered_map<Realm::Processor,
+      std::map<Realm::Processor,
                          DeviceSpecificPtr<ManagedPerDeviceFFHandle>> const
           &handles);
 
@@ -24,7 +24,7 @@ public:
       at(Realm::Processor processor) const;
 
 private:
-  std::unordered_map<Realm::Processor,
+  std::map<Realm::Processor,
                      DeviceSpecificPtr<ManagedPerDeviceFFHandle>>
       handles;
 };

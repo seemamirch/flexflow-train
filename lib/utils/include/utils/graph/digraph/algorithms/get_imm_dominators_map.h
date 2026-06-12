@@ -5,7 +5,7 @@
 
 namespace FlexFlow {
 
-std::unordered_map<Node, std::optional<Node>>
+std::map<Node, std::optional<Node>>
     get_imm_dominators_map(DiGraphView const &);
 
 } // namespace FlexFlow

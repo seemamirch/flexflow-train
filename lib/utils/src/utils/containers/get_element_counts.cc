@@ -3,7 +3,7 @@
 
 namespace FlexFlow {
 
-std::unordered_map<char, int> get_element_counts(std::string const &s) {
+std::map<char, int> get_element_counts(std::string const &s) {
   return get_element_counts(vector_of(s));
 }
 

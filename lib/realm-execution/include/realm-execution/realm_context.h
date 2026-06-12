@@ -12,7 +12,7 @@
 #include "realm-execution/redops/redop_id_t.dtg.h"
 #include "realm-execution/tasks/task_id_t.dtg.h"
 #include <optional>
-#include <unordered_map>
+#include <map>
 
 namespace FlexFlow {
 
@@ -128,7 +128,7 @@ private:
   Realm::Processor processor;
   Allocator allocator;
   std::vector<Realm::Event> outstanding_events;
-  std::unordered_map<std::pair<Realm::AddressSpace, Realm::Processor::Kind>,
+  std::map<std::pair<Realm::AddressSpace, Realm::Processor::Kind>,
                      std::vector<Realm::Processor>>
       processors;
 };

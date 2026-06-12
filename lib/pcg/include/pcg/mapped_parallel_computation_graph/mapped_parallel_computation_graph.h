@@ -7,7 +7,7 @@
 
 namespace FlexFlow {
 
-std::unordered_set<parallel_layer_guid_t>
+std::set<parallel_layer_guid_t>
     mpcg_get_parallel_layers(MappedParallelComputationGraph const &);
 
 std::set<MappedParallelLayerInvocationInfo>
@@ -30,11 +30,11 @@ ParallelTensorAttrs
     mpcg_get_parallel_tensor_attrs(MappedParallelComputationGraph const &,
                                    parallel_tensor_guid_t const &);
 
-std::unordered_map<TensorSlotName, ParallelComputationGraphEdge>
+std::map<TensorSlotName, ParallelComputationGraphEdge>
     mpcg_get_incoming_edges(MappedParallelComputationGraph const &,
                             parallel_layer_guid_t const &);
 
-std::unordered_set<ParallelComputationGraphEdge>
+std::set<ParallelComputationGraphEdge>
     mpcg_get_outgoing_edges(MappedParallelComputationGraph const &,
                             parallel_layer_guid_t const &);
 
@@ -46,16 +46,16 @@ bidict<TensorSlotName, parallel_tensor_guid_t>
     mpcg_get_outgoing_tensors(MappedParallelComputationGraph const &,
                               parallel_layer_guid_t const &);
 
-std::unordered_set<ParallelComputationGraphEdge>
+std::set<ParallelComputationGraphEdge>
     mpcg_get_edges(MappedParallelComputationGraph const &);
 
-std::unordered_set<parallel_tensor_use_t>
+std::set<parallel_tensor_use_t>
     mpcg_get_parallel_tensor_uses(MappedParallelComputationGraph const &,
                                   parallel_tensor_guid_t const &);
 
 MappedParallelComputationGraph mapped_pcg_from_pcg_and_mapped_op_task_groups(
     ParallelComputationGraph const &pcg,
-    std::unordered_map<parallel_layer_guid_t, MappedOperatorTaskGroup> const
+    std::map<parallel_layer_guid_t, MappedOperatorTaskGroup> const
         &mapped_op_task_groups);
 
 MappedParallelComputationGraph

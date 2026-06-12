@@ -11,7 +11,7 @@ unchecked_dfs_iterator::unchecked_dfs_iterator(DiGraphView const &g,
     : stack(stack), graph(g) {}
 
 unchecked_dfs_iterator::unchecked_dfs_iterator(
-    DiGraphView const &g, std::unordered_set<Node> const &starting_points)
+    DiGraphView const &g, std::set<Node> const &starting_points)
     : graph(g) {
   for (Node const &n : starting_points) {
     this->stack.push_back(n);
@@ -30,7 +30,7 @@ unchecked_dfs_iterator &unchecked_dfs_iterator::operator++() {
   Node const last = this->operator*();
   this->stack.pop_back();
 
-  std::unordered_set<DirectedEdge> outgoing = get_outgoing_edges(graph, last);
+  std::set<DirectedEdge> outgoing = get_outgoing_edges(graph, last);
   for (DirectedEdge const &e : outgoing) {
     auto it = std::find(stack.begin(), stack.end(), e.dst);
     if (it == stack.end()) {
@@ -65,11 +65,11 @@ bool unchecked_dfs_iterator::operator!=(
 
 checked_dfs_iterator::checked_dfs_iterator(DiGraphView const &g,
                                            std::vector<Node> const &stack,
-                                           std::unordered_set<Node> const &seen)
+                                           std::set<Node> const &seen)
     : iter(g, stack), seen(seen) {}
 
 checked_dfs_iterator::checked_dfs_iterator(
-    DiGraphView const &g, std::unordered_set<Node> const &starting_points)
+    DiGraphView const &g, std::set<Node> const &starting_points)
     : iter(g, starting_points), seen{} {}
 
 checked_dfs_iterator::reference checked_dfs_iterator::operator*() const {
@@ -104,12 +104,12 @@ bool checked_dfs_iterator::operator!=(checked_dfs_iterator const &other) const {
 
 bfs_iterator::bfs_iterator(DiGraphView const &g,
                            std::queue<Node> const &q,
-                           std::optional<std::unordered_set<Node>> const &seen)
+                           std::optional<std::set<Node>> const &seen)
     : graph(g), q(q), seen(seen) {}
 
 bfs_iterator::bfs_iterator(DiGraphView const &g,
-                           std::unordered_set<Node> const &starting_points)
-    : graph(g), seen(std::unordered_set<Node>{}) {
+                           std::set<Node> const &starting_points)
+    : graph(g), seen(std::set<Node>{}) {
   for (Node const &n : starting_points) {
     this->q.push(n);
   }
@@ -129,7 +129,7 @@ bfs_iterator &bfs_iterator::operator++() {
   this->seen.value().insert(current);
   this->q.pop();
 
-  std::unordered_set<DirectedEdge> outgoing =
+  std::set<DirectedEdge> outgoing =
       get_outgoing_edges(graph, {current});
   for (DirectedEdge const &e : outgoing) {
     if (!contains(this->seen.value(), e.dst)) {
@@ -165,7 +165,7 @@ bool bfs_iterator::operator!=(bfs_iterator const &other) const {
 }
 
 CheckedDFSView::CheckedDFSView(DiGraphView const &g,
-                               std::unordered_set<Node> const &starting_points)
+                               std::set<Node> const &starting_points)
     : graph(g), starting_points(starting_points) {}
 
 checked_dfs_iterator CheckedDFSView::cbegin() const {
@@ -185,12 +185,12 @@ checked_dfs_iterator CheckedDFSView::end() const {
 }
 
 CheckedDFSView dfs(DiGraphView const &g,
-                   std::unordered_set<Node> const &starting_points) {
+                   std::set<Node> const &starting_points) {
   return CheckedDFSView(g, starting_points);
 }
 
 UncheckedDFSView::UncheckedDFSView(
-    DiGraphView const &g, std::unordered_set<Node> const &starting_points)
+    DiGraphView const &g, std::set<Node> const &starting_points)
     : graph(g), starting_points(starting_points) {}
 
 unchecked_dfs_iterator UncheckedDFSView::cbegin() const {
@@ -211,12 +211,12 @@ unchecked_dfs_iterator UncheckedDFSView::end() const {
 
 UncheckedDFSView
     unchecked_dfs(DiGraphView const &g,
-                  std::unordered_set<Node> const &starting_points) {
+                  std::set<Node> const &starting_points) {
   return UncheckedDFSView(g, starting_points);
 }
 
 BFSView::BFSView(DiGraphView const &g,
-                 std::unordered_set<Node> const &starting_points)
+                 std::set<Node> const &starting_points)
     : graph(g), starting_points(starting_points) {}
 
 bfs_iterator BFSView::cbegin() const {
@@ -236,7 +236,7 @@ bfs_iterator BFSView::end() const {
 }
 
 BFSView bfs(DiGraphView const &g,
-            std::unordered_set<Node> const &starting_points) {
+            std::set<Node> const &starting_points) {
   return BFSView(g, starting_points);
 }
 

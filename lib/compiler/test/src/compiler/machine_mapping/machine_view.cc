@@ -4,7 +4,7 @@
 #include "pcg/gpu_id_t.dtg.h"
 #include "test/utils/doctest/fmt/optional.h"
 #include "utils/containers/transform.h"
-#include "utils/fmt/unordered_set.h"
+#include "utils/fmt/set.h"
 #include "utils/fmt/vector.h"
 #include <doctest/doctest.h>
 
@@ -402,12 +402,12 @@ TEST_SUITE(FF_TEST_SUITE) {
           {MachineViewDimension{stride_t{2_p},
                                 MachineSpecificationDimension::INTRA_NODE}}};
 
-      std::unordered_set<device_id_t> correct = {
+      std::set<device_id_t> correct = {
           device_id_t{gpu_id_t{1_n}},
           device_id_t{gpu_id_t{3_n}},
           device_id_t{gpu_id_t{5_n}},
       };
-      std::unordered_set<device_id_t> result = get_device_ids(task, mv, ms);
+      std::set<device_id_t> result = get_device_ids(task, mv, ms);
       CHECK(result == correct);
     }
 
@@ -453,13 +453,13 @@ TEST_SUITE(FF_TEST_SUITE) {
            MachineViewDimension{stride_t{2_p},
                                 MachineSpecificationDimension::INTRA_NODE}}};
 
-      std::unordered_set<device_id_t> correct = {
+      std::set<device_id_t> correct = {
           device_id_t{gpu_id_t{7_n}},
           device_id_t{gpu_id_t{9_n}},
           device_id_t{gpu_id_t{12_n}},
           device_id_t{gpu_id_t{14_n}},
       };
-      std::unordered_set<device_id_t> result = get_device_ids(task, mv, ms);
+      std::set<device_id_t> result = get_device_ids(task, mv, ms);
       CHECK(result == correct);
     }
   }

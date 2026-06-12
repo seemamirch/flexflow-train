@@ -33,7 +33,7 @@
 #include "utils/containers/transform.h"
 #include "utils/containers/zip_values_strict_with.h"
 #include "utils/containers/zip_with.h"
-#include "utils/containers/binary_merge_disjoint_unordered_maps.h"
+#include "utils/containers/binary_merge_disjoint_maps.h"
 
 namespace FlexFlow {
 
@@ -61,7 +61,7 @@ parallel_tensor_guid_t ParallelComputationGraphBuilder::create_input_tensor(
                          layer_attrs,
                          {},
                          {},
-                         std::unordered_map<TensorSlotName, CreateGrad>{
+                         std::map<TensorSlotName, CreateGrad>{
                              {
                                  TensorSlotName::OUTPUT,
                                  CreateGrad::NO,
@@ -179,7 +179,7 @@ parallel_tensor_guid_t ParallelComputationGraphBuilder::conv2d(
 
   ParallelTensorShape input_shape = this->get_shape(input);
 
-  std::unordered_map<TensorSlotName, InitializerAttrs> initializers =
+  std::map<TensorSlotName, InitializerAttrs> initializers =
       get_initializers(attrs,
                        get_reduced_shape(input_shape),
                        maybe_kernel_initializer,
@@ -220,7 +220,7 @@ parallel_tensor_guid_t ParallelComputationGraphBuilder::dense(
 
   ParallelTensorShape input_shape = this->get_shape(input);
 
-  std::unordered_map<TensorSlotName, InitializerAttrs> initializers =
+  std::map<TensorSlotName, InitializerAttrs> initializers =
       throw_if_unexpected(get_initializers(attrs,
                                            get_reduced_shape(input_shape),
                                            maybe_projection_initializer,
@@ -258,7 +258,7 @@ parallel_tensor_guid_t ParallelComputationGraphBuilder::embedding(
 
   ParallelLayerAttrs layer = ParallelLayerAttrs{PCGOperatorAttrs{attrs}, name};
 
-  std::unordered_map<TensorSlotName, InitializerAttrs> initializers =
+  std::map<TensorSlotName, InitializerAttrs> initializers =
       get_initializers(attrs, maybe_kernel_initializer);
 
   return require_only_key(this->add_layer(layer,
@@ -308,7 +308,7 @@ parallel_tensor_guid_t ParallelComputationGraphBuilder::multihead_attention(
 
   ParallelLayerAttrs layer = ParallelLayerAttrs{PCGOperatorAttrs{attrs}, name};
 
-  std::unordered_map<TensorSlotName, InitializerAttrs> initializers =
+  std::map<TensorSlotName, InitializerAttrs> initializers =
       throw_if_unexpected(
           get_initializers(attrs,
                            get_reduced_shape(this->get_shape(query)),
@@ -370,7 +370,7 @@ parallel_tensor_guid_t ParallelComputationGraphBuilder::batch_norm(
 
   std::vector<ParallelTensorAttrs> weights;
 
-  std::unordered_map<TensorSlotName, InitializerAttrs> initializers =
+  std::map<TensorSlotName, InitializerAttrs> initializers =
       throw_if_unexpected(get_initializers(attrs));
 
   return require_only_key(this->add_layer(layer,
@@ -645,16 +645,16 @@ parallel_tensor_guid_t ParallelComputationGraphBuilder::add_weight(
 
 static void check_incoming_tensor_roles(
     ParallelLayerAttrs const &layer,
-    std::unordered_set<TensorSlotName> const &input_slots,
-    std::unordered_set<TensorSlotName> const &weight_slots) {
-  std::unordered_map<TensorSlotName, IncomingTensorRole> correct =
+    std::set<TensorSlotName> const &input_slots,
+    std::set<TensorSlotName> const &weight_slots) {
+  std::map<TensorSlotName, IncomingTensorRole> correct =
       get_incoming_tensor_roles(layer.op_attrs);
-  std::unordered_map<TensorSlotName, IncomingTensorRole> current =
-      binary_merge_disjoint_unordered_maps(
-          generate_unordered_map(
+  std::map<TensorSlotName, IncomingTensorRole> current =
+      binary_merge_disjoint_maps(
+          generate_map(
               input_slots,
               [](TensorSlotName) { return IncomingTensorRole::INPUT; }),
-          generate_unordered_map(weight_slots, [](TensorSlotName) {
+          generate_map(weight_slots, [](TensorSlotName) {
             return IncomingTensorRole::WEIGHT;
           }));
 
@@ -662,25 +662,25 @@ static void check_incoming_tensor_roles(
          "check_incoming_tensor_roles found deviation in incoming tensors");
 }
 
-std::unordered_map<TensorSlotName, parallel_tensor_guid_t>
+std::map<TensorSlotName, parallel_tensor_guid_t>
     ParallelComputationGraphBuilder::add_layer(
         ParallelLayerAttrs const &layer,
-        std::unordered_map<TensorSlotName, parallel_tensor_guid_t> const
+        std::map<TensorSlotName, parallel_tensor_guid_t> const
             &inputs,
-        std::unordered_map<TensorSlotName, InitializerAttrs> const
+        std::map<TensorSlotName, InitializerAttrs> const
             &weight_initializers) {
 
-  ASSERT(are_disjoint(unordered_keys(inputs), unordered_keys(weight_initializers)));
-  check_incoming_tensor_roles(layer, unordered_keys(inputs), unordered_keys(weight_initializers));
+  ASSERT(are_disjoint(keys(inputs), keys(weight_initializers)));
+  check_incoming_tensor_roles(layer, keys(inputs), keys(weight_initializers));
 
-  std::unordered_map<TensorSlotName, ParallelTensorShape> input_shapes =
+  std::map<TensorSlotName, ParallelTensorShape> input_shapes =
       map_values(inputs, [&](parallel_tensor_guid_t const &i) {
         return this->get_shape(i);
       });
 
-  std::unordered_map<TensorSlotName, ParallelTensorShape> weight_shapes =
+  std::map<TensorSlotName, ParallelTensorShape> weight_shapes =
       get_weight_shapes(layer.op_attrs, input_shapes);
-  std::unordered_map<TensorSlotName, parallel_tensor_guid_t> weight_tensors =
+  std::map<TensorSlotName, parallel_tensor_guid_t> weight_tensors =
       zip_values_strict_with(weight_shapes,
                              weight_initializers,
                              [&](ParallelTensorShape const &weight_shape,

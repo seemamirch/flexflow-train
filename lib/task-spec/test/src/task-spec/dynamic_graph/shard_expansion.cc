@@ -3,7 +3,7 @@
 #include "task-spec/dynamic_graph/copy_attrs.dtg.h"
 #include "task-spec/dynamic_graph/dynamic_copy_layer_guid_t.dtg.h"
 #include "task-spec/dynamic_graph/training_operation_attrs.dtg.h"
-#include "test/utils/doctest/fmt/unordered_set.h"
+#include "test/utils/doctest/fmt/set.h"
 #include <doctest/doctest.h>
 #include "task-spec/dynamic_graph/dynamic_tensor_role.h"
 #include "op-attrs/ops/element_unary.h"
@@ -234,7 +234,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           },
       };
 
-      std::unordered_set<DynamicNodeInvocationShardingInfo> result =
+      std::set<DynamicNodeInvocationShardingInfo> result =
           generate_shard_expansion_for_invocation(input);
 
       auto mk_invocation_shard =
@@ -255,7 +255,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         };
       };
 
-      std::unordered_set<DynamicNodeInvocationShardingInfo> correct = {
+      std::set<DynamicNodeInvocationShardingInfo> correct = {
           mk_invocation_shard(mc1,
                               mc1_input_coord,
                               mc1_weight_coord,
@@ -320,7 +320,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           },
       };
 
-      std::unordered_set<DynamicNodeInvocationShardingInfo> result =
+      std::set<DynamicNodeInvocationShardingInfo> result =
           generate_shard_expansion_for_invocation(input);
 
       auto mk_invocation_shard =
@@ -349,7 +349,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         };
       };
 
-      std::unordered_set<DynamicNodeInvocationShardingInfo> correct = {
+      std::set<DynamicNodeInvocationShardingInfo> correct = {
           mk_invocation_shard(mc1, pt1),
           mk_invocation_shard(mc2, pt2),
       };
@@ -459,7 +459,7 @@ TEST_SUITE(FF_TEST_SUITE) {
             },
         };
 
-        std::unordered_set<DynamicNodeInvocationShardingInfo> result =
+        std::set<DynamicNodeInvocationShardingInfo> result =
             generate_shard_expansion_for_invocation(input);
 
 
@@ -482,7 +482,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         auto mk_invocation_shard =
             [&](nonempty_set<MachineSpaceCoordinate> const &device_coords,
                 ParallelTensorSpaceCoordinate const &input_shard_coord,
-                std::unordered_set<MachineSpaceCoordinate> const &output_task_shards)
+                std::set<MachineSpaceCoordinate> const &output_task_shards)
             -> DynamicNodeInvocationShardingInfo {
 
           return DynamicNodeInvocationShardingInfo{
@@ -506,7 +506,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           };
         };
 
-        std::unordered_set<DynamicNodeInvocationShardingInfo> correct = {
+        std::set<DynamicNodeInvocationShardingInfo> correct = {
           mk_invocation_shard(nonempty_set{mc1, mc2}, pt1, {mc1, mc2}),
           mk_invocation_shard(nonempty_set{mc3, mc4}, pt2, {mc3, mc4}),
         };
@@ -567,7 +567,7 @@ TEST_SUITE(FF_TEST_SUITE) {
             },
         };
 
-        std::unordered_set<DynamicNodeInvocationShardingInfo> result =
+        std::set<DynamicNodeInvocationShardingInfo> result =
             generate_shard_expansion_for_invocation(input);
 
         auto mk_output_grad_binding = [&](MachineSpaceCoordinate const &mc)
@@ -588,7 +588,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
         auto mk_invocation_shard =
             [&](nonempty_set<MachineSpaceCoordinate> const &device_coords,
-                std::unordered_set<MachineSpaceCoordinate> const &output_grad_task_shards,
+                std::set<MachineSpaceCoordinate> const &output_grad_task_shards,
                 ParallelTensorSpaceCoordinate const &input_grad_shard_coord)
             -> DynamicNodeInvocationShardingInfo {
 
@@ -613,7 +613,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           };
         };
 
-        std::unordered_set<DynamicNodeInvocationShardingInfo> correct = {
+        std::set<DynamicNodeInvocationShardingInfo> correct = {
           mk_invocation_shard(nonempty_set{mc1, mc2}, {mc1, mc2}, pt1),
           mk_invocation_shard(nonempty_set{mc3, mc4}, {mc3, mc4}, pt2),
         };

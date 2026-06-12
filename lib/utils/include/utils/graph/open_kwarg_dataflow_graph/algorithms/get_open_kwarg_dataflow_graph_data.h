@@ -7,6 +7,7 @@
 #include "utils/graph/open_kwarg_dataflow_graph/algorithms/get_all_open_kwarg_dataflow_edges.h"
 #include "utils/graph/open_kwarg_dataflow_graph/algorithms/open_kwarg_dataflow_graph_data.dtg.h"
 #include "utils/graph/open_kwarg_dataflow_graph/open_kwarg_dataflow_graph_view.h"
+#include "utils/containers/set_of.h"
 
 namespace FlexFlow {
 
@@ -15,10 +16,10 @@ OpenKwargDataflowGraphData<GraphInputName, SlotName>
     get_open_kwarg_dataflow_graph_data(
         OpenKwargDataflowGraphView<GraphInputName, SlotName> const &g) {
   return OpenKwargDataflowGraphData<GraphInputName, SlotName>{
-      /*nodes=*/get_nodes(g),
-      /*edges=*/get_all_open_kwarg_dataflow_edges(g),
-      /*inputs=*/get_all_kwarg_dataflow_graph_inputs(g),
-      /*outputs=*/get_all_kwarg_dataflow_outputs(g),
+      /*nodes=*/set_of(get_nodes(g)),
+      /*edges=*/set_of(get_all_open_kwarg_dataflow_edges(g)),
+      /*inputs=*/set_of(get_all_kwarg_dataflow_graph_inputs(g)),
+      /*outputs=*/set_of(get_all_kwarg_dataflow_outputs(g)),
   };
 }
 

@@ -15,9 +15,8 @@
 #include "utils/containers/require_only_key.h"
 #include "utils/containers/transform_pairs.h"
 #include <optional>
-#include <unordered_map>
+#include <map>
 #include <utility>
-#include "utils/containers/unordered_map_from_map.h"
 #include "utils/bidict/algorithms/bidict_unordered_set_of.h"
 
 namespace FlexFlow {
@@ -75,7 +74,7 @@ DynamicOpenDataflowGraph make_dynamic_open_dataflow_graph_from_mapped_pcg(
     MappedParallelComputationGraph const &mpcg) {
 
   return dynamic_open_dataflow_graph_from_invocation_set(
-    transform(unordered_set_of(mpcg_get_invocation_set(mpcg)), make_dynamic_node_invocation_from_mapped));
+    transform(set_of(mpcg_get_invocation_set(mpcg)), make_dynamic_node_invocation_from_mapped));
 }
 
 } // namespace FlexFlow

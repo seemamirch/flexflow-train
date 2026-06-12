@@ -26,9 +26,9 @@ RuntimeOnlyCostEstimator make_fake_runtime_only_cost_estimator(
 }
 
 RuntimeOnlyCostEstimator make_fake_runtime_only_cost_estimator(
-    std::unordered_map<RuntimeOnlyOpCostEstimateKey,
+    std::map<RuntimeOnlyOpCostEstimateKey,
                        RuntimeOnlyOpCostMetrics> const &op_cost_map,
-    std::unordered_map<TensorSetMovement, milliseconds_t> const
+    std::map<TensorSetMovement, milliseconds_t> const
         &comm_cost_map) {
   return make_fake_runtime_only_cost_estimator(
       [op_cost_map](RuntimeOnlyOpCostEstimateKey const &k) {

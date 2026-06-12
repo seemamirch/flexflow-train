@@ -5,7 +5,8 @@
 #include "utils/containers/get_element_type.h"
 #include <string>
 #include <type_traits>
-#include <unordered_map>
+#include <map>
+#include "utils/containers/binary_merge_disjoint_maps.h"
 #include "utils/containers/binary_merge_disjoint_unordered_maps.h"
 
 namespace FlexFlow {
@@ -78,6 +79,23 @@ std::unordered_map<OutK, OutV> flatmap(std::unordered_map<InK, InV> const &m,
 
   for (auto const &[k, v] : m) {
     result = binary_merge_disjoint_unordered_maps(result, f(k, v));
+  }
+
+  return result;
+}
+
+template <
+    typename InK,
+    typename InV,
+    typename F,
+    typename OutK = typename std::invoke_result_t<F, InK, InV>::key_type,
+    typename OutV = typename std::invoke_result_t<F, InK, InV>::mapped_type>
+std::map<OutK, OutV> flatmap(std::map<InK, InV> const &m,
+                                       F &&f) {
+  std::map<OutK, OutV> result;
+
+  for (auto const &[k, v] : m) {
+    result = binary_merge_disjoint_maps(result, f(k, v));
   }
 
   return result;

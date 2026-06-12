@@ -3,15 +3,15 @@
 
 #include "utils/graph/labelled_open_dataflow_graph/labelled_open_dataflow_graph_view.h"
 #include <string>
-#include <unordered_map>
+#include <map>
 
 namespace FlexFlow {
 
 std::string escape_dot_string(std::string const &);
 std::string render_dot_node_attrs(
-    std::unordered_map<std::string, std::string> const &attrs);
+    std::map<std::string, std::string> const &attrs);
 std::string render_dot(
-    LabelledDataflowGraphView<std::unordered_map<std::string, std::string>,
+    LabelledDataflowGraphView<std::map<std::string, std::string>,
                               std::string> const &);
 
 } // namespace FlexFlow

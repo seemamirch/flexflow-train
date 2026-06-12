@@ -7,19 +7,19 @@
 #include "utils/full_binary_tree/binary_tree_path.h"
 #include "utils/full_binary_tree/visit.h"
 #include "utils/overload.h"
-#include <unordered_set>
+#include <set>
 
 namespace FlexFlow {
 
 template <typename Tree, typename Parent, typename Leaf>
-std::unordered_set<BinaryTreePath> get_all_leaf_paths(
+std::set<BinaryTreePath> get_all_leaf_paths(
     Tree const &tree,
     FullBinaryTreeImplementation<Tree, Parent, Leaf> const &impl) {
-  auto visitor = FullBinaryTreeVisitor<std::unordered_set<BinaryTreePath>,
+  auto visitor = FullBinaryTreeVisitor<std::set<BinaryTreePath>,
                                        Tree,
                                        Parent,
                                        Leaf>{
-      [&](Parent const &parent) -> std::unordered_set<BinaryTreePath> {
+      [&](Parent const &parent) -> std::set<BinaryTreePath> {
         return set_union(
             transform(get_all_leaf_paths(impl.get_left_child(parent), impl),
                       [](BinaryTreePath const &path) {
@@ -30,7 +30,7 @@ std::unordered_set<BinaryTreePath> get_all_leaf_paths(
                         return nest_inside_right_child(path);
                       }));
       },
-      [&](Leaf const &leaf) -> std::unordered_set<BinaryTreePath> {
+      [&](Leaf const &leaf) -> std::set<BinaryTreePath> {
         return {binary_tree_root_path()};
       },
   };

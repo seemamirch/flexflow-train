@@ -6,9 +6,9 @@
 
 namespace FlexFlow {
 
-std::unordered_map<Node, Node> parallel_extend(DiGraph &g,
+std::map<Node, Node> parallel_extend(DiGraph &g,
                                                DiGraphView const &ext);
-std::unordered_map<Node, Node> serial_extend(DiGraph &g,
+std::map<Node, Node> serial_extend(DiGraph &g,
                                              DiGraphView const &ext);
 DiGraph series_composition(DiGraphView const &g1, DiGraphView const &g2);
 DiGraph parallel_composition(DiGraphView const &g1, DiGraphView const &g2);

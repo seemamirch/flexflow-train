@@ -100,7 +100,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           },
       };
 
-      std::unordered_map<parallel_layer_guid_t, MappedOperatorTaskGroup>
+      std::map<parallel_layer_guid_t, MappedOperatorTaskGroup>
           mapped_tasks = {
               {
                   l_input1,

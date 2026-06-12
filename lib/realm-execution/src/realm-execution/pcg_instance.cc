@@ -83,7 +83,7 @@ PCGInstance create_pcg_instance(
     MappedParallelComputationGraph const &mpcg,
     OptimizerAttrs const &optimizer_attrs,
     std::optional<ParallelLossConfig> const &loss,
-    std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor> const
+    std::map<DynamicValueAttrs, DynamicTensorAccessor> const
         &input_tensors,
     ProfilingSettings const &profiling_settings,
     DistributedFfHandle const &device_handle) {
@@ -92,7 +92,7 @@ PCGInstance create_pcg_instance(
       make_dynamic_open_dataflow_graph_from_mapped_pcg(mpcg);
   dg = perform_pass_expansion(dg);
 
-  std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor> inputs =
+  std::map<DynamicValueAttrs, DynamicTensorAccessor> inputs =
       input_tensors;
   std::optional<DynamicValueAttrs> logit_grad_value;
   if (loss.has_value()) {
@@ -275,7 +275,7 @@ static Realm::Event spawn_dynamic_node_invocation(
   });
 }
 
-static std::unordered_map<dynamic_layer_guid_t, Realm::Event>
+static std::map<dynamic_layer_guid_t, Realm::Event>
     execute_distributed_dynamic_node_invocation_set(
         RealmContext &ctx,
         std::vector<DynamicNodeInvocation> const &invocations,
@@ -287,7 +287,7 @@ static std::unordered_map<dynamic_layer_guid_t, Realm::Event>
   // For simplicity we'll track a dependency on all outstanding operations up to
   // this point. This will create an effective barrier between phases.
   DependencySet dependency_set{ctx.get_outstanding_events()};
-  return unordered_map_from_pairs(
+  return map_from_pairs(
       transform(invocations, [&](DynamicNodeInvocation const &invocation) {
         std::vector<Realm::Event> input_dependencies =
             transform(vector_of(values(invocation.inputs)),
@@ -321,14 +321,14 @@ static std::unordered_map<dynamic_layer_guid_t, Realm::Event>
       }));
 }
 
-std::unordered_map<dynamic_layer_guid_t, Realm::Event>
+std::map<dynamic_layer_guid_t, Realm::Event>
     perform_all_passes_for_pcg_instance(
         PCGInstance &pcg_instance,
         ProfilingSettings const &profiling_settings,
         DistributedFfHandle const &device_handle) {
   std::vector<DynamicNodeInvocation> execution_order =
       pcg_instance.get_execution_order();
-  std::unordered_map<dynamic_layer_guid_t, Realm::Event> result =
+  std::map<dynamic_layer_guid_t, Realm::Event> result =
       execute_distributed_dynamic_node_invocation_set(
           /*ctx=*/pcg_instance.get_realm_context(),
           /*invocations=*/execution_order,
@@ -342,7 +342,7 @@ std::unordered_map<dynamic_layer_guid_t, Realm::Event>
   return result;
 }
 
-std::unordered_map<dynamic_layer_guid_t, Realm::Event>
+std::map<dynamic_layer_guid_t, Realm::Event>
     perform_forward_pass_for_pcg_instance(
         PCGInstance &pcg_instance,
         ProfilingSettings const &profiling_settings,
@@ -365,7 +365,7 @@ std::unordered_map<dynamic_layer_guid_t, Realm::Event>
       /*device_handle=*/device_handle);
 }
 
-std::unordered_map<dynamic_layer_guid_t, Realm::Event>
+std::map<dynamic_layer_guid_t, Realm::Event>
     perform_backward_pass_for_pcg_instance(
         PCGInstance &pcg_instance,
         ProfilingSettings const &profiling_settings,
@@ -388,7 +388,7 @@ std::unordered_map<dynamic_layer_guid_t, Realm::Event>
       /*device_handle=*/device_handle);
 }
 
-std::unordered_map<dynamic_layer_guid_t, Realm::Event>
+std::map<dynamic_layer_guid_t, Realm::Event>
     perform_update_pass_for_pcg_instance(
         PCGInstance &pcg_instance,
         ProfilingSettings const &profiling_settings,
@@ -401,7 +401,7 @@ std::unordered_map<dynamic_layer_guid_t, Realm::Event>
                return task_type == DynamicTaskType::UPD;
              });
 
-  std::unordered_map<dynamic_layer_guid_t, Realm::Event> result =
+  std::map<dynamic_layer_guid_t, Realm::Event> result =
       execute_distributed_dynamic_node_invocation_set(
           /*ctx=*/pcg_instance.get_realm_context(),
           /*invocations=*/execution_order,

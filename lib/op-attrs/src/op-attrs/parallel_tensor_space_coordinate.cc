@@ -3,9 +3,8 @@
 #include "op-attrs/parallel_tensor_dim_idx_t.h"
 #include "utils/containers/contains_key.h"
 #include "utils/containers/filtermap_keys.h"
-#include "utils/containers/generate_unordered_map.h"
-#include "utils/containers/unordered_set_of.h"
 #include "utils/nonnegative_int/num_elements.h"
+#include "utils/containers/generate_map.h"
 
 namespace FlexFlow {
 
@@ -23,12 +22,12 @@ num_ptensor_shard_dims_t
   };
 }
 
-std::unordered_set<parallel_tensor_dim_idx_t>
+std::set<parallel_tensor_dim_idx_t>
     get_dim_idxs_in_ptensor_space_coord(
         ParallelTensorSpaceCoordinate const &coord) {
 
-  std::unordered_set<parallel_tensor_dim_idx_t> result = unordered_set_of(
-      dim_idxs_for_num_shard_dims(ptensor_coord_num_shard_dims(coord)));
+  std::set<parallel_tensor_dim_idx_t> result = 
+      dim_idxs_for_num_shard_dims(ptensor_coord_num_shard_dims(coord));
   result.insert(sum_dim_idx());
   result.insert(discard_copy_dim_idx());
   return result;
@@ -47,11 +46,11 @@ nonnegative_int ptensor_coord_component_for_ptensor_dim_idx(
 }
 
 ParallelTensorSpaceCoordinate parallel_tensor_space_coord_from_map(
-    std::unordered_map<parallel_tensor_dim_idx_t, nonnegative_int> const &m) {
+    std::map<parallel_tensor_dim_idx_t, nonnegative_int> const &m) {
   ASSERT(contains_key(m, sum_dim_idx()));
   ASSERT(contains_key(m, discard_copy_dim_idx()));
 
-  std::unordered_map<ff_dim_t, nonnegative_int> shard_map =
+  std::map<ff_dim_t, nonnegative_int> shard_map =
       filtermap_keys(m, [](parallel_tensor_dim_idx_t const &d) {
         return d.try_require_shard_dim();
       });
@@ -73,7 +72,7 @@ DimCoord<parallel_tensor_dim_idx_t> dim_coord_from_parallel_tensor_space_coord(
     ParallelTensorSpaceCoordinate const &coord) {
 
   return DimCoord<parallel_tensor_dim_idx_t>{
-      generate_unordered_map(get_dim_idxs_in_ptensor_space_coord(coord),
+      generate_map(get_dim_idxs_in_ptensor_space_coord(coord),
                    [&](parallel_tensor_dim_idx_t idx) {
                      return ptensor_coord_component_for_ptensor_dim_idx(coord,
                                                                         idx);

@@ -27,8 +27,8 @@ TEST_SUITE(FF_TEST_SUITE) {
 
       auto is_allowed_to_run =
           [&](Node const &n,
-              std::unordered_set<Node> const &in_progress_tasks,
-              std::unordered_set<Node> const &finished_tasks) { return true; };
+              std::set<Node> const &in_progress_tasks,
+              std::set<Node> const &finished_tasks) { return true; };
 
       TaskExecutionConstraint constraint =
           TaskExecutionConstraint{is_allowed_to_run};
@@ -59,8 +59,8 @@ TEST_SUITE(FF_TEST_SUITE) {
       SUBCASE("no processing constraints") {
         auto is_allowed_to_run =
             [&](Node const &n,
-                std::unordered_set<Node> const &in_progress_tasks,
-                std::unordered_set<Node> const &finished_tasks) {
+                std::set<Node> const &in_progress_tasks,
+                std::set<Node> const &finished_tasks) {
               return true;
             };
 
@@ -80,8 +80,8 @@ TEST_SUITE(FF_TEST_SUITE) {
       SUBCASE("one node at a time") {
         auto is_allowed_to_run =
             [&](Node const &n,
-                std::unordered_set<Node> const &in_progress_tasks,
-                std::unordered_set<Node> const &finished_tasks) {
+                std::set<Node> const &in_progress_tasks,
+                std::set<Node> const &finished_tasks) {
               return in_progress_tasks.size() == 0;
             };
 
@@ -123,8 +123,8 @@ TEST_SUITE(FF_TEST_SUITE) {
       SUBCASE("no processing constraints") {
         auto is_allowed_to_run =
             [&](Node const &n,
-                std::unordered_set<Node> const &in_progress_tasks,
-                std::unordered_set<Node> const &finished_tasks) {
+                std::set<Node> const &in_progress_tasks,
+                std::set<Node> const &finished_tasks) {
               return true;
             };
 
@@ -146,8 +146,8 @@ TEST_SUITE(FF_TEST_SUITE) {
       SUBCASE("one node at a time") {
         auto is_allowed_to_run =
             [&](Node const &n,
-                std::unordered_set<Node> const &in_progress_tasks,
-                std::unordered_set<Node> const &finished_tasks) {
+                std::set<Node> const &in_progress_tasks,
+                std::set<Node> const &finished_tasks) {
               return in_progress_tasks.size() == 0;
             };
 
@@ -187,8 +187,8 @@ TEST_SUITE(FF_TEST_SUITE) {
       SUBCASE("at most two nodes at a time") {
         auto is_allowed_to_run =
             [&](Node const &n,
-                std::unordered_set<Node> const &in_progress_tasks,
-                std::unordered_set<Node> const &finished_tasks) {
+                std::set<Node> const &in_progress_tasks,
+                std::set<Node> const &finished_tasks) {
               return in_progress_tasks.size() < 2;
             };
 

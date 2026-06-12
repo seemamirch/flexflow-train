@@ -67,8 +67,8 @@ TEST_SUITE(FF_TEST_SUITE) {
         };
 
     std::function<std::vector<std::string>(
-        std::unordered_set<std::string> const &)>
-        slot_ordering = [](std::unordered_set<std::string> const &slots)
+        std::set<std::string> const &)>
+        slot_ordering = [](std::set<std::string> const &slots)
         -> std::vector<std::string> { return reversed(sorted(slots)); };
 
     DataflowGraphData result =

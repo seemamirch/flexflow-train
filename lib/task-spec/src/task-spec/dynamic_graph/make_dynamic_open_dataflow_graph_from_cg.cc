@@ -7,9 +7,9 @@
 #include "task-spec/dynamic_graph/dynamic_open_dataflow_graph.h"
 #include "task-spec/dynamic_graph/dynamic_tensor_role.h"
 #include "task-spec/dynamic_graph/training_operation_attrs.dtg.h"
-#include "utils/containers/generate_unordered_map.h"
+#include "utils/containers/generate_map.h"
 #include <optional>
-#include <unordered_map>
+#include <map>
 #include <utility>
 #include "utils/containers/map_from_unordered.h"
 
@@ -31,7 +31,7 @@ DynamicOpenDataflowGraph
         /*per_device_op_state=*/std::nullopt,
     };
 
-    std::unordered_map<DynamicTensorSlot, DynamicValueAttrs> result_inputs =
+    std::map<DynamicTensorSlot, DynamicValueAttrs> result_inputs =
         transform(
             get_incoming_tensors(cg, layer),
             [&](TensorSlotName const &slot_name, tensor_guid_t const &tensor) {
@@ -53,7 +53,7 @@ DynamicOpenDataflowGraph
               };
             });
 
-    std::unordered_map<DynamicTensorSlot, DynamicValueAttrs> result_outputs =
+    std::map<DynamicTensorSlot, DynamicValueAttrs> result_outputs =
         transform(
             get_outgoing_tensors(cg, layer),
             [&](TensorSlotName const &slot_name, tensor_guid_t const &tensor) {
@@ -75,7 +75,7 @@ DynamicOpenDataflowGraph
               };
             });
 
-    result.invocations.emplace(map_from_unordered(result_inputs), result_attrs, map_from_unordered(result_outputs));
+    result.invocations.emplace(result_inputs, result_attrs, result_outputs);
   }
 
   return result;

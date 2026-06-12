@@ -18,7 +18,6 @@
 #include "utils/containers/contains.h"
 #include "utils/bidict/algorithms/right_entries.h"
 #include "utils/containers/map_values.h"
-#include "utils/containers/unordered_set_of.h"
 #include "utils/bidict/algorithms/bidict_from_unstructured_relation.h"
 
 namespace FlexFlow {
@@ -27,14 +26,14 @@ MappedOperatorTaskGroup::MappedOperatorTaskGroup(
     bidict<MachineSpaceCoordinate, OperatorAtomicTaskShardBinding> const
         &shard_bindings)
     : shard_bindings(shard_bindings) {
-  std::vector<std::unordered_set<TensorSlotName>> binding_slot_sets =
+  std::vector<std::set<TensorSlotName>> binding_slot_sets =
       transform(vector_of(shard_bindings.right_values()),
                 [&](OperatorAtomicTaskShardBinding const &s)
-                    -> std::unordered_set<TensorSlotName> {
-                  return unordered_keys(s.tensor_coords);
+                    -> std::set<TensorSlotName> {
+                  return keys(s.tensor_coords);
                 });
 
-  std::unordered_set<TensorSlotName> slot_names =
+  std::set<TensorSlotName> slot_names =
       require_all_same(binding_slot_sets).value();
 
   for (TensorSlotName const &slot_name : slot_names) {
@@ -104,13 +103,13 @@ bidict<ParallelTensorSpaceCoordinate, MachineSpaceCoordinate>
   std::set<TensorSlotName> slot_names = get_slot_names_for_task_group(task_group);
   ASSERT(contains(slot_names, slot_name));
 
-  std::unordered_map<MachineSpaceCoordinate, ParallelTensorSpaceCoordinate> m =
-    map_values(task_group.get_shard_bindings().as_unordered_map(),
+  std::map<MachineSpaceCoordinate, ParallelTensorSpaceCoordinate> m =
+    map_values(task_group.get_shard_bindings().as_map(),
                [&](OperatorAtomicTaskShardBinding const &b) -> ParallelTensorSpaceCoordinate {
                  return ptensor_space_coord_for_slot_name(b, slot_name);
                });
 
-  return bidict_from_unstructured_relation(unordered_set_of(m)).reversed();
+  return bidict_from_unstructured_relation(set_of(m)).reversed();
 }
 
 std::set<TensorSlotName> get_slot_names_for_task_group(MappedOperatorTaskGroup const &g) {

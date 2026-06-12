@@ -29,13 +29,13 @@ void require_full_dynamic_graph_satisfies(
     std::function<void(DynamicValueAttrs const &)> const &,
     std::function<void(DynamicTensorSlot const &)> const &);
 
-std::unordered_multiset<DynamicNodeAttrs>
+std::multiset<DynamicNodeAttrs>
     get_dynamic_nodes(DynamicOpenDataflowGraph const &);
-std::unordered_multiset<DynamicValueAttrs>
+std::multiset<DynamicValueAttrs>
     get_dynamic_values(DynamicOpenDataflowGraph const &);
-std::unordered_multiset<DynamicTensorSlot>
+std::multiset<DynamicTensorSlot>
     get_dynamic_tensor_slots(DynamicOpenDataflowGraph const &);
-std::unordered_set<DynamicNodeInvocation>
+std::set<DynamicNodeInvocation>
     get_dynamic_invocation_set(DynamicOpenDataflowGraph const &);
 
 std::optional<DynamicValueAttrs>
@@ -50,11 +50,11 @@ DynamicOpenDataflowGraph transform_dynamic_invocation_set(
 
 DynamicOpenDataflowGraph flatmap_dynamic_invocation_set(
     DynamicOpenDataflowGraph const &,
-    std::function<std::unordered_set<DynamicNodeInvocation>(
+    std::function<std::set<DynamicNodeInvocation>(
         DynamicNodeInvocation const &)> const &);
 
 DynamicOpenDataflowGraph dynamic_open_dataflow_graph_from_invocation_set(
-    std::unordered_set<DynamicNodeInvocation> const &);
+    std::set<DynamicNodeInvocation> const &);
 
 std::pair<LabelledOpenKwargDataflowGraph<DynamicNodeAttrs,
                                          DynamicValueAttrs,

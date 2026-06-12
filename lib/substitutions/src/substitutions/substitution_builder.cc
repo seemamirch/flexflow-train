@@ -54,11 +54,11 @@ std::pair<PatternValue, OutputGraphExprValue> SubstitutionBuilder::add_input(
   };
 }
 
-std::unordered_map<TensorSlotName, PatternValue>
+std::map<TensorSlotName, PatternValue>
     SubstitutionBuilder::add_pattern_node(
         OperatorAttributePattern const &node_pattern,
-        std::unordered_map<TensorSlotName, PatternValue> const &inputs,
-        std::unordered_map<TensorSlotName, TensorAttributePattern> const
+        std::map<TensorSlotName, PatternValue> const &inputs,
+        std::map<TensorSlotName, TensorAttributePattern> const
             &output_patterns,
         std::optional<std::string> const &maybe_name) {
   KwargNodeAddedResult<TensorSlotName> node_added = this->pattern_g.add_node(
@@ -85,16 +85,16 @@ std::unordered_map<TensorSlotName, PatternValue>
                     });
 }
 
-std::unordered_map<TensorSlotName, OutputGraphExprValue>
+std::map<TensorSlotName, OutputGraphExprValue>
     SubstitutionBuilder::add_output_graph_node(
         OutputOperatorAttrsAssignment const &node_expr,
-        std::unordered_map<TensorSlotName, OutputGraphExprValue> const &inputs,
-        std::unordered_set<TensorSlotName> const &output_slots) {
+        std::map<TensorSlotName, OutputGraphExprValue> const &inputs,
+        std::set<TensorSlotName> const &output_slots) {
   KwargNodeAddedResult<TensorSlotName> node_added = this->output_g.add_node(
       node_expr,
       map_values(inputs,
                  raw_open_kwarg_dataflow_value_from_output_graph_expr_value),
-      generate_unordered_map(output_slots,
+      generate_map(output_slots,
                    [](TensorSlotName) { return std::monostate{}; }));
 
   return map_values(

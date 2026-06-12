@@ -14,7 +14,7 @@ std::string labelled_kwarg_dataflow_graph_view_as_dot(
     std::function<nlohmann::json(ValueLabel const &)> const &render_value_label,
     std::function<nlohmann::json(SlotName const &)> const &render_slot_name,
     std::function<std::vector<SlotName>(
-        std::unordered_set<SlotName> const &)> const &order_slots) {
+        std::set<SlotName> const &)> const &order_slots) {
   std::function<nlohmann::json(Node const &)> render_node =
       [&](Node const &n) -> nlohmann::json {
     return render_node_label(g.at(n));

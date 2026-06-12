@@ -20,6 +20,13 @@ std::pair<K, V> get_only(std::unordered_map<K, V> const &m) {
   return *m.cbegin();
 }
 
+template <typename K, typename V>
+std::pair<K, V> get_only(std::map<K, V> const &m) {
+  ASSERT(m.size() == 1);
+
+  return *m.cbegin();
+}
+
 } // namespace FlexFlow
 
 #endif

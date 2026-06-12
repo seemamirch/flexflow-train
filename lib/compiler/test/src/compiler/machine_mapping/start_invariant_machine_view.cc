@@ -1,6 +1,6 @@
 #include "compiler/machine_mapping/start_invariant_machine_view.h"
 #include "op-attrs/task_space_coordinate.h"
-#include "utils/fmt/unordered_set.h"
+#include "utils/fmt/set.h"
 #include "utils/fmt/vector.h"
 #include <doctest/doctest.h>
 
@@ -140,11 +140,11 @@ TEST_SUITE(FF_TEST_SUITE) {
       }
 
       SUBCASE("get_machine_space_offsets") {
-        std::unordered_set<MachineSpaceOffset> correct = {
+        std::set<MachineSpaceOffset> correct = {
             MachineSpaceOffset{0, 0, DeviceType::GPU},
             MachineSpaceOffset{0, 2, DeviceType::GPU},
             MachineSpaceOffset{0, 4, DeviceType::GPU}};
-        std::unordered_set<MachineSpaceOffset> result =
+        std::set<MachineSpaceOffset> result =
             get_machine_space_offsets(task, simv);
         CHECK(correct == result);
       }
@@ -223,12 +223,12 @@ TEST_SUITE(FF_TEST_SUITE) {
       }
 
       SUBCASE("get_machine_space_offsets") {
-        std::unordered_set<MachineSpaceOffset> correct = {
+        std::set<MachineSpaceOffset> correct = {
             MachineSpaceOffset{0, 0, DeviceType::GPU},
             MachineSpaceOffset{0, 2, DeviceType::GPU},
             MachineSpaceOffset{1, 0, DeviceType::GPU},
             MachineSpaceOffset{1, 2, DeviceType::GPU}};
-        std::unordered_set<MachineSpaceOffset> result =
+        std::set<MachineSpaceOffset> result =
             get_machine_space_offsets(task, simv);
         CHECK(correct == result);
       }

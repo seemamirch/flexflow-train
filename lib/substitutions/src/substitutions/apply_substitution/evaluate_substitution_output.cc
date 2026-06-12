@@ -24,8 +24,8 @@ std::pair<SubParallelComputationGraph, OutputExprToResultSubPCGMapping>
     evaluate_substitution_output(SubParallelComputationGraph const &spcg,
                                  Substitution const &sub,
                                  PCGPatternMatch const &match) {
-  std::unordered_map<PatternNode, PCGOperatorAttrs> node_match =
-      map_values(match.node_assignment.as_unordered_map(),
+  std::map<PatternNode, PCGOperatorAttrs> node_match =
+      map_values(match.node_assignment.as_map(),
                  [&](parallel_layer_guid_t const &n) {
                    return get_operator_attrs(spcg, n);
                  });
@@ -86,7 +86,7 @@ std::pair<SubParallelComputationGraph, OutputExprToResultSubPCGMapping>
               [](Node const &n) { return OutputGraphExprNode{n}; }),
           [](NewNode const &n) { return parallel_layer_guid_t{n.raw_node}; });
 
-  std::unordered_map<KwargDataflowGraphInput<int>, ParallelTensorShape>
+  std::map<KwargDataflowGraphInput<int>, ParallelTensorShape>
       input_shapes = map_values(
           map_keys(match.input_assignment,
                    [&](PatternInput const &i) {

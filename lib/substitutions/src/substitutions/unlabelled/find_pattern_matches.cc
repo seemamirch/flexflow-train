@@ -33,9 +33,9 @@ static std::optional<UnlabelledKwargDataflowGraphPatternMatch>
       empty_unlabelled_pattern_match();
   match.node_assignment.equate(pattern_node, graph_node);
 
-  std::unordered_map<TensorSlotName, PatternValue> pattern_outputs =
+  std::map<TensorSlotName, PatternValue> pattern_outputs =
       get_outputs_from_pattern_node(pattern, pattern_node);
-  std::unordered_map<TensorSlotName,
+  std::map<TensorSlotName,
                      OpenKwargDataflowValue<int, TensorSlotName>>
       graph_outputs = map_values(
           get_outgoing_kwarg_dataflow_outputs_for_node(graph, graph_node),
@@ -43,25 +43,25 @@ static std::optional<UnlabelledKwargDataflowGraphPatternMatch>
             return OpenKwargDataflowValue<int, TensorSlotName>{o};
           });
 
-  if (unordered_keys(pattern_outputs) != unordered_keys(graph_outputs)) {
+  if (keys(pattern_outputs) != keys(graph_outputs)) {
     return std::nullopt;
   }
 
-  std::unordered_map<TensorSlotName, PatternValue> pattern_node_inputs =
+  std::map<TensorSlotName, PatternValue> pattern_node_inputs =
       get_inputs_to_pattern_node(pattern, pattern_node);
-  std::unordered_set<PatternInput> pattern_graph_inputs =
+  std::set<PatternInput> pattern_graph_inputs =
       get_pattern_inputs(pattern);
 
-  ASSERT(unordered_set_of(values(pattern_node_inputs)) ==
+  ASSERT(set_of(values(pattern_node_inputs)) ==
          transform(pattern_graph_inputs,
                    [](PatternInput const &i) { return PatternValue{i}; }));
 
-  std::unordered_map<TensorSlotName,
+  std::map<TensorSlotName,
                      OpenKwargDataflowValue<int, TensorSlotName>>
       graph_node_inputs =
           get_incoming_open_kwarg_dataflow_values_for_node(graph, graph_node);
 
-  if (unordered_keys(graph_node_inputs) != unordered_keys(pattern_node_inputs)) {
+  if (keys(graph_node_inputs) != keys(pattern_node_inputs)) {
     return std::nullopt;
   }
 

@@ -19,9 +19,9 @@
 
 namespace FlexFlow {
 
-std::unordered_set<parallel_layer_guid_t>
+std::set<parallel_layer_guid_t>
     mpcg_get_parallel_layers(MappedParallelComputationGraph const &mpcg) {
-  return get_parallel_layers(pcg_from_mpcg(mpcg));
+  return pcg_get_parallel_layers(pcg_from_mpcg(mpcg));
 }
 
 std::set<MappedParallelLayerInvocationInfo>
@@ -88,13 +88,13 @@ ParallelTensorAttrs
   return get_parallel_tensor_attrs(pcg_from_mpcg(mpcg), t);
 }
 
-std::unordered_map<TensorSlotName, ParallelComputationGraphEdge>
+std::map<TensorSlotName, ParallelComputationGraphEdge>
     mpcg_get_incoming_edges(MappedParallelComputationGraph const &mpcg,
                             parallel_layer_guid_t const &l) {
   return get_incoming_edges(pcg_from_mpcg(mpcg), l);
 }
 
-std::unordered_set<ParallelComputationGraphEdge>
+std::set<ParallelComputationGraphEdge>
     mpcg_get_outgoing_edges(MappedParallelComputationGraph const &mpcg,
                             parallel_layer_guid_t const &l) {
   return get_outgoing_edges(pcg_from_mpcg(mpcg), l);
@@ -112,12 +112,12 @@ bidict<TensorSlotName, parallel_tensor_guid_t>
   return bidict_from_map(get_outgoing_tensors(pcg_from_mpcg(mpcg), l));
 }
 
-std::unordered_set<ParallelComputationGraphEdge>
+std::set<ParallelComputationGraphEdge>
     mpcg_get_edges(MappedParallelComputationGraph const &mpcg) {
   return get_edges(pcg_from_mpcg(mpcg));
 }
 
-std::unordered_set<parallel_tensor_use_t>
+std::set<parallel_tensor_use_t>
     mpcg_get_parallel_tensor_uses(MappedParallelComputationGraph const &mpcg,
                                   parallel_tensor_guid_t const &t) {
   return pcg_get_parallel_tensor_uses(pcg_from_mpcg(mpcg), t);
@@ -125,7 +125,7 @@ std::unordered_set<parallel_tensor_use_t>
 
 MappedParallelComputationGraph mapped_pcg_from_pcg_and_mapped_op_task_groups(
     ParallelComputationGraph const &pcg,
-    std::unordered_map<parallel_layer_guid_t, MappedOperatorTaskGroup> const
+    std::map<parallel_layer_guid_t, MappedOperatorTaskGroup> const
         &mapped_op_task_groups) {
   auto mapping_for_layer =
       [&](parallel_layer_guid_t l) -> MappedOperatorTaskGroup {
@@ -143,7 +143,7 @@ MappedParallelComputationGraph mapped_pcg_from_pcg_and_mapped_op_task_groups(
   };
 
   require_all_of(
-    get_parallel_layers(pcg),
+    pcg_get_parallel_layers(pcg),
     [&](parallel_layer_guid_t l) -> void {
       std::set<TensorSlotName> for_layer = slot_names_for_layer(l);
       std::set<TensorSlotName> for_layer_mapping = slot_names_for_layer_mapping(l);
@@ -237,8 +237,8 @@ std::string mapped_pcg_as_dot(MappedParallelComputationGraph const &mpcg) {
   };
 
   std::function<std::vector<TensorSlotName>(
-      std::unordered_set<TensorSlotName> const &)>
-      order_slots = [](std::unordered_set<TensorSlotName> const &slot_names)
+      std::set<TensorSlotName> const &)>
+      order_slots = [](std::set<TensorSlotName> const &slot_names)
       -> std::vector<TensorSlotName> { return sorted(slot_names); };
 
   return labelled_kwarg_dataflow_graph_view_as_dot(mpcg.raw_graph,

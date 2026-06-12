@@ -3,7 +3,7 @@
 
 #include "utils/containers/are_disjoint.h"
 #include "utils/containers/filtermap_values.h"
-#include "utils/containers/generate_unordered_map.h"
+#include "utils/containers/generate_map.h"
 #include "utils/containers/map_from_keys_and_values.h"
 #include "utils/containers/map_values.h"
 #include "utils/containers/restrict_keys.h"
@@ -14,8 +14,8 @@
 #include "utils/orthotope/dim_ordering.dtg.h"
 #include "utils/orthotope/minimal_dim_domain.dtg.h"
 #include "utils/orthotope/minimal_orthotope.dtg.h"
-#include "utils/containers/unordered_keys.h"
-#include "utils/containers/binary_merge_disjoint_unordered_maps.h"
+#include "utils/containers/keys.h"
+#include "utils/containers/binary_merge_disjoint_maps.h"
 
 namespace FlexFlow {
 
@@ -59,31 +59,31 @@ MinimalDimDomain<T>
 template <typename T>
 DimDomain<T> dim_domain_from_minimal_dim_domain(
     MinimalDimDomain<T> const &minimal_dim_domain,
-    std::unordered_set<T> const &trivial_dims) {
-  std::unordered_set<T> nontrivial_dims =
+    std::set<T> const &trivial_dims) {
+  std::set<T> nontrivial_dims =
       get_minimal_domain_dims(minimal_dim_domain);
 
   ASSERT(are_disjoint(nontrivial_dims, trivial_dims));
 
   return DimDomain{
-      /*dims=*/binary_merge_disjoint_unordered_maps(
+      /*dims=*/binary_merge_disjoint_maps(
           map_values(
               minimal_dim_domain.dims,
               [](int_ge_two x) { return x.positive_int_from_int_ge_two(); }),
-          generate_unordered_map(trivial_dims, [](T const &) { return 1_p; })),
+          generate_map(trivial_dims, [](T const &) { return 1_p; })),
   };
 }
 
 template <typename T>
-std::unordered_set<T>
+std::set<T>
     get_minimal_domain_dims(MinimalDimDomain<T> const &domain) {
-  return unordered_keys(domain.dims);
+  return keys(domain.dims);
 }
 
 template <typename T>
 MinimalDimDomain<T>
     restrict_minimal_domain_to_dims(MinimalDimDomain<T> const &domain,
-                                    std::unordered_set<T> const &allowed) {
+                                    std::set<T> const &allowed) {
   return MinimalDimDomain<T>{restrict_keys(domain.dims, allowed)};
 }
 
@@ -100,7 +100,7 @@ MinimalOrthotope minimal_orthotope_from_minimal_dim_domain(
 template <typename T>
 MinimalDimDomain<T> minimal_dim_domain_from_minimal_orthotope(
     MinimalOrthotope const &orthotope,
-    std::unordered_set<T> const &dims,
+    std::set<T> const &dims,
     DimOrdering<T> const &dim_ordering) {
 
   return MinimalDimDomain<T>{

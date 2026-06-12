@@ -4,7 +4,7 @@
 #include "task-spec/dynamic_graph/dynamic_task_type.dtg.h"
 #include "task-spec/dynamic_graph/dynamic_tensor_role.h"
 #include "task-spec/dynamic_graph/dynamic_value_attrs.dtg.h"
-#include "test/utils/doctest/fmt/unordered_set.h"
+#include "test/utils/doctest/fmt/set.h"
 #include <doctest/doctest.h>
 #include "task-spec/dynamic_graph/dynamic_value_attrs.h"
 #include "task-spec/dynamic_graph/serializable_dynamic_node_invocation.h"
@@ -292,15 +292,15 @@ TEST_SUITE(FF_TEST_SUITE) {
       };
 
       SUBCASE("same mapping, no copies") {
-        std::unordered_map<DynamicValueAttrs, DynamicValueAttrs> sources_same{
+        std::map<DynamicValueAttrs, DynamicValueAttrs> sources_same{
           {graph_input1, graph_input1_src_same},
           {graph_input2, graph_input2_src_same},
         };
 
-        std::unordered_set<DynamicNodeInvocation> result =
+        std::set<DynamicNodeInvocation> result =
             copies_for_invocation_inputs(input, sources_same);
 
-        std::unordered_set<DynamicNodeInvocation> correct = {};
+        std::set<DynamicNodeInvocation> correct = {};
 
         CHECK(result.size() == correct.size());
         CHECK(result == correct);
@@ -340,14 +340,14 @@ TEST_SUITE(FF_TEST_SUITE) {
               graph_input1,
               get_tensor_bindings_for_slot_name(input_mapping_copy1_diff_vs_use, TensorSlotName::OUTPUT));
 
-        std::unordered_map<DynamicValueAttrs, DynamicValueAttrs> sources_copy1{
+        std::map<DynamicValueAttrs, DynamicValueAttrs> sources_copy1{
             {graph_input1, graph_input1_src_copy1},
             {graph_input2, graph_input2_src_same}};
 
-        std::unordered_set<DynamicNodeInvocation> result =
+        std::set<DynamicNodeInvocation> result =
             copies_for_invocation_inputs(input, sources_copy1);
 
-        std::unordered_set<DynamicNodeInvocation> correct = {
+        std::set<DynamicNodeInvocation> correct = {
             mk_copy(graph_input1_src_copy1_diff_vs_use, graph_input1_use_diff_vs_copy1),
         };
 
@@ -391,14 +391,14 @@ TEST_SUITE(FF_TEST_SUITE) {
               graph_input2,
               get_tensor_bindings_for_slot_name(weight_mapping_copy2, TensorSlotName::OUTPUT));
 
-        std::unordered_map<DynamicValueAttrs, DynamicValueAttrs> sources_copy2{
+        std::map<DynamicValueAttrs, DynamicValueAttrs> sources_copy2{
             {graph_input1, graph_input1_src_copy2},
             {graph_input2, graph_input2_src_copy2}};
 
-        std::unordered_set<DynamicNodeInvocation> result =
+        std::set<DynamicNodeInvocation> result =
             copies_for_invocation_inputs(input, sources_copy2);
 
-        std::unordered_set<DynamicNodeInvocation> correct = {
+        std::set<DynamicNodeInvocation> correct = {
             mk_copy(graph_input1_src_copy2, graph_input1_use),
             mk_copy(graph_input2_src_copy2, graph_input2_use),
         };
@@ -493,7 +493,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         },
       };
 
-        std::unordered_map<DynamicValueAttrs, DynamicValueAttrs> unmapped_to_mapped_source_value = {
+        std::map<DynamicValueAttrs, DynamicValueAttrs> unmapped_to_mapped_source_value = {
           {
             graph_input_unmapped,
             decide_dynamic_value_attrs_mapping(
@@ -507,10 +507,10 @@ TEST_SUITE(FF_TEST_SUITE) {
           },
         };
 
-      std::unordered_set<DynamicNodeInvocation> result = copies_for_invocation_inputs(
+      std::set<DynamicNodeInvocation> result = copies_for_invocation_inputs(
         input, unmapped_to_mapped_source_value);
 
-      std::unordered_set<DynamicNodeInvocation> correct = {};
+      std::set<DynamicNodeInvocation> correct = {};
 
       nlohmann::json result_j = transform(result, dynamic_node_invocation_to_serializable);
       nlohmann::json correct_j = transform(correct, dynamic_node_invocation_to_serializable);

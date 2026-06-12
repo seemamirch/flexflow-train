@@ -13,7 +13,7 @@ namespace FlexFlow {
 template <typename GraphInputName, typename SlotName>
 void require_open_kwarg_dataflow_graph_data_is_valid(
     OpenKwargDataflowGraphData<GraphInputName, SlotName> const &data) {
-  std::unordered_set<KwargDataflowGraphInput<GraphInputName>>
+  std::set<KwargDataflowGraphInput<GraphInputName>>
       inputs_from_edges = filtrans(
           data.edges,
           [](OpenKwargDataflowEdge<GraphInputName, SlotName> const &e)

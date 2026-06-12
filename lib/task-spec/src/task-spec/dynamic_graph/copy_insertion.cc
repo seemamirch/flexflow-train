@@ -92,16 +92,16 @@ static DynamicValueAttrs map_dynamic_value_attrs_for_task_group(
 static std::pair<DynamicValueAttrs, DynamicValueAttrs>
     filter_mapping_to_avoid_degenerate_copies(DynamicValueAttrs const &input,
                                               DynamicValueAttrs const &output) {
-  std::unordered_set<
+  std::set<
       std::pair<ParallelTensorSpaceCoordinate, MachineSpaceCoordinate>>
       input_mapping = unstructured_relation_from_bidict(assert_unwrap(input.mapping));
-  std::unordered_set<
+  std::set<
       std::pair<ParallelTensorSpaceCoordinate, MachineSpaceCoordinate>>
       output_mapping = unstructured_relation_from_bidict(assert_unwrap(output.mapping));
 
   // Exclude the point shared between the input and output mappings, because
   // those will not result in actual copies once shard expansion is performed
-  std::unordered_set<
+  std::set<
       std::pair<ParallelTensorSpaceCoordinate, MachineSpaceCoordinate>>
       remove = set_intersection(input_mapping, output_mapping);
 
@@ -116,9 +116,9 @@ static std::pair<DynamicValueAttrs, DynamicValueAttrs>
   return std::pair{filtered_input, filtered_output};
 }
 
-std::unordered_set<DynamicNodeInvocation> copies_for_invocation_inputs(
+std::set<DynamicNodeInvocation> copies_for_invocation_inputs(
   DynamicNodeInvocation const &i,
-  std::unordered_map<DynamicValueAttrs, DynamicValueAttrs> const &unmapped_value_to_src_mapped_value)
+  std::map<DynamicValueAttrs, DynamicValueAttrs> const &unmapped_value_to_src_mapped_value)
 {
   if (training_op_attrs_has_op_type(assert_unwrap(i.node_attrs.op_attrs), OperatorType::REPLICATE)) {
     // copies should not be inserted before a replicate, as the replicate
@@ -136,7 +136,7 @@ std::unordered_set<DynamicNodeInvocation> copies_for_invocation_inputs(
   std::map<DynamicTensorSlot, DynamicValueAttrs> mapped_inputs =
       map_values2(i.inputs, map_tensor);
 
-  std::unordered_set<DynamicNodeInvocation> result;
+  std::set<DynamicNodeInvocation> result;
 
   for (auto const &[slot, input] : i.inputs) {
     if (!contains_key(unmapped_value_to_src_mapped_value, input)) {
@@ -189,9 +189,9 @@ std::unordered_set<DynamicNodeInvocation> copies_for_invocation_inputs(
   return result;
 }
 
-std::unordered_set<DynamicNodeInvocation> perform_copy_insertion_for_invocation(
+std::set<DynamicNodeInvocation> perform_copy_insertion_for_invocation(
     DynamicNodeInvocation const &i,
-    std::unordered_map<DynamicValueAttrs, DynamicValueAttrs> const
+    std::map<DynamicValueAttrs, DynamicValueAttrs> const
         &unmapped_value_to_mapped_source_value) {
 
   MappedOperatorTaskGroup mapping = assert_unwrap(i.node_attrs.mapping);
@@ -213,9 +213,9 @@ std::unordered_set<DynamicNodeInvocation> perform_copy_insertion_for_invocation(
     return r;
   }();
 
-  std::unordered_set<DynamicNodeInvocation> result = set_union(
+  std::set<DynamicNodeInvocation> result = set_union(
     copies_for_invocation_inputs(i, unmapped_value_to_mapped_source_value),
-    std::unordered_set<DynamicNodeInvocation>{
+    std::set<DynamicNodeInvocation>{
       mapped_i,
     });
 
@@ -228,7 +228,7 @@ DynamicOpenDataflowGraph
   ASSERT(no_part_of_graph_is_copy_inserted(g));
   require_graph_is_ready_for_copy_insertion(g);
 
-  std::unordered_map<DynamicValueAttrs, DynamicValueAttrs>
+  std::map<DynamicValueAttrs, DynamicValueAttrs>
       unmapped_value_to_mapped_source_value;
   for (DynamicNodeInvocation const &i : g.invocations) {
     for (auto const &[slot, value] : i.outputs) {

@@ -352,7 +352,7 @@ TEST_SUITE(FF_TEST_SUITE) {
       DynamicValueAttrs v1 = mk_value_attrs(0, std::nullopt);
       DynamicValueAttrs v2 = mk_value_attrs(1, std::nullopt);
 
-      std::unordered_set<DynamicNodeInvocation> invocation_set = {
+      std::set<DynamicNodeInvocation> invocation_set = {
           DynamicNodeInvocation{
               /*inputs=*/std::map<DynamicTensorSlot, DynamicValueAttrs>{},
               /*node_attrs=*/n1,
@@ -418,7 +418,7 @@ TEST_SUITE(FF_TEST_SUITE) {
       DynamicValueAttrs v2_gradient =
           mk_value_attrs(1, mk_dynamic_tensor_role_bwd());
 
-      std::unordered_set<DynamicNodeInvocation> invocation_set = {
+      std::set<DynamicNodeInvocation> invocation_set = {
           DynamicNodeInvocation{
               /*inputs=*/std::map<DynamicTensorSlot, DynamicValueAttrs>{},
               /*node_attrs=*/n1_fwd,

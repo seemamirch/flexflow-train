@@ -10,7 +10,7 @@ namespace FlexFlow {
 ReplicaParallelDimSet empty_replica_parallel_dim_set();
 positive_int get_degree_of_replica_type(ReplicaParallelDimSet const &,
                                         ReplicaType);
-std::unordered_set<ReplicaParallelDim>
+std::set<ReplicaParallelDim>
     get_replica_dims(ReplicaParallelDimSet const &);
 
 } // namespace FlexFlow

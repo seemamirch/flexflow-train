@@ -14,6 +14,6 @@ template std::string open_kwarg_dataflow_graph_as_dot(
         OpenKwargDataflowValue<GraphInputName, SlotName> const &)> const &,
     std::function<nlohmann::json(SlotName const &)> const &,
     std::function<
-        std::vector<SlotName>(std::unordered_set<SlotName> const &)> const &);
+        std::vector<SlotName>(std::set<SlotName> const &)> const &);
 
 } // namespace FlexFlow

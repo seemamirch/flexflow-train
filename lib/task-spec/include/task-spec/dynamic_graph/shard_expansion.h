@@ -33,10 +33,10 @@ namespace FlexFlow {
   DynamicNodeInvocation const &,
   DynamicNodeInvocationShardingInfo const &);
 
-[[nodiscard]] std::unordered_set<DynamicNodeInvocationShardingInfo>
+[[nodiscard]] std::set<DynamicNodeInvocationShardingInfo>
   generate_shard_expansion_for_invocation(DynamicNodeInvocation const &);
 
-[[nodiscard]] std::unordered_set<DynamicNodeInvocation>
+[[nodiscard]] std::set<DynamicNodeInvocation>
     perform_shard_expansion_for_invocation(DynamicNodeInvocation const &);
 
 [[nodiscard]] DynamicOpenDataflowGraph

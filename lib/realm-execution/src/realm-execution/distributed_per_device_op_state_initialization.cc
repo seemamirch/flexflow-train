@@ -11,7 +11,7 @@
 #include "utils/containers/values.h"
 #include "utils/optional.h"
 #include <optional>
-#include <unordered_map>
+#include <map>
 #include <utility>
 
 namespace FlexFlow {
@@ -28,7 +28,7 @@ PerDeviceOpStateBacking perform_distributed_per_device_op_state_initialization(
   // Initialize all operators and save the per-device op state
   ASSERT(no_nodes_are_initialized(dg));
 
-  std::unordered_map<DynamicNodeInvocation,
+  std::map<DynamicNodeInvocation,
                      DeviceSpecificPtr<PerDeviceOpState> *>
       device_state_map;
   for (DynamicNodeInvocation const &invocation : dg.invocations) {
@@ -73,7 +73,7 @@ PerDeviceOpStateBacking perform_distributed_per_device_op_state_initialization(
   ctx.get_outstanding_events().wait();
 
   auto deref = [](DeviceSpecificPtr<PerDeviceOpState> *const &p) { return *p; };
-  std::unordered_map<DynamicNodeInvocation, DeviceSpecificPtr<PerDeviceOpState>>
+  std::map<DynamicNodeInvocation, DeviceSpecificPtr<PerDeviceOpState>>
       result = map_values(device_state_map, deref);
 
   for (DeviceSpecificPtr<PerDeviceOpState> *device_state_ptr :

@@ -6,7 +6,7 @@
 namespace FlexFlow {
 
 DistributedFfHandle::DistributedFfHandle(
-    std::unordered_map<Realm::Processor,
+    std::map<Realm::Processor,
                        DeviceSpecificPtr<ManagedPerDeviceFFHandle>> const
         &handles)
     : handles(handles) {}
@@ -21,7 +21,7 @@ DistributedFfHandle
                                  size_t workSpaceSize,
                                  bool allowTensorOpMathConversion,
                                  Realm::Event precondition) {
-  std::unordered_map<Realm::Processor,
+  std::map<Realm::Processor,
                      DeviceSpecificPtr<ManagedPerDeviceFFHandle>>
       handles;
 

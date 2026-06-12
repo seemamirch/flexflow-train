@@ -13,9 +13,9 @@ TEST_SUITE(FF_TEST_SUITE) {
     SUBCASE("single node") {
       std::vector<Node> n = add_nodes(g, 1);
 
-      std::unordered_set<std::unordered_set<Node>> result =
+      std::set<std::set<Node>> result =
           get_weakly_connected_components(g);
-      std::unordered_set<std::unordered_set<Node>> correct = {{n.at(0)}};
+      std::set<std::set<Node>> correct = {{n.at(0)}};
       CHECK(result == correct);
     }
 
@@ -26,9 +26,9 @@ TEST_SUITE(FF_TEST_SUITE) {
                     DirectedEdge{n.at(0), n.at(0)},
                 });
 
-      std::unordered_set<std::unordered_set<Node>> result =
+      std::set<std::set<Node>> result =
           get_weakly_connected_components(g);
-      std::unordered_set<std::unordered_set<Node>> correct = {{n.at(0)}};
+      std::set<std::set<Node>> correct = {{n.at(0)}};
       CHECK(result == correct);
     }
 
@@ -40,9 +40,9 @@ TEST_SUITE(FF_TEST_SUITE) {
                     DirectedEdge{n.at(1), n.at(1)},
                 });
 
-      std::unordered_set<std::unordered_set<Node>> result =
+      std::set<std::set<Node>> result =
           get_weakly_connected_components(g);
-      std::unordered_set<std::unordered_set<Node>> correct = {{n.at(0)},
+      std::set<std::set<Node>> correct = {{n.at(0)},
                                                               {n.at(1)}};
       CHECK(result == correct);
     }
@@ -54,9 +54,9 @@ TEST_SUITE(FF_TEST_SUITE) {
                     DirectedEdge{n.at(0), n.at(1)},
                 });
 
-      std::unordered_set<std::unordered_set<Node>> result =
+      std::set<std::set<Node>> result =
           get_weakly_connected_components(g);
-      std::unordered_set<std::unordered_set<Node>> correct = {
+      std::set<std::set<Node>> correct = {
           {n.at(0), n.at(1)}};
       CHECK(result == correct);
     }
@@ -69,9 +69,9 @@ TEST_SUITE(FF_TEST_SUITE) {
                     DirectedEdge{n.at(1), n.at(0)},
                 });
 
-      std::unordered_set<std::unordered_set<Node>> result =
+      std::set<std::set<Node>> result =
           get_weakly_connected_components(g);
-      std::unordered_set<std::unordered_set<Node>> correct = {
+      std::set<std::set<Node>> correct = {
           {n.at(0), n.at(1)}};
       CHECK(result == correct);
     }
@@ -90,9 +90,9 @@ TEST_SUITE(FF_TEST_SUITE) {
                     DirectedEdge{n.at(4), n.at(3)},
                 });
 
-      std::unordered_set<std::unordered_set<Node>> result =
+      std::set<std::set<Node>> result =
           get_weakly_connected_components(g);
-      std::unordered_set<std::unordered_set<Node>> correct = {
+      std::set<std::set<Node>> correct = {
           {n.at(0), n.at(1), n.at(2)},
           {n.at(3), n.at(4)},
       };

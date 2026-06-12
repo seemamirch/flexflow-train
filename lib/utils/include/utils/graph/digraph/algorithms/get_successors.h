@@ -5,11 +5,11 @@
 
 namespace FlexFlow {
 
-std::unordered_map<Node, std::unordered_set<Node>>
+std::map<Node, std::set<Node>>
     get_successors(DiGraphView const &);
-std::unordered_set<Node> get_successors(DiGraphView const &, Node const &);
-std::unordered_map<Node, std::unordered_set<Node>>
-    get_successors(DiGraphView const &, std::unordered_set<Node> const &);
+std::set<Node> get_successors(DiGraphView const &, Node const &);
+std::map<Node, std::set<Node>>
+    get_successors(DiGraphView const &, std::set<Node> const &);
 
 } // namespace FlexFlow
 

@@ -13,10 +13,10 @@ template DimProjection<L, R>
                                 DimOrdering<L> const &,
                                 DimOrdering<R> const &);
 
-template std::unordered_set<L>
+template std::set<L>
     input_dims_of_projection(DimProjection<L, R> const &);
 
-template std::unordered_set<R>
+template std::set<R>
     output_dims_of_projection(DimProjection<L, R> const &);
 
 template DimProjection<R, L> invert_dim_projection(DimProjection<L, R> const &);

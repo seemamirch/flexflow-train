@@ -6,25 +6,25 @@
 #include "utils/containers/require_same.h"
 #include "utils/containers/transform.h"
 #include "utils/containers/values.h"
-#include "utils/containers/merge_unordered_maps_with.h"
-#include "utils/containers/unordered_map_from_pairs.h"
+#include "utils/containers/merge_maps_with.h"
+#include "utils/containers/map_from_pairs.h"
 
 namespace FlexFlow {
 
-std::unordered_set<BinaryTreePath>
+std::set<BinaryTreePath>
     abstracted_single_tensor_movement_get_dst_layers(
         AbstractedSingleTensorMovement const &m) {
   return transform(
-      unordered_keys(m.edge_to_size),
+      keys(m.edge_to_size),
       [](AbstractedSingleTensorCommunicationEdge const &e) -> BinaryTreePath {
         return e.dst.operator_tree_path;
       });
 }
 
 AbstractedSingleTensorMovement merge_abstracted_single_tensor_movements(
-    std::unordered_multiset<AbstractedSingleTensorMovement> const &movements) {
+    std::multiset<AbstractedSingleTensorMovement> const &movements) {
 
-  std::unordered_multiset<BinaryTreePath> src_paths =
+  std::multiset<BinaryTreePath> src_paths =
       transform(movements, [](AbstractedSingleTensorMovement const &m) {
         return m.src_op_tree_path;
       });
@@ -34,7 +34,7 @@ AbstractedSingleTensorMovement merge_abstracted_single_tensor_movements(
   return AbstractedSingleTensorMovement{
       /*src_op_tree_path=*/require_all_same1(src_paths),
       /*edge_to_size=*/
-      merge_unordered_maps_with(transform(vector_of(movements),
+      merge_maps_with(transform(vector_of(movements),
                                 [](AbstractedSingleTensorMovement const &m) {
                                   return m.edge_to_size;
                                 }),
@@ -45,13 +45,13 @@ AbstractedSingleTensorMovement merge_abstracted_single_tensor_movements(
 AbstractedSingleTensorMovement
     abstracted_single_tensor_movement_from_communications(
         BinaryTreePath const &src_op_tree_path,
-        std::unordered_set<AbstractedSingleTensorCommunication> const
+        std::set<AbstractedSingleTensorCommunication> const
             &communications) {
 
   return AbstractedSingleTensorMovement{
       /*src_op_tree_path=*/src_op_tree_path,
       /*edge_to_size=*/
-      unordered_map_from_pairs(
+      map_from_pairs(
           transform(communications,
                     [](AbstractedSingleTensorCommunication const &c) {
                       return std::pair{c.edge, c.size};
@@ -61,16 +61,16 @@ AbstractedSingleTensorMovement
 
 TensorSetMovement concretize_abstracted_single_tensor_movement(
     AbstractedSingleTensorMovement const &abstracted,
-    std::unordered_map<BinaryTreePath, MachineSpaceStencil> const
+    std::map<BinaryTreePath, MachineSpaceStencil> const
         &pre_machine_stencils,
-    std::unordered_map<BinaryTreePath, MachineSpaceStencil> const
+    std::map<BinaryTreePath, MachineSpaceStencil> const
         &post_machine_stencils) {
 
   ASSERT(contains_key(pre_machine_stencils, abstracted.src_op_tree_path));
   MachineSpaceStencil pre_machine_stencil =
       pre_machine_stencils.at(abstracted.src_op_tree_path);
 
-  std::unordered_map<std::optional<CommunicationEdge>, num_bytes_t>
+  std::map<std::optional<CommunicationEdge>, num_bytes_t>
       communication_edges = map_keys_with_value_merging(
           abstracted.edge_to_size,
           /*key_func=*/

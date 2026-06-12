@@ -14,10 +14,10 @@ template UpProjection<T1, T3>
 using L = ordered_value_type<0>;
 using R = ordered_value_type<1>;
 
-template std::unordered_set<L>
+template std::set<L>
     input_dims_of_up_projection(UpProjection<L, R> const &);
 
-template std::unordered_set<R>
+template std::set<R>
     output_dims_of_up_projection(UpProjection<L, R> const &);
 
 template DimCoord<R> compute_up_projection(UpProjection<L, R> const &,
@@ -29,7 +29,7 @@ template UpProjection<L, R> make_empty_up_projection();
 
 template void project_dims(UpProjection<L, R> &,
                            L const &,
-                           std::unordered_set<R> const &);
+                           std::set<R> const &);
 
 template DownProjection<R, L> invert_up_projection(UpProjection<L, R> const &);
 

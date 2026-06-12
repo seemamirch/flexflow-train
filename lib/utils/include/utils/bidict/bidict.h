@@ -1,22 +1,22 @@
 #ifndef _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_BIDICT_BIDICT_H
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_BIDICT_BIDICT_H
 
-#include "utils/containers/unordered_keys.h"
 #include "utils/containers/map_from_keys_and_values.h"
-#include "utils/fmt/unordered_map.h"
-#include "utils/hash/unordered_map.h"
 #include "utils/json/check_is_json_deserializable.h"
 #include "utils/json/check_is_json_serializable.h"
-#include "utils/ord/unordered_map.h"
 #include <cassert>
 #include <nlohmann/json.hpp>
 #include <optional>
 #include <rapidcheck.h>
-#include <unordered_map>
 #include "utils/containers/require_same.h"
 #include "utils/containers/values.h"
-#include "utils/containers/unordered_set_of.h"
 #include "utils/containers/contains_key.h"
+#include "utils/containers/unordered_map_from_map.h"
+#include "utils/check_fmtable.h"
+#include "utils/containers/keys.h"
+#include "utils/containers/set_of.h"
+#include "utils/hash/map.h"
+#include "utils/fmt/map.h"
 
 namespace FlexFlow {
 
@@ -118,12 +118,12 @@ struct bidict {
     return bwd_map.at(r);
   }
 
-  std::unordered_set<L> left_values() const {
-    return unordered_keys(this->fwd_map);
+  std::set<L> left_values() const {
+    return keys(this->fwd_map);
   }
 
-  std::unordered_set<R> right_values() const {
-    return unordered_keys(this->bwd_map);
+  std::set<R> right_values() const {
+    return keys(this->bwd_map);
   }
 
   std::size_t size() const {
@@ -135,7 +135,7 @@ struct bidict {
     return this->size() == 0;
   }
 
-  using const_iterator = typename std::unordered_map<L, R>::const_iterator;
+  using const_iterator = typename std::map<L, R>::const_iterator;
   using value_type = std::pair<L, R>;
   using reference = value_type &;
   using const_reference = value_type const &;
@@ -148,7 +148,7 @@ struct bidict {
   /*   using pointer = std::pair<L, R> const *; */
   /*   using reference = std::pair<L, R> const &; */
 
-  /*   explicit const_iterator(typename std::unordered_map<tl::optional<L>,
+  /*   explicit const_iterator(typename std::map<tl::optional<L>,
    * tl::optional<R>>::const_iterator); */
 
   /*   reference operator*() const { */
@@ -177,7 +177,7 @@ struct bidict {
   /*   } */
   /* private: */
   /*   mutable tl::optional<std::pair<L, R>> current; */
-  /*   typename std::unordered_map<tl::optional<L>,
+  /*   typename std::map<tl::optional<L>,
    * tl::optional<R>>::const_iterator it; */
   /* }; */
 
@@ -217,33 +217,56 @@ struct bidict {
     return bidict<R, L>(bwd_map, fwd_map);
   }
 
-  operator std::unordered_map<L, R> const &() const {
+  operator std::map<L, R> const &() const {
     return this->fwd_map;
   }
 
-  std::unordered_map<L, R> const &as_unordered_map() const {
+  operator std::unordered_map<L, R> () const {
+    return unordered_map_from_map(this->fwd_map);
+  }
+
+  std::map<L, R> const &as_map() const {
     return this->fwd_map;
   }
 
-  std::unordered_map<L, R> const &l_to_r() const {
+  std::unordered_map<L, R> as_unordered_map() const {
+    return unordered_map_from_map(this->fwd_map);
+  }
+
+  std::map<L, R> const &l_to_r() const {
     return this->fwd_map;
   }
 
-  std::unordered_map<R, L> const &r_to_l() const {
+  std::map<R, L> const &r_to_l() const {
     return this->bwd_map;
   }
 
-  bidict(std::unordered_map<L, R> const &fwd_map,
-         std::unordered_map<R, L> const &bwd_map)
+  bidict(std::map<L, R> const &fwd_map,
+         std::map<R, L> const &bwd_map)
       : fwd_map(fwd_map), bwd_map(bwd_map) {}
 
+  bool operator<(bidict<L, R> const &other) const {
+    return this->fwd_map < other.fwd_map;
+  }
+
+  bool operator<=(bidict<L, R> const &other) const {
+    return this->fwd_map <= other.fwd_map;
+  }
+
+  bool operator>(bidict<L, R> const &other) const {
+    return this->fwd_map > other.fwd_map;
+  }
+
+  bool operator>=(bidict<L, R> const &other) const {
+    return this->fwd_map >= other.fwd_map;
+  }
 private:
   void check_invariants() const {
-    std::unordered_set<L> fwd_l_vals = unordered_keys(this->fwd_map);
-    std::unordered_set<L> bwd_l_vals = unordered_set_of(values(this->bwd_map));
+    std::set<L> fwd_l_vals = keys(this->fwd_map);
+    std::set<L> bwd_l_vals = set_of(values(this->bwd_map));
 
-    std::unordered_set<R> bwd_r_vals = unordered_keys(this->bwd_map);
-    std::unordered_set<R> fwd_r_vals = unordered_set_of(values(this->fwd_map));
+    std::set<R> bwd_r_vals = keys(this->bwd_map);
+    std::set<R> fwd_r_vals = set_of(values(this->fwd_map));
 
     ASSERT(fwd_l_vals == bwd_l_vals);
     ASSERT(fwd_r_vals == bwd_r_vals);
@@ -255,18 +278,12 @@ private:
 
   friend struct bidict<R, L>;
 
-  std::unordered_map<L, R> fwd_map;
-  std::unordered_map<R, L> bwd_map;
+  std::map<L, R> fwd_map;
+  std::map<R, L> bwd_map;
 };
 
 template <typename L, typename R>
-std::enable_if_t<is_lt_comparable_v<L> && is_lt_comparable_v<R>, bool>
-    operator<(bidict<L, R> const &lhs, bidict<L, R> const &rhs) {
-  return lhs.as_unordered_map() < rhs.as_unordered_map();
-}
-
-template <typename L, typename R>
-std::unordered_map<L, R> format_as(bidict<L, R> const &b) {
+std::map<L, R> format_as(bidict<L, R> const &b) {
   return b;
 }
 
@@ -288,7 +305,7 @@ struct adl_serializer<::FlexFlow::bidict<L, R>> {
     CHECK_IS_JSON_DESERIALIZABLE(L);
     CHECK_IS_JSON_DESERIALIZABLE(R);
 
-    std::unordered_map<L, R> m = j;
+    std::map<L, R> m = j;
 
     ::FlexFlow::bidict<L, R> b{m.cbegin(), m.cend()};
 
@@ -298,7 +315,7 @@ struct adl_serializer<::FlexFlow::bidict<L, R>> {
     CHECK_IS_JSON_SERIALIZABLE(L);
     CHECK_IS_JSON_SERIALIZABLE(R);
 
-    j = b.as_unordered_map();
+    j = b.as_map();
   }
 };
 
@@ -310,16 +327,16 @@ template <typename L, typename R>
 struct Arbitrary<::FlexFlow::bidict<L, R>> {
   static Gen<::FlexFlow::bidict<L, R>> arbitrary() {
     return gen::map(
-        gen::withSize([](int size) -> Gen<std::unordered_map<L, R>> {
+        gen::withSize([](int size) -> Gen<std::map<L, R>> {
           return gen::apply(
               [](std::vector<L> const &keys,
-                 std::vector<R> const &values) -> std::unordered_map<L, R> {
+                 std::vector<R> const &values) -> std::map<L, R> {
                 return ::FlexFlow::map_from_keys_and_values(keys, values);
               },
               gen::unique<std::vector<L>>(size, gen::arbitrary<L>()),
               gen::unique<std::vector<R>>(size, gen::arbitrary<R>()));
         }),
-        [](std::unordered_map<L, R> const &m) {
+        [](std::map<L, R> const &m) {
           return ::FlexFlow::bidict<L, R>{m.cbegin(), m.cend()};
         });
   }
@@ -332,7 +349,7 @@ namespace std {
 template <typename L, typename R>
 struct hash<::FlexFlow::bidict<L, R>> {
   size_t operator()(::FlexFlow::bidict<L, R> const &b) const {
-    return hash<unordered_map<L, R>>{}(b);
+    return hash<std::map<L, R>>{}(b.as_map());
   }
 };
 

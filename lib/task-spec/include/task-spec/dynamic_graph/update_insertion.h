@@ -15,7 +15,7 @@ bool value_is_ready_for_update_insertion(DynamicValueAttrs const &);
 bool no_part_of_graph_has_had_update_insertion_performed(DynamicOpenDataflowGraph const &);
 bool graph_is_ready_for_update_insertion(DynamicOpenDataflowGraph const &);
 
-std::unordered_set<DynamicNodeInvocation>
+std::set<DynamicNodeInvocation>
     perform_update_insertion_for_invocation(DynamicNodeInvocation const &,
                                             OptimizerAttrs const &);
 

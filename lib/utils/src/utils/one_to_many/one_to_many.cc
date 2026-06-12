@@ -18,7 +18,7 @@ template std::map<L, nonempty_set<R>>
 
 template std::ostream &operator<<(std::ostream &, OneToMany<L, R> const &);
 
-template std::unordered_set<std::pair<L, R>>
+template std::set<std::pair<L, R>>
     unstructured_relation_from_one_to_many(OneToMany<L, R> const &);
 
 } // namespace FlexFlow

@@ -7,9 +7,7 @@
 #include "utils/containers/map_keys_with_value_merging.h"
 #include "utils/containers/merge_maps_with.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/unordered_set_of.h"
-#include "utils/hash/unordered_map.h"
-#include "utils/containers/binary_merge_unordered_maps_with.h"
+#include "utils/containers/binary_merge_maps_with.h"
 
 namespace FlexFlow {
 
@@ -25,7 +23,7 @@ AbstractedTensorSetMovement
   };
 }
 
-std::unordered_set<BinaryTreePath>
+std::set<BinaryTreePath>
     get_src_layers(AbstractedTensorSetMovement const &m) {
   return transform(
       m.single_tensor_movements,
@@ -34,20 +32,20 @@ std::unordered_set<BinaryTreePath>
       });
 }
 
-std::unordered_set<BinaryTreePath>
+std::set<BinaryTreePath>
     get_dst_layers(AbstractedTensorSetMovement const &m) {
   return flatmap(m.single_tensor_movements,
                  [](AbstractedSingleTensorMovement const &m)
-                     -> std::unordered_set<BinaryTreePath> {
+                     -> std::set<BinaryTreePath> {
                    return abstracted_single_tensor_movement_get_dst_layers(m);
                  });
 }
 
 TensorSetMovement concretize_abstracted_tensor_set_movement(
     AbstractedTensorSetMovement const &abstracted,
-    std::unordered_map<BinaryTreePath, MachineSpaceStencil> const
+    std::map<BinaryTreePath, MachineSpaceStencil> const
         &pre_machine_stencils,
-    std::unordered_map<BinaryTreePath, MachineSpaceStencil> const
+    std::map<BinaryTreePath, MachineSpaceStencil> const
         &post_machine_stencils) {
 
   std::vector<TensorSetMovement> single_tensor_movements =
@@ -63,7 +61,7 @@ TensorSetMovement concretize_abstracted_tensor_set_movement(
       [](TensorSetMovement const &lhs,
          TensorSetMovement const &rhs) -> TensorSetMovement {
     return TensorSetMovement{
-        binary_merge_unordered_maps_with(
+        binary_merge_maps_with(
             lhs.edge_to_size,
             rhs.edge_to_size,
             [](num_bytes_t l, num_bytes_t r) { return l + r; }),

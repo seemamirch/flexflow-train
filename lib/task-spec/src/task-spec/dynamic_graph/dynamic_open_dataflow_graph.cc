@@ -20,14 +20,13 @@
 #include "utils/graph/open_kwarg_dataflow_graph/kwarg_dataflow_graph_input.dtg.h"
 #include "utils/many_to_one/many_to_one.h"
 #include "utils/containers/require_all_of.h"
-#include "utils/containers/unordered_map_from_map.h"
-#include "utils/containers/map_from_unordered.h"
+#include "utils/containers/multiset_of.h"
 
 namespace FlexFlow {
 
 DynamicOpenDataflowGraph make_empty_dynamic_open_dataflow_graph() {
   return DynamicOpenDataflowGraph{
-      std::unordered_set<DynamicNodeInvocation>{},
+      std::set<DynamicNodeInvocation>{},
   };
 }
 
@@ -71,34 +70,34 @@ void require_full_dynamic_graph_satisfies(
 }
 
 
-std::unordered_multiset<DynamicNodeAttrs>
+std::multiset<DynamicNodeAttrs>
     get_dynamic_nodes(DynamicOpenDataflowGraph const &g) {
-  return transform(unordered_multiset_of(g.invocations),
+  return transform(multiset_of(g.invocations),
                    [&](DynamicNodeInvocation const &i) -> DynamicNodeAttrs {
                      return i.node_attrs;
                    });
 }
 
-std::unordered_multiset<DynamicValueAttrs>
+std::multiset<DynamicValueAttrs>
     get_dynamic_values(DynamicOpenDataflowGraph const &g) {
-  return flatmap(unordered_multiset_of(g.invocations),
+  return flatmap(multiset_of(g.invocations),
                  [&](DynamicNodeInvocation const &i)
-                     -> std::unordered_multiset<DynamicValueAttrs> {
+                     -> std::multiset<DynamicValueAttrs> {
                    return multiset_union(values(i.inputs), values(i.outputs));
                  });
 }
 
-std::unordered_multiset<DynamicTensorSlot>
+std::multiset<DynamicTensorSlot>
     get_dynamic_tensor_slots(DynamicOpenDataflowGraph const &g) {
-  return flatmap(unordered_multiset_of(g.invocations),
+  return flatmap(multiset_of(g.invocations),
                  [&](DynamicNodeInvocation const &i)
-                     -> std::unordered_multiset<DynamicTensorSlot> {
-                   return unordered_multiset_of(
+                     -> std::multiset<DynamicTensorSlot> {
+                   return multiset_of(
                        set_union(keys(i.inputs), keys(i.outputs)));
                  });
 }
 
-std::unordered_set<DynamicNodeInvocation>
+std::set<DynamicNodeInvocation>
     get_dynamic_invocation_set(DynamicOpenDataflowGraph const &g) {
   return g.invocations;
 }
@@ -121,9 +120,9 @@ DynamicOpenDataflowGraph transform_dynamic_invocation_set(
     DynamicOpenDataflowGraph const &g,
     std::function<DynamicNodeInvocation(DynamicNodeInvocation const &)> const
         &f) {
-  std::unordered_set<DynamicNodeInvocation> current_invocation_set =
+  std::set<DynamicNodeInvocation> current_invocation_set =
       get_dynamic_invocation_set(g);
-  std::unordered_set<DynamicNodeInvocation> new_invocation_set =
+  std::set<DynamicNodeInvocation> new_invocation_set =
       transform(current_invocation_set, f);
 
   return dynamic_open_dataflow_graph_from_invocation_set(new_invocation_set);
@@ -131,10 +130,10 @@ DynamicOpenDataflowGraph transform_dynamic_invocation_set(
 
 DynamicOpenDataflowGraph flatmap_dynamic_invocation_set(
     DynamicOpenDataflowGraph const &g,
-    std::function<std::unordered_set<DynamicNodeInvocation>(
+    std::function<std::set<DynamicNodeInvocation>(
         DynamicNodeInvocation const &)> const &f) {
 
-  std::unordered_set<DynamicNodeInvocation> current_invocation_set =
+  std::set<DynamicNodeInvocation> current_invocation_set =
       get_dynamic_invocation_set(g);
   std::vector<DynamicNodeInvocation> new_invocation_set =
       flatmap(vector_of(current_invocation_set), f);
@@ -142,11 +141,11 @@ DynamicOpenDataflowGraph flatmap_dynamic_invocation_set(
   ASSERT(!contains_duplicates(new_invocation_set));
 
   return dynamic_open_dataflow_graph_from_invocation_set(
-      unordered_set_of(new_invocation_set));
+      set_of(new_invocation_set));
 }
 
 DynamicOpenDataflowGraph dynamic_open_dataflow_graph_from_invocation_set(
-    std::unordered_set<DynamicNodeInvocation> const &invocation_set) {
+    std::set<DynamicNodeInvocation> const &invocation_set) {
 
   return DynamicOpenDataflowGraph{
       invocation_set,
@@ -161,8 +160,8 @@ std::pair<LabelledOpenKwargDataflowGraph<DynamicNodeAttrs,
     labelled_open_kwarg_dataflow_graph_from_dynamic_open_dataflow_graph(
         DynamicOpenDataflowGraph const &g) {
 
-  std::unordered_set<DynamicValueAttrs> all_values =
-      unordered_set_of(get_dynamic_values(g));
+  std::set<DynamicValueAttrs> all_values =
+      set_of(get_dynamic_values(g));
 
   ManyToOne<DynamicValueAttrs, DynamicNodeInvocation> value_to_producer;
   for (DynamicNodeInvocation const &invocation :
@@ -172,7 +171,7 @@ std::pair<LabelledOpenKwargDataflowGraph<DynamicNodeAttrs,
     }
   }
 
-  std::unordered_set<DynamicValueAttrs> graph_inputs =
+  std::set<DynamicValueAttrs> graph_inputs =
       filter(all_values, [&](DynamicValueAttrs const &v) -> bool {
         return !value_to_producer.contains_l(v);
       });
@@ -212,22 +211,22 @@ std::pair<LabelledOpenKwargDataflowGraph<DynamicNodeAttrs,
   };
 
   bidict<Node, DynamicNodeInvocation> node_map;
-  std::unordered_set<DynamicNodeInvocation> to_add = g.invocations;
+  std::set<DynamicNodeInvocation> to_add = g.invocations;
 
   auto add_invocation_to_graph =
       [&](DynamicNodeInvocation const &invocation) -> void {
     KwargNodeAddedResult<DynamicTensorSlot> added = result.add_node(
         invocation.node_attrs,
-        map_values(unordered_map_from_map(invocation.inputs),
+        map_values(invocation.inputs,
                    [&](DynamicValueAttrs const &input)
                        -> OpenKwargDataflowValue<int, DynamicTensorSlot> {
                      return value_map.at_r(input);
                    }),
-        unordered_map_from_map(invocation.outputs));
+        invocation.outputs);
     node_map.equate(added.node, invocation);
 
     for (auto const &[k, v] :
-         zip_values_strict(invocation.outputs, map_from_unordered(added.outputs))) {
+         zip_values_strict(invocation.outputs, added.outputs)) {
       DynamicValueAttrs invocation_output = v.first;
       KwargDataflowOutput<DynamicTensorSlot> graph_output = v.second;
       value_map.equate(
@@ -344,8 +343,8 @@ std::string
   };
 
   std::function<std::vector<DynamicTensorSlot>(
-      std::unordered_set<DynamicTensorSlot> const &)>
-      order_slots = [](std::unordered_set<DynamicTensorSlot> const &slot_names)
+      std::set<DynamicTensorSlot> const &)>
+      order_slots = [](std::set<DynamicTensorSlot> const &slot_names)
       -> std::vector<DynamicTensorSlot> { return sorted(slot_names); };
 
   return labelled_open_kwarg_dataflow_graph_view_as_dot(labelled_g,

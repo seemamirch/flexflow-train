@@ -7,9 +7,10 @@
 #include "utils/hash/set.h"
 #include "utils/fmt/set.h"
 #include "utils/positive_int/positive_int.h"
-#include "utils/containers/unordered_set_of.h"
+#include "utils/containers/set_of.h"
 #include "utils/json/check_is_json_deserializable.h"
 #include "utils/json/check_is_json_serializable.h"
+#include "utils/containers/unordered_set_of.h"
 
 namespace FlexFlow {
 

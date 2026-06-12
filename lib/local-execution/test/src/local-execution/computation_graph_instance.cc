@@ -143,7 +143,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     device_id_t device_idx =
         make_device_id_t_from_idx(nonnegative_int{0}, DeviceType::CPU);
 
-    std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
+    std::map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
 
     ComputationGraphInstance computation_graph_instance =
         create_computation_graph_instance(
@@ -312,7 +312,7 @@ TEST_SUITE(FF_CUDA_TEST_SUITE) {
     device_handle_t ff_handle =
         gpu_make_device_handle_t(managed_handle.raw_handle());
 
-    std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
+    std::map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
 
     ComputationGraphInstance computation_graph_instance =
         create_computation_graph_instance(
@@ -428,7 +428,7 @@ TEST_SUITE(FF_CUDA_TEST_SUITE) {
     device_handle_t ff_handle =
         gpu_make_device_handle_t(managed_handle.raw_handle());
 
-    std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
+    std::map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
 
     auto compute_loss = [&](LossAttrs const &loss_attrs,
                             GenericTensorAccessorR label_tensor) {

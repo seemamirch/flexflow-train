@@ -11,7 +11,7 @@
 #include "utils/graph/series_parallel/series_split.dtg.h"
 #include "utils/overload.h"
 #include "utils/variant.h"
-#include "utils/containers/unordered_multiset_of.h"
+#include "utils/containers/multiset_of.h"
 #include "utils/containers/multiset_of.h"
 
 namespace FlexFlow {
@@ -36,16 +36,16 @@ NonNormalSPDecomposition non_normal_series_composition(
 }
 
 NonNormalSPDecomposition non_normal_parallel_composition(
-    std::unordered_multiset<NonNormalSPDecomposition> const &sp_compositions) {
+    std::multiset<NonNormalSPDecomposition> const &sp_compositions) {
 
-  std::unordered_multiset<
+  std::multiset<
       std::variant<::FlexFlow::NonNormalSeriesSplit, ::FlexFlow::Node>>
       composition{};
 
   for (NonNormalSPDecomposition const &sp_comp : sp_compositions) {
     if (sp_comp.has<NonNormalParallelSplit>()) {
       composition = multiset_union(
-          composition, unordered_multiset_of(sp_comp.get<NonNormalParallelSplit>().get_children()));
+          composition, multiset_of(sp_comp.get<NonNormalParallelSplit>().get_children()));
     } else if (sp_comp.has<NonNormalSeriesSplit>()) {
       composition.insert(sp_comp.get<NonNormalSeriesSplit>());
     } else {
@@ -72,7 +72,7 @@ static NonNormalSeriesSplit as_non_normal(SeriesSplit const &s) {
 
 static NonNormalParallelSplit as_non_normal(ParallelSplit const &p) {
   return non_normal_parallel_composition(
-             unordered_multiset_of(transform(p.get_children(),
+             multiset_of(transform(p.get_children(),
                        [](std::variant<SeriesSplit, Node> const &child) {
                          return as_non_normal(
                              widen<SeriesParallelDecomposition>(child));

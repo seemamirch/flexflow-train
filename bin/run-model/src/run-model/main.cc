@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
                                          /*nesterov=*/false,
                                          /*weight_decay=*/0.001}};
 
-    std::unordered_map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
+    std::map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
 
     DistributedFfHandle device_handle =
         create_distributed_ff_handle(ctx,

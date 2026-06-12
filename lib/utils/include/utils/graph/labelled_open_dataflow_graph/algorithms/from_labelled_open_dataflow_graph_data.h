@@ -15,8 +15,8 @@ template <typename NodeLabel, typename ValueLabel>
 LabelledOpenDataflowGraphView<NodeLabel, ValueLabel>
     from_labelled_open_dataflow_graph_data(
         LabelledOpenDataflowGraphData<NodeLabel, ValueLabel> const &data) {
-  std::unordered_set<OpenDataflowValue> values = keys(data.value_data);
-  std::unordered_set<DataflowOutput> outputs =
+  std::set<OpenDataflowValue> values = keys(data.value_data);
+  std::set<DataflowOutput> outputs =
       filtrans(values, try_get_dataflow_output);
 
   OpenDataflowGraphData unlabelled_data = OpenDataflowGraphData{

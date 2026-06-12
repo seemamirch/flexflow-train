@@ -1,5 +1,5 @@
 #include "op-attrs/operator_task_space.h"
-#include "utils/fmt/unordered_set.h"
+#include "utils/fmt/set.h"
 #include <doctest/doctest.h>
 
 using namespace FlexFlow;
@@ -10,9 +10,9 @@ TEST_SUITE(FF_TEST_SUITE) {
     SUBCASE("OperatorTaskSpace has 0 dimensions") {
       OperatorTaskSpace task = OperatorTaskSpace{MinimalOrthotope{{}}};
 
-      std::unordered_set<TaskSpaceCoordinate> correct = {
+      std::set<TaskSpaceCoordinate> correct = {
           TaskSpaceCoordinate{OrthotopeCoord{{}}}};
-      std::unordered_set<TaskSpaceCoordinate> result =
+      std::set<TaskSpaceCoordinate> result =
           get_task_space_coordinates(task);
       CHECK(correct == result);
     }
@@ -22,13 +22,13 @@ TEST_SUITE(FF_TEST_SUITE) {
       OperatorTaskSpace task =
           OperatorTaskSpace{MinimalOrthotope{{2_ge2, 2_ge2}}};
 
-      std::unordered_set<TaskSpaceCoordinate> correct = {{
+      std::set<TaskSpaceCoordinate> correct = {{
           TaskSpaceCoordinate{OrthotopeCoord{{0_n, 0_n}}},
           TaskSpaceCoordinate{OrthotopeCoord{{0_n, 1_n}}},
           TaskSpaceCoordinate{OrthotopeCoord{{1_n, 0_n}}},
           TaskSpaceCoordinate{OrthotopeCoord{{1_n, 1_n}}},
       }};
-      std::unordered_set<TaskSpaceCoordinate> result =
+      std::set<TaskSpaceCoordinate> result =
           get_task_space_coordinates(task);
       CHECK(correct == result);
     }
@@ -38,7 +38,7 @@ TEST_SUITE(FF_TEST_SUITE) {
       OperatorTaskSpace task =
           OperatorTaskSpace{MinimalOrthotope{{3_ge2, 2_ge2, 2_ge2}}};
 
-      std::unordered_set<TaskSpaceCoordinate> correct = {{
+      std::set<TaskSpaceCoordinate> correct = {{
           TaskSpaceCoordinate{OrthotopeCoord{{0_n, 0_n, 0_n}}},
           TaskSpaceCoordinate{OrthotopeCoord{{0_n, 0_n, 1_n}}},
           TaskSpaceCoordinate{OrthotopeCoord{{0_n, 1_n, 0_n}}},
@@ -52,7 +52,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           TaskSpaceCoordinate{OrthotopeCoord{{2_n, 1_n, 0_n}}},
           TaskSpaceCoordinate{OrthotopeCoord{{2_n, 1_n, 1_n}}},
       }};
-      std::unordered_set<TaskSpaceCoordinate> result =
+      std::set<TaskSpaceCoordinate> result =
           get_task_space_coordinates(task);
       CHECK(correct == result);
     }

@@ -19,8 +19,8 @@ template MinimalDimDomainMapping<L, R>
 
 template DimDomainMapping<L, R> dim_domain_mapping_from_minimal_dim_domain(
     MinimalDimDomainMapping<L, R> const &,
-    std::unordered_set<L> const &,
-    std::unordered_set<R> const &);
+    std::set<L> const &,
+    std::set<R> const &);
 
 template MinimalDimDomainMapping<L, R>
     minimal_dim_domain_mapping_identity_map(MinimalDimDomain<L> const &,

@@ -76,7 +76,7 @@ TEST_SUITE(FF_TEST_SUITE) {
                                              });
 
       std::optional<ParallelReduction> result = find_parallel_reduction(g);
-      std::unordered_set<ParallelReduction> correct_options = {
+      std::set<ParallelReduction> correct_options = {
           make_parallel_reduction(e.at(0), e.at(1)),
           make_parallel_reduction(e.at(1), e.at(2)),
           make_parallel_reduction(e.at(0), e.at(2)),
@@ -121,22 +121,22 @@ TEST_SUITE(FF_TEST_SUITE) {
       MultiDiEdge returned_edge = apply_parallel_reduction(g, input);
 
       SUBCASE("nodes") {
-        std::unordered_set<Node> result_nodes = get_nodes(g);
-        std::unordered_set<Node> correct_nodes = unordered_set_of(n);
+        std::set<Node> result_nodes = get_nodes(g);
+        std::set<Node> correct_nodes = set_of(n);
         CHECK(result_nodes == correct_nodes);
       }
 
       SUBCASE("edge shape") {
-        std::unordered_map<DirectedEdge, int> result_edges = get_edge_counts(g);
-        std::unordered_map<DirectedEdge, int> correct_edges = {
+        std::map<DirectedEdge, int> result_edges = get_edge_counts(g);
+        std::map<DirectedEdge, int> correct_edges = {
             {DirectedEdge{n.at(0), n.at(1)}, 1},
         };
         CHECK(result_edges == correct_edges);
       }
 
       SUBCASE("return value and edge ids") {
-        std::unordered_set<MultiDiEdge> result_edge_ids = get_edges(g);
-        std::unordered_set<MultiDiEdge> correct_edge_ids = {returned_edge};
+        std::set<MultiDiEdge> result_edge_ids = get_edges(g);
+        std::set<MultiDiEdge> correct_edge_ids = {returned_edge};
         CHECK(result_edge_ids == correct_edge_ids);
       }
     }
@@ -154,7 +154,7 @@ TEST_SUITE(FF_TEST_SUITE) {
                                                  {n.at(3), n.at(4)},
                                              });
 
-      std::unordered_map<DirectedEdge, int> input_edge_counts =
+      std::map<DirectedEdge, int> input_edge_counts =
           get_edge_counts(g);
 
       MultiDiEdge reduction_e1 = e.at(3);
@@ -165,15 +165,15 @@ TEST_SUITE(FF_TEST_SUITE) {
       MultiDiEdge returned_edge = apply_parallel_reduction(g, input);
 
       SUBCASE("nodes") {
-        std::unordered_set<Node> result_nodes = get_nodes(g);
-        std::unordered_set<Node> correct_nodes = unordered_set_of(n);
+        std::set<Node> result_nodes = get_nodes(g);
+        std::set<Node> correct_nodes = set_of(n);
         CHECK(result_nodes == correct_nodes);
       }
 
       SUBCASE("edge shape") {
-        std::unordered_map<DirectedEdge, int> result_edges = get_edge_counts(g);
-        std::unordered_map<DirectedEdge, int> correct_edges = [&] {
-          std::unordered_map<DirectedEdge, int> new_edge_counts =
+        std::map<DirectedEdge, int> result_edges = get_edge_counts(g);
+        std::map<DirectedEdge, int> correct_edges = [&] {
+          std::map<DirectedEdge, int> new_edge_counts =
               input_edge_counts;
           new_edge_counts.at(get_directed_edge(g, reduction_e1))--;
           return new_edge_counts;
@@ -182,9 +182,9 @@ TEST_SUITE(FF_TEST_SUITE) {
       }
 
       SUBCASE("return value and edge ids") {
-        std::unordered_set<MultiDiEdge> result_edge_ids = get_edges(g);
-        std::unordered_set<MultiDiEdge> correct_edge_ids = [&] {
-          std::unordered_set<MultiDiEdge> new_edges = unordered_set_of(e);
+        std::set<MultiDiEdge> result_edge_ids = get_edges(g);
+        std::set<MultiDiEdge> correct_edge_ids = [&] {
+          std::set<MultiDiEdge> new_edges = set_of(e);
           new_edges.erase(reduction_e1);
           new_edges.erase(reduction_e2);
           new_edges.insert(returned_edge);

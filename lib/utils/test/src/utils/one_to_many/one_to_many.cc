@@ -1,11 +1,11 @@
 #include "utils/one_to_many/one_to_many.h"
 #include "test/utils/doctest/fmt/multiset.h"
-#include "test/utils/doctest/fmt/unordered_set.h"
+#include "test/utils/doctest/fmt/set.h"
 #include "test/utils/doctest/fmt/set.h"
 #include "utils/containers/multiset_of.h"
 #include "utils/one_to_many/one_to_many_from_l_to_r_mapping.h"
 #include "test/utils/doctest/fmt/pair.h"
-#include "test/utils/doctest/fmt/unordered_set.h"
+#include "test/utils/doctest/fmt/set.h"
 #include <doctest/doctest.h>
 
 using namespace ::FlexFlow;
@@ -139,9 +139,9 @@ TEST_SUITE(FF_TEST_SUITE) {
         {2, {"two"}},
     };
 
-    std::unordered_set<std::pair<int, std::string>> result =
+    std::set<std::pair<int, std::string>> result =
         unstructured_relation_from_one_to_many(input);
-    std::unordered_set<std::pair<int, std::string>> correct = {
+    std::set<std::pair<int, std::string>> correct = {
         {1, "one"},
         {1, "ONE"},
         {2, "two"},
@@ -152,7 +152,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
   TEST_CASE("one_to_many_from_unstructured_relation") {
     SUBCASE("relation is one-to-many") {
-      std::unordered_set<std::pair<int, std::string>> input = {
+      std::set<std::pair<int, std::string>> input = {
           {1, "one"},
           {1, "ONE"},
           {2, "two"},
@@ -169,7 +169,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     SUBCASE("relation is one-to-one") {
-      std::unordered_set<std::pair<int, std::string>> input = {
+      std::set<std::pair<int, std::string>> input = {
           {1, "one"},
           {2, "two"},
       };
@@ -185,7 +185,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     SUBCASE("relation is not one-to-many") {
-      std::unordered_set<std::pair<int, std::string>> input = {
+      std::set<std::pair<int, std::string>> input = {
           {1, "one"},
           {1, "ONE"},
           {2, "two"},

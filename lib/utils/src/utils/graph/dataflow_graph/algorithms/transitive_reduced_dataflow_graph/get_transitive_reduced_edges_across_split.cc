@@ -6,15 +6,15 @@
 
 namespace FlexFlow {
 
-std::unordered_set<DataflowEdge> get_transitive_reduced_edges_across_split(
+std::set<DataflowEdge> get_transitive_reduced_edges_across_split(
     TransitiveReducedDataflowGraphView const &tr_g,
     BinarySeriesSplit const &split) {
-  std::unordered_set<Node> src_subgraph =
-      unordered_set_of(get_leaves(split.get_left_child()));
-  std::unordered_set<Node> dst_subgraph =
-      unordered_set_of(get_leaves(split.get_right_child()));
+  std::set<Node> src_subgraph =
+      set_of(get_leaves(split.get_left_child()));
+  std::set<Node> dst_subgraph =
+      set_of(get_leaves(split.get_right_child()));
 
-  std::unordered_set<DirectedEdge> raw_edges =
+  std::set<DirectedEdge> raw_edges =
       get_edges_from_subgraph_to_subgraph(
           tr_g.transitive_reduction, src_subgraph, dst_subgraph);
 

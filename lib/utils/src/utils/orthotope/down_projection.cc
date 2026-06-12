@@ -8,10 +8,10 @@ using R = ordered_value_type<1>;
 
 template DownProjection<L, R> make_empty_down_projection();
 
-template std::unordered_set<L>
+template std::set<L>
     input_dims_of_down_projection(DownProjection<L, R> const &);
 
-template std::unordered_set<R>
+template std::set<R>
     output_dims_of_down_projection(DownProjection<L, R> const &);
 
 template DimCoord<R> compute_down_projection(DownProjection<L, R> const &,
@@ -20,7 +20,7 @@ template DimCoord<R> compute_down_projection(DownProjection<L, R> const &,
                                              DimOrdering<L> const &);
 
 template void project_dims(DownProjection<L, R> &,
-                           std::unordered_set<L> const &,
+                           std::set<L> const &,
                            R const &);
 
 template UpProjection<R, L>

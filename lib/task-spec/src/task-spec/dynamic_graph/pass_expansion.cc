@@ -161,11 +161,11 @@ DynamicOpenDataflowGraph
   DynamicOpenDataflowGraph result = flatmap_dynamic_invocation_set(
       g, [](DynamicNodeInvocation const &invocation) {
         if (invocation.inputs.empty()) {
-          return std::unordered_set{
+          return std::set{
               perform_fwd_pass_expansion_for_invocation(invocation),
           };
         } else {
-          return std::unordered_set{
+          return std::set{
               perform_fwd_pass_expansion_for_invocation(invocation),
               perform_bwd_pass_expansion_for_invocation(invocation),
           };

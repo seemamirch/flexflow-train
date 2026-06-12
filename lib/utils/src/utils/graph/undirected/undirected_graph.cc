@@ -32,12 +32,12 @@ IUndirectedGraph &UndirectedGraph::get_ptr() {
       GraphView::ptr.get_mutable());
 }
 
-std::unordered_set<UndirectedEdge>
+std::set<UndirectedEdge>
     UndirectedGraph::query_edges(UndirectedEdgeQuery const &q) const {
   return this->get_ptr().query_edges(q);
 }
 
-std::unordered_set<Node>
+std::set<Node>
     UndirectedGraph::query_nodes(NodeQuery const &q) const {
   return this->get_ptr().query_nodes(q);
 }
