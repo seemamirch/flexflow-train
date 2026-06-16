@@ -2,6 +2,7 @@
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_BIDICT_ALGORITHMS_MERGE_DISJOINT_BIDICTS_H
 
 #include "utils/bidict/algorithms/binary_merge_disjoint_bidicts.h"
+#include "utils/bidict/bidict.h"
 #include "utils/containers/foldl.h"
 
 namespace FlexFlow {

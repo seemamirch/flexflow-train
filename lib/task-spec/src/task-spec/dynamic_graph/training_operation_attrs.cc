@@ -15,4 +15,21 @@ bool training_op_attrs_has_op_type(TrainingOperationAttrs const &op_attrs,
   });
 }
 
+TrainingOpType training_op_attrs_get_op_type(
+    TrainingOperationAttrs const &training_op_attrs) {
+  return training_op_attrs.visit<TrainingOpType>(overload{
+      [](PCGOperatorAttrs const &a) -> TrainingOpType {
+        return TrainingOpType{
+            pcg_op_attrs_get_op_type(a),
+        };
+      },
+      [](LossAttrs const &) -> TrainingOpType {
+        return TrainingOpType{TrainingOnlyOpType::LOSS};
+      },
+      [](CopyAttrs const &) -> TrainingOpType {
+        return TrainingOpType{TrainingOnlyOpType::COPY};
+      },
+  });
+}
+
 } // namespace FlexFlow

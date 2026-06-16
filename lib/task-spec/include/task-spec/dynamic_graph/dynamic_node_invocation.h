@@ -2,6 +2,10 @@
 #define _FLEXFLOW_LIB_TASK_SPEC_INCLUDE_TASK_SPEC_DYNAMIC_GRAPH_DYNAMIC_NODE_INVOCATION_H
 
 #include "task-spec/dynamic_graph/dynamic_node_invocation.dtg.h"
+#include "pcg/tensor_direction.dtg.h"
+#include "task-spec/dynamic_graph/dynamic_node_invocation.dtg.h"
+#include "task-spec/dynamic_graph/dynamic_slot_site.dtg.h"
+#include "task-spec/dynamic_graph/training_op_type.dtg.h"
 
 namespace FlexFlow {
 
@@ -14,6 +18,15 @@ void require_invocation_fully_satisfies(DynamicNodeInvocation const &,
                                         std::function<void(DynamicNodeAttrs const &)> const &require_node_condition,
                                         std::function<void(DynamicValueAttrs const &)> const &require_value_condition,
                                         std::function<void(DynamicTensorSlot const &)> const &require_slot_condition);
+
+std::unordered_map<DynamicTensorSlot, DynamicValueAttrs>
+    get_slot_map_for_direction(DynamicNodeInvocation const &, TensorDirection);
+
+TrainingOpType
+    dynamic_node_invocation_get_op_type(DynamicNodeInvocation const &);
+
+std::unordered_set<InternalDynamicSlotSite>
+    get_dynamic_slot_sites_for_invocation(DynamicNodeInvocation const &);
 
 } // namespace FlexFlow
 

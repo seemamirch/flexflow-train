@@ -17,6 +17,7 @@ includes = [
   "pcg/machine_space_coordinate.dtg.h",
   "utils/bidict/bidict.h",
   "task-spec/dynamic_graph/dynamic_tensor_role.dtg.h",
+  "task-spec/dynamic_graph/parallel_tensor_mapping.dtg.h",
 ]
 
 src_includes = [
@@ -38,7 +39,7 @@ type = "std::optional<::FlexFlow::ParallelTensorSpaceCoordinate>"
 
 [[fields]]
 name = "mapping"
-type = "std::optional<::FlexFlow::bidict<::FlexFlow::ParallelTensorSpaceCoordinate, ::FlexFlow::MachineSpaceCoordinate>>"
+type = "std::optional<::FlexFlow::ParallelTensorMapping>"
 
 [[fields]]
 name = "role"

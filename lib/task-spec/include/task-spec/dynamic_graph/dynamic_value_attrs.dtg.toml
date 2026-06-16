@@ -17,6 +17,7 @@ includes = [
   "utils/bidict/bidict.h",
   "task-spec/dynamic_graph/dynamic_tensor_accessor.dtg.h",
   "task-spec/dynamic_graph/dynamic_tensor_role.dtg.h",
+  "task-spec/dynamic_graph/parallel_tensor_mapping.dtg.h",
 ]
 
 src_includes = [
@@ -52,7 +53,7 @@ For a \ref DynamicOpenDataflowGraph originating from a \ref MappedParallelComput
 
 [[fields]]
 name = "mapping"
-type = "std::optional<::FlexFlow::bidict<::FlexFlow::ParallelTensorSpaceCoordinate, ::FlexFlow::MachineSpaceCoordinate>>"
+type = "std::optional<::FlexFlow::ParallelTensorMapping>"
 docstring = '''
 \brief The location (i.e., \ref MachineSpaceCoordinate) of each shard (i.e., \ref ParallelTensorSpaceCoordinate) of this (usually parallel) tensor.
 

@@ -8,11 +8,10 @@ features = [
 includes = [
   "utils/graph/digraph/digraph_view.h",
   "compiler/task_graph_simulator/pcg_task.dtg.h",
-  "pcg/device_id_t.dtg.h",
-  "utils/many_to_one/many_to_one.h",
-  "pcg/parallel_computation_graph/parallel_layer_guid_t.dtg.h",
   "<set>",
   "<map>"
+  "utils/many_to_one/many_to_one.h",
+  "pcg/machine_space_coordinate.dtg.h",
 ]
 
 src_includes = [
@@ -32,4 +31,4 @@ type = "::FlexFlow::ManyToOne<::FlexFlow::Node, ::FlexFlow::PCGTask>"
 
 [[fields]]
 name = "node_to_devices"
-type = "std::map<::FlexFlow::Node, std::set<::FlexFlow::device_id_t>>"
+type = "std::map<::FlexFlow::Node, std::set<::FlexFlow::MachineSpaceCoordinate>>"

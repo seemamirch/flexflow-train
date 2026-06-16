@@ -5,21 +5,22 @@
 #include "utils/bidict/algorithms/right_entries.h"
 #include "utils/bidict/bidict.h"
 #include "utils/containers/are_disjoint.h"
-#include "utils/exception.h"
+#include <libassert/assert.hpp>
 
 namespace FlexFlow {
 
 template <typename K, typename V>
 bidict<K, V> binary_merge_disjoint_bidicts(bidict<K, V> const &lhs,
                                            bidict<K, V> const &rhs) {
-  if (!are_disjoint(left_entries(lhs), left_entries(rhs))) {
-    throw mk_runtime_error(
-        fmt::format("Left entries of {} and {} are non-disjoint", lhs, rhs));
-  }
-  if (!are_disjoint(right_entries(lhs), right_entries(rhs))) {
-    throw mk_runtime_error(
-        fmt::format("Right entries of {} and {} are non-disjoint", lhs, rhs));
-  }
+  ASSERT(are_disjoint(left_entries(lhs), left_entries(rhs)),
+         "Left entries of {} and {} are non-disjoint",
+         lhs,
+         rhs);
+
+  ASSERT(are_disjoint(right_entries(lhs), right_entries(rhs)),
+         "Right entries of {} and {} are non-disjoint",
+         lhs,
+         rhs);
 
   bidict<K, V> result;
   for (auto const &kv : lhs) {

@@ -86,20 +86,31 @@ PCGInstance create_pcg_instance(
     std::map<DynamicValueAttrs, DynamicTensorAccessor> const
         &input_tensors,
     ProfilingSettings const &profiling_settings,
-    DistributedFfHandle const &device_handle) {
+    DistributedFfHandle const &device_handle,
+    DeviceType device_type) {
 
   DynamicOpenDataflowGraph dg =
-      make_dynamic_open_dataflow_graph_from_mapped_pcg(mpcg);
+      make_dynamic_open_dataflow_graph_from_mapped_pcg(mpcg, device_type);
   dg = perform_pass_expansion(dg);
 
   std::map<DynamicValueAttrs, DynamicTensorAccessor> inputs =
       input_tensors;
   std::optional<DynamicValueAttrs> logit_grad_value;
   if (loss.has_value()) {
-    auto [loss_attrs, label_tensor, logit_tensor, loss_mapping] =
-        assert_unwrap(loss);
+    ParallelLossConfig loss_config = assert_unwrap(loss);
+
+    LossAttrs loss_attrs = loss_config.loss_attrs;
+    GenericTensorAccessorR label_tensor = loss_config.label_tensor;
+    parallel_tensor_guid_t logit_tensor = loss_config.logit_tensor;
+    MappedOperatorTaskGroup loss_op_task_group = loss_config.loss_mapping;
+
+    DynamicNodeMapping mapping = DynamicNodeMapping{
+        /*op_task_group=*/loss_op_task_group,
+        /*device_type=*/device_type,
+    };
+
     auto [dg2, label_v, logit_grad_v] = perform_loss_insertion(
-        dg, loss_attrs, dynamic_tensor_guid_t{logit_tensor}, loss_mapping);
+        dg, loss_attrs, dynamic_tensor_guid_t{logit_tensor}, mapping);
     dg = dg2;
     logit_grad_value = logit_grad_v;
     inputs.insert(std::pair{label_v, label_tensor});
@@ -108,6 +119,7 @@ PCGInstance create_pcg_instance(
   dg = perform_update_insertion(dg, optimizer_attrs);
   dg = perform_copy_insertion(dg);
   dg = perform_shard_expansion(dg);
+
   TensorInstanceBacking tensor_instance_backing =
       perform_instance_allocation(dg, inputs, ctx);
 
@@ -151,12 +163,14 @@ PCGInstance create_pcg_instance(
   std::vector<DynamicNodeInvocation> invocation_topo_order = transform(
       node_topo_order, [&](Node node) { return node_map.at_l(node); });
 
-  return PCGInstance{/*ctx=*/ctx,
-                     /*execution_order=*/invocation_topo_order,
-                     /*tensor_instance_backing=*/tensor_instance_backing,
-                     /*device_state_backing=*/device_state_backing,
-                     /*optimizer_attrs=*/optimizer_attrs,
-                     /*logit_grad_tensor=*/logit_grad_tensor};
+  return PCGInstance{
+      /*ctx=*/ctx,
+      /*execution_order=*/invocation_topo_order,
+      /*tensor_instance_backing=*/tensor_instance_backing,
+      /*device_state_backing=*/device_state_backing,
+      /*optimizer_attrs=*/optimizer_attrs,
+      /*logit_grad_tensor=*/logit_grad_tensor,
+  };
 }
 
 /**
@@ -184,8 +198,8 @@ static Realm::Event spawn_dynamic_node_invocation(
                                                     invocation);
 
   auto spawn_task = [&]() {
-    Realm::Processor target_proc = ctx.map_device_coord_to_processor(
-        get_only(assert_unwrap(invocation.node_attrs.device_coords)));
+    Realm::Processor target_proc = ctx.processor_from_global_device_id(
+        get_only(assert_unwrap(invocation.node_attrs.device_ids)));
     return spawn_op_task(ctx,
                          target_proc,
                          invocation,

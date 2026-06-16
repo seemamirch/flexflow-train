@@ -13,7 +13,7 @@ DynamicNodeInvocation make_dynamic_node_invocation_from_mapped(
 DynamicNodeInvocation build_replicate_invocation(MappedParallelLayerInvocationInfo const &);
 
 DynamicOpenDataflowGraph make_dynamic_open_dataflow_graph_from_mapped_pcg(
-    MappedParallelComputationGraph const &);
+    MappedParallelComputationGraph const &, DeviceType device_type);
 
 } // namespace FlexFlow
 

@@ -22,15 +22,14 @@
 namespace FlexFlow {
 
 std::pair<Realm::RegionInstance, Realm::Event>
-    perform_instance_allocation_for_value(
-        MachineSpaceCoordinate const &device_coord,
-        DynamicValueAttrs const &value,
-        RealmContext &ctx) {
+    perform_instance_allocation_for_value(global_device_id_t const &device_id,
+                                          DynamicValueAttrs const &value,
+                                          RealmContext &ctx) {
   ASSERT(value.accessor == std::nullopt);
 
   TensorShape shape = get_piece_shape(value.parallel_tensor_shape.value());
 
-  Realm::Processor proc = ctx.map_device_coord_to_processor(device_coord);
+  Realm::Processor proc = ctx.processor_from_global_device_id(device_id);
   Realm::Memory memory = ctx.get_nearest_memory(proc);
   return ctx.create_instance(memory, shape, Realm::ProfilingRequestSet());
 }
@@ -56,7 +55,7 @@ TensorInstanceBacking perform_instance_allocation(
         MachineSpaceCoordinate device_coord =
             assert_unwrap(v.mapping).at_l(assert_unwrap(v.shard_coord));
         result.backing.insert(std::pair{
-            v, perform_instance_allocation_for_value(device_coord, v, ctx)});
+            v, perform_instance_allocation_for_value(device, v, ctx)});
       }
       return result.backing.at(v);
     }

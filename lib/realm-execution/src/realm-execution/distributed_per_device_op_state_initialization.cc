@@ -40,16 +40,16 @@ PerDeviceOpStateBacking perform_distributed_per_device_op_state_initialization(
       continue;
     }
 
-    Realm::Processor target_proc =
-        ctx.map_device_coord_to_processor(assert_unwrap(device_coord));
+    Realm::Processor target_proc = ctx.processor_from_global_device_id(
+        assert_unwrap(device_coord));
 
     TensorInstanceBacking tensor_backing =
         subset_tensor_instance_backing_for_invocation(tensor_instance_backing,
                                                       invocation);
 
     DeviceSpecificPtr<PerDeviceOpState> *device_state_ptr =
-        new DeviceSpecificPtr<PerDeviceOpState>{ctx.get_current_device_idx(),
-                                                std::nullopt};
+        new DeviceSpecificPtr<PerDeviceOpState>{
+            ctx.get_current_global_device_id(), std::nullopt};
 
     std::optional<Realm::Event> completion_event =
         spawn_per_device_op_state_init_task(ctx,

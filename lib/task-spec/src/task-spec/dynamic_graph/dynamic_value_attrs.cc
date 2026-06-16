@@ -15,7 +15,7 @@ DynamicValueAttrs
 
 DynamicValueAttrs decide_dynamic_value_attrs_mapping(
     DynamicValueAttrs const &attrs,
-    bidict<ParallelTensorSpaceCoordinate, MachineSpaceCoordinate> const &mapping)
+    ParallelTensorMapping const &mapping)
 {
   ASSERT(!attrs.mapping.has_value());
 
@@ -24,6 +24,5 @@ DynamicValueAttrs decide_dynamic_value_attrs_mapping(
 
   return result;
 }
-
 
 } // namespace FlexFlow
