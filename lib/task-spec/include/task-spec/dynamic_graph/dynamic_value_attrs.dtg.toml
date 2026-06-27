@@ -43,6 +43,10 @@ For a \ref DynamicOpenDataflowGraph originating form a \ref MappedParallelComput
 '''
 
 [[fields]]
+name = "create_grad"
+type = "std::optional<bool>"
+
+[[fields]]
 name = "shard_coord"
 type = "std::optional<::FlexFlow::ParallelTensorSpaceCoordinate>"
 docstring = '''

@@ -1,9 +1,9 @@
 #include "utils/orthotope/dim_coord.h"
-#include "utils/archetypes/ordered_value_type.h"
+#include "utils/archetypes/jsonable_ordered_value_type.h"
 
 namespace FlexFlow {
 
-using T = ordered_value_type<0>;
+using T = jsonable_ordered_value_type<0>;
 
 template std::set<T> get_coord_dims(DimCoord<T> const &);
 

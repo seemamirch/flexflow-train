@@ -1,6 +1,6 @@
 #include "utils/graph/digraph/algorithms/transitive_reduction.h"
 #include "utils/bidict/algorithms/bidict_from_enumerating.h"
-#include "utils/bidict/algorithms/transform_keys.h"
+#include "utils/bidict/algorithms/bidict_transform_keys.h"
 #include "utils/containers/is_subseteq_of.h"
 #include "utils/containers/set_intersection.h"
 #include "utils/containers/vector_of.h"
@@ -41,7 +41,7 @@ DiGraph transitive_reduction(DiGraphView const &g) {
   // between transitive_closure and transitive_reduction
 
   bidict<int, Node> nodes =
-      transform_keys(bidict_from_enumerating(get_nodes(g)),
+      bidict_transform_keys(bidict_from_enumerating(get_nodes(g)),
                      [](nonnegative_int x) { return x.unwrap_nonnegative(); });
   int num_nodes = nodes.size();
 

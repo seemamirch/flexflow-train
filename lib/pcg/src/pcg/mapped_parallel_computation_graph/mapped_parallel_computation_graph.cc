@@ -3,7 +3,7 @@
 #include "pcg/mapped_parallel_computation_graph/mapped_parallel_layer_attrs.h"
 #include "pcg/parallel_computation_graph/parallel_computation_graph.h"
 #include "utils/bidict/algorithms/bidict_from_map.h"
-#include "utils/bidict/algorithms/transform_keys.h"
+#include "utils/bidict/algorithms/bidict_transform_keys.h"
 #include "utils/containers/transform.h"
 #include "utils/graph/kwarg_dataflow_graph/algorithms/find_isomorphism_between_kwarg_dataflow_graphs.h"
 #include "utils/graph/labelled_kwarg_dataflow_graph/algorithms/labelled_kwarg_dataflow_graph_view_as_dot.h"

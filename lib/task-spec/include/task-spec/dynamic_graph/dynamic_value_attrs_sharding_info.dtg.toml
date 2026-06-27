@@ -11,7 +11,7 @@ features = [
 
 includes = [
   "op-attrs/parallel_tensor_space_coordinate.dtg.h",
-  "pcg/machine_space_coordinate.dtg.h",
+  "task-spec/global_device_id_t.dtg.h",
 ]
 
 src_includes = []
@@ -22,4 +22,4 @@ type = "::FlexFlow::ParallelTensorSpaceCoordinate"
 
 [[fields]]
 name = "mapping"
-type = "::FlexFlow::MachineSpaceCoordinate"
+type = "::FlexFlow::global_device_id_t"

@@ -3,7 +3,7 @@
 #include "op-attrs/operator_task_space.h"
 #include "op-attrs/parallel_tensor_space_coordinate.h"
 #include "pcg/mapped_parallel_computation_graph/operator_atomic_task_shard_binding.h"
-#include "utils/bidict/algorithms/transform_values.h"
+#include "utils/bidict/algorithms/bidict_transform_values.h"
 #include "utils/bidict/generate_bidict.h"
 #include "utils/containers/are_all_distinct.h"
 #include "utils/containers/require_all_same.h"

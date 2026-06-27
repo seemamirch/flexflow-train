@@ -34,6 +34,10 @@ name = "parallel_tensor_shape"
 type = "std::optional<::FlexFlow::ParallelTensorShape>"
 
 [[fields]]
+name = "create_grad"
+type = "std::optional<bool>"
+
+[[fields]]
 name = "shard_coord"
 type = "std::optional<::FlexFlow::ParallelTensorSpaceCoordinate>"
 

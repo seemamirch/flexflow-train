@@ -133,8 +133,8 @@ MappedParallelComputationGraph
   parallel_tensor_guid_t t_relu_1 =
       require_only_key(relu_operator_1.outputs, TensorSlotName::OUTPUT);
 
-  MachineSpaceCoordinate cpu0{0_n, 0_n, device_type};
-  MachineSpaceCoordinate cpu1{0_n, 1_n, device_type};
+  MachineSpaceCoordinate mc0{0_n, 0_n};
+  MachineSpaceCoordinate mc1{0_n, 1_n};
 
   ParallelTensorSpaceCoordinate tensor_coord0{
       /*sum_component=*/0_n,
@@ -154,7 +154,7 @@ MappedParallelComputationGraph
                   MappedOperatorTaskGroup{
                       {
                           {
-                              cpu0,
+                              mc0,
                               OperatorAtomicTaskShardBinding{{
                                   {TensorSlotName::OUTPUT, tensor_coord0},
                               }},
@@ -167,7 +167,7 @@ MappedParallelComputationGraph
                   MappedOperatorTaskGroup{
                       {
                           {
-                              cpu0,
+                              mc0,
                               OperatorAtomicTaskShardBinding{{
                                   {TensorSlotName::OUTPUT, tensor_coord0},
                               }},
@@ -180,7 +180,7 @@ MappedParallelComputationGraph
                   MappedOperatorTaskGroup{
                       {
                           {
-                              cpu0,
+                              mc0,
                               OperatorAtomicTaskShardBinding{{
                                   {TensorSlotName::LHS_INPUT, tensor_coord0},
                                   {TensorSlotName::RHS_INPUT, tensor_coord0},
@@ -195,14 +195,14 @@ MappedParallelComputationGraph
                   MappedOperatorTaskGroup{
                       {
                           {
-                              cpu0,
+                              mc0,
                               OperatorAtomicTaskShardBinding{{
                                   {TensorSlotName::INPUT, tensor_coord0},
                                   {TensorSlotName::OUTPUT, tensor_coord0},
                               }},
                           },
                           {
-                              cpu1,
+                              mc1,
                               OperatorAtomicTaskShardBinding{{
                                   {TensorSlotName::INPUT, tensor_coord0},
                                   {TensorSlotName::OUTPUT, tensor_coord1},
@@ -216,14 +216,14 @@ MappedParallelComputationGraph
                   MappedOperatorTaskGroup{
                       {
                           {
-                              cpu0,
+                              mc0,
                               OperatorAtomicTaskShardBinding{{
                                   {TensorSlotName::INPUT, tensor_coord0},
                                   {TensorSlotName::OUTPUT, tensor_coord0},
                               }},
                           },
                           {
-                              cpu1,
+                              mc1,
                               OperatorAtomicTaskShardBinding{{
                                   {TensorSlotName::INPUT, tensor_coord1},
                                   {TensorSlotName::OUTPUT, tensor_coord1},
@@ -276,7 +276,8 @@ TEST_SUITE(FF_TEST_SUITE) {
               /*loss=*/std::nullopt,
               /*input_tensors=*/input_tensors,
               /*profiling_settings=*/ProfilingSettings{0, 0},
-              /*device_handle=*/device_handle);
+              /*device_handle=*/device_handle,
+              /*device_type=*/DeviceType::CPU);
 
           // begin training loop
           int num_epochs = 1;
@@ -331,7 +332,8 @@ TEST_SUITE(FF_CUDA_TEST_SUITE) {
               /*loss=*/std::nullopt,
               /*input_tensors=*/input_tensors,
               /*profiling_settings=*/ProfilingSettings{0, 0},
-              /*device_handle=*/device_handle);
+              /*device_handle=*/device_handle,
+              /*device_type=*/DeviceType::GPU);
 
           // begin training loop
           int num_epochs = 1;

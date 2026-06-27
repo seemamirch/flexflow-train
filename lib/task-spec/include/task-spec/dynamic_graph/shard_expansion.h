@@ -9,17 +9,15 @@
 
 namespace FlexFlow {
 
-[[nodiscard]] bool node_is_shard_expanded(DynamicNodeAttrs const &);
-[[nodiscard]] bool value_is_shard_expanded(DynamicValueAttrs const &);
-[[nodiscard]] bool invocation_is_fully_shard_expanded(DynamicNodeInvocation const &);
+void require_node_is_shard_expanded(DynamicNodeAttrs const &);
+void require_value_is_shard_expanded(DynamicValueAttrs const &);
+void require_invocation_is_fully_shard_expanded(DynamicNodeInvocation const &);
+void require_graph_is_fully_shard_expanded(DynamicOpenDataflowGraph const &);
 
-[[nodiscard]] bool node_is_ready_for_shard_expansion(DynamicNodeAttrs const &);
-[[nodiscard]] bool value_is_ready_for_shard_expansion(DynamicValueAttrs const &);
-[[nodiscard]] bool invocation_is_ready_for_shard_expansion(DynamicNodeInvocation const &);
-
-[[nodiscard]] bool no_part_of_graph_is_shard_expanded(DynamicOpenDataflowGraph const &);
-[[nodiscard]] bool graph_is_fully_shard_expanded(DynamicOpenDataflowGraph const &);
-[[nodiscard]] bool graph_is_ready_for_shard_expansion(DynamicOpenDataflowGraph const &);
+void require_node_is_ready_for_shard_expansion(DynamicNodeAttrs const &);
+void require_value_is_ready_for_shard_expansion(DynamicValueAttrs const &);
+void require_invocation_is_ready_for_shard_expansion(DynamicNodeInvocation const &);
+void require_graph_is_ready_for_shard_expansion(DynamicOpenDataflowGraph const &);
 
 [[nodiscard]] DynamicNodeAttrs apply_dynamic_node_attrs_sharding_info(
   DynamicNodeAttrs const &,
@@ -37,10 +35,10 @@ namespace FlexFlow {
   generate_shard_expansion_for_invocation(DynamicNodeInvocation const &);
 
 [[nodiscard]] std::set<DynamicNodeInvocation>
-    perform_shard_expansion_for_invocation(DynamicNodeInvocation const &);
+  perform_shard_expansion_for_invocation(DynamicNodeInvocation const &);
 
 [[nodiscard]] DynamicOpenDataflowGraph
-    perform_shard_expansion(DynamicOpenDataflowGraph const &);
+  perform_shard_expansion(DynamicOpenDataflowGraph const &);
 
 } // namespace FlexFlow
 

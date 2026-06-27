@@ -25,10 +25,10 @@ std::map<Node, std::optional<Node>>
         transform(vector_of(n_dominators), [&](Node const &dominator) {
           return vector_of(node_to_its_dominators.at(dominator));
         }));
-    std::map<Node, int> dominator_counts =
+    std::map<Node, positive_int> dominator_counts =
         get_element_counts(recursive_dominator_list);
     std::set<Node> imm_dominators = keys(
-        filter_values(dominator_counts, [](int count) { return count <= 1; }));
+        filter_values(dominator_counts, [](positive_int count) { return count <= 1; }));
     ASSERT(imm_dominators.size() <= 1);
 
     return maybe_get_only(imm_dominators);

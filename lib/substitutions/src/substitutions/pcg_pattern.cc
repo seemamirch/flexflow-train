@@ -5,7 +5,7 @@
 #include "substitutions/tensor_pattern/satisfies_pattern.h"
 #include "substitutions/unlabelled/find_pattern_matches.h"
 #include "substitutions/unlabelled/pattern_value.h"
-#include "utils/bidict/algorithms/transform_values.h"
+#include "utils/bidict/algorithms/bidict_transform_values.h"
 #include "utils/containers/map_values.h"
 #include "utils/containers/transform.h"
 #include "utils/graph/kwarg_dataflow_graph/algorithms/get_outgoing_kwarg_dataflow_outputs_for_node.h"
@@ -60,7 +60,7 @@ std::vector<PCGPatternMatch>
   auto pcg_match_from_unlabelled_match =
       [](UnlabelledKwargDataflowGraphPatternMatch const &m) {
         return PCGPatternMatch{
-            transform_values(
+            bidict_transform_values(
                 m.node_assignment,
                 [](Node const &n) { return parallel_layer_guid_t{n}; }),
             map_values(

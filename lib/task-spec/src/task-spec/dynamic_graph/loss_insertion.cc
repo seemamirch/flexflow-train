@@ -24,6 +24,7 @@ LossInsertionResult perform_loss_insertion(
   DynamicValueAttrs label_value{
       /*tensor_guid=*/mk_dynamic_tensor_guid_for_loss(),
       /*parallel_tensor_shape=*/logit_value.parallel_tensor_shape,
+      /*create_grad=*/false,
       /*shard_coord=*/logit_value.shard_coord,
       /*mapping=*/std::nullopt,
       /*accessor=*/std::nullopt,
@@ -33,6 +34,7 @@ LossInsertionResult perform_loss_insertion(
   DynamicValueAttrs logit_grad_value{
       /*tensor_guid=*/logit_value.tensor_guid,
       /*parallel_tensor_shape=*/logit_value.parallel_tensor_shape,
+      /*create_grad=*/logit_value.create_grad,
       /*shard_coord=*/logit_value.shard_coord,
       /*mapping=*/std::nullopt,
       /*accessor=*/std::nullopt,

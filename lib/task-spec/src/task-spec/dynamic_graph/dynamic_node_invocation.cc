@@ -3,7 +3,6 @@
 #include "task-spec/dynamic_graph/training_operation_attrs.h"
 #include "utils/containers/are_disjoint.h"
 #include "utils/containers/set_union.h"
-#include "utils/containers/unordered_set_of.h"
 #include "utils/optional.h"
 #include "utils/containers/values.h"
 #include "utils/containers/keys.h"
@@ -38,7 +37,7 @@ void require_invocation_fully_satisfies(DynamicNodeInvocation const &i,
   }
 }
 
-std::unordered_map<DynamicTensorSlot, DynamicValueAttrs>
+std::map<DynamicTensorSlot, DynamicValueAttrs>
     get_slot_map_for_direction(DynamicNodeInvocation const &invocation,
                                TensorDirection direction) {
   switch (direction) {
@@ -59,34 +58,49 @@ TrainingOpType
   return training_op_attrs_get_op_type(training_op_attrs);
 }
 
-std::unordered_set<InternalDynamicSlotSite>
-    get_dynamic_slot_sites_for_invocation(DynamicNodeInvocation const &i) {
+std::set<InternalDynamicSlotSite>
+    get_incoming_dynamic_slot_sites_for_invocation(dynamic_invocation_id_t const &id, DynamicNodeInvocation const &i) {
 
-  std::unordered_set<InternalDynamicSlotSite> input_slots =
-      transform(unordered_set_of(i.inputs),
+  std::set<InternalDynamicSlotSite> incoming_slots =
+      transform(set_of(i.inputs),
                 [&](std::pair<DynamicTensorSlot, DynamicValueAttrs> const &p)
                     -> InternalDynamicSlotSite {
                   return InternalDynamicSlotSite{
-                      /*invocation=*/i,
+                      /*invocation=*/id,
                       /*direction=*/TensorDirection::INCOMING,
                       /*slot_name=*/p.first,
                   };
                 });
 
-  std::unordered_set<InternalDynamicSlotSite> output_slots =
-      transform(unordered_set_of(i.outputs),
+  return incoming_slots;
+}
+
+std::set<InternalDynamicSlotSite>
+    get_output_dynamic_slot_sites_for_invocation(dynamic_invocation_id_t const &id, DynamicNodeInvocation const &i) {
+
+  std::set<InternalDynamicSlotSite> output_slots =
+      transform(set_of(i.outputs),
                 [&](std::pair<DynamicTensorSlot, DynamicValueAttrs> const &p)
                     -> InternalDynamicSlotSite {
                   return InternalDynamicSlotSite{
-                      /*invocation=*/i,
+                      /*invocation=*/id,
                       /*direction=*/TensorDirection::OUTPUT,
                       /*slot_name=*/p.first,
                   };
                 });
 
-  ASSERT(are_disjoint(input_slots, output_slots));
+  return output_slots;
+}
 
-  return set_union(input_slots, output_slots);
+std::set<InternalDynamicSlotSite>
+    get_dynamic_slot_sites_for_invocation(dynamic_invocation_id_t const &id, DynamicNodeInvocation const &i) {
+
+  std::set<InternalDynamicSlotSite> incoming_slots = get_incoming_dynamic_slot_sites_for_invocation(id, i);
+  std::set<InternalDynamicSlotSite> output_slots = get_output_dynamic_slot_sites_for_invocation(id, i);
+
+  ASSERT(are_disjoint(incoming_slots, output_slots));
+
+  return set_union(incoming_slots, output_slots);
 }
 
 } // namespace FlexFlow

@@ -6,7 +6,7 @@
 #include "utils/bidict/algorithms/bidict_from_map.h"
 #include "utils/bidict/algorithms/binary_merge_disjoint_bidicts.h"
 #include "utils/bidict/algorithms/exhaustive_relational_join.h"
-#include "utils/bidict/algorithms/transform_values.h"
+#include "utils/bidict/algorithms/bidict_transform_values.h"
 #include "utils/containers/is_subseteq_of.h"
 #include "utils/containers/map_values.h"
 #include "utils/containers/values.h"
@@ -43,7 +43,7 @@ bidict<PatternNodeOutput, parallel_tensor_guid_t>
 UnlabelledKwargDataflowGraphPatternMatch
     get_unlabelled_pattern_match(PCGPatternMatch const &match) {
   return UnlabelledKwargDataflowGraphPatternMatch{
-      transform_values(
+      bidict_transform_values(
           match.node_assignment,
           [](parallel_layer_guid_t const &l) { return l.raw_graph_node; }),
       map_values(match.input_assignment,

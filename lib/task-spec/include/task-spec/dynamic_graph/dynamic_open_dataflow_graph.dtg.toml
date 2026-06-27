@@ -3,6 +3,7 @@ name = "DynamicOpenDataflowGraph"
 type = "struct"
 features = [
   "eq",
+	"ord",
   "fmt",
 ]
 

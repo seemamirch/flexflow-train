@@ -243,10 +243,14 @@ static Realm::Event spawn_dynamic_node_invocation(
 
     // chain reductions sequentially to avoid write races on dst
     Realm::Event result = precondition;
-    for (auto const &[p, m] : assert_unwrap(output_grad.mapping)) {
+    for (auto const &[p, d] : assert_unwrap(output_grad.mapping).raw) {
       DynamicValueAttrs replica_key = output_grad;
       replica_key.mapping =
-          bidict<ParallelTensorSpaceCoordinate, MachineSpaceCoordinate>{{p, m}};
+          ParallelTensorMapping{
+            bidict<ParallelTensorSpaceCoordinate, global_device_id_t>{
+              {p, d},
+            },
+          };
       replica_key.shard_coord = p;
 
       Realm::RegionInstance src_inst =

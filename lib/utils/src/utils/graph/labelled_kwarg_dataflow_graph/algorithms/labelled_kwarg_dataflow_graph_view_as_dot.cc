@@ -1,12 +1,12 @@
 #include "utils/graph/labelled_kwarg_dataflow_graph/algorithms/labelled_kwarg_dataflow_graph_view_as_dot.h"
-#include "utils/archetypes/ordered_value_type.h"
+#include "utils/archetypes/jsonable_ordered_value_type.h"
 #include "utils/archetypes/value_type.h"
 
 namespace FlexFlow {
 
 using NodeLabel = value_type<0>;
 using ValueLabel = value_type<1>;
-using SlotName = ordered_value_type<2>;
+using SlotName = jsonable_ordered_value_type<2>;
 
 template std::string labelled_kwarg_dataflow_graph_view_as_dot(
     LabelledKwargDataflowGraphView<NodeLabel, ValueLabel, SlotName> const &,

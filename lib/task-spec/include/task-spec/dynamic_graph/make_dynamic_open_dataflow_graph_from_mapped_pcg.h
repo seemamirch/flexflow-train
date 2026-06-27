@@ -8,7 +8,8 @@
 namespace FlexFlow {
 
 DynamicNodeInvocation make_dynamic_node_invocation_from_mapped(
-    MappedParallelLayerInvocationInfo const &);
+    MappedParallelLayerInvocationInfo const &,
+    DeviceType device_type);
 
 DynamicNodeInvocation build_replicate_invocation(MappedParallelLayerInvocationInfo const &);
 

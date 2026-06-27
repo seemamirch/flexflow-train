@@ -63,14 +63,14 @@ TEST_SUITE(FF_TEST_SUITE) {
       std::vector<Node> inv = get_topological_ordering(result.graph);
 
       SUBCASE("edges") {
-        std::map<DirectedEdge, int> result_edges =
+        std::map<DirectedEdge, positive_int> result_edges =
             get_edge_counts(result.graph);
-        std::map<DirectedEdge, int> correct_edges = {
-            {DirectedEdge{inv.at(0), inv.at(1)}, 1},
-            {DirectedEdge{inv.at(1), inv.at(2)}, 1},
-            {DirectedEdge{inv.at(1), inv.at(3)}, 1},
-            {DirectedEdge{inv.at(2), inv.at(3)}, 1},
-            {DirectedEdge{inv.at(3), inv.at(4)}, 1},
+        std::map<DirectedEdge, positive_int> correct_edges = {
+            {DirectedEdge{inv.at(0), inv.at(1)}, 1_p},
+            {DirectedEdge{inv.at(1), inv.at(2)}, 1_p},
+            {DirectedEdge{inv.at(1), inv.at(3)}, 1_p},
+            {DirectedEdge{inv.at(2), inv.at(3)}, 1_p},
+            {DirectedEdge{inv.at(3), inv.at(4)}, 1_p},
         };
         CHECK(result_edges == correct_edges);
       }
@@ -125,10 +125,10 @@ TEST_SUITE(FF_TEST_SUITE) {
       std::vector<Node> inv = get_topological_ordering(result.graph);
 
       SUBCASE("edges") {
-        std::map<DirectedEdge, int> result_edges =
+        std::map<DirectedEdge, positive_int> result_edges =
             get_edge_counts(result.graph);
-        std::map<DirectedEdge, int> correct_edges = {
-            {DirectedEdge{inv.at(0), inv.at(1)}, 2},
+        std::map<DirectedEdge, positive_int> correct_edges = {
+            {DirectedEdge{inv.at(0), inv.at(1)}, 2_p},
         };
         CHECK(result_edges == correct_edges);
       }

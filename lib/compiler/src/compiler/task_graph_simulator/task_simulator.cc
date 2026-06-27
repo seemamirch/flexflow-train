@@ -53,7 +53,7 @@ milliseconds_t task_simulator_estimate_forward_pass_time(
     assert(current_task.is_operator());
 
     auto get_devices =
-        [&](Node const &n) -> std::unordered_set<MachineSpaceCoordinate> {
+        [&](Node const &n) -> std::set<MachineSpaceCoordinate> {
       return task_graph.node_to_devices.at(n);
     };
 

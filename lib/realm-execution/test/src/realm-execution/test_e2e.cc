@@ -148,7 +148,7 @@ static E2ETrainingConfig create_e2e_test_case() {
   MachineSpaceCoordinate cpu1{0_n, 1_n};
   ParallelTensorSpaceCoordinate tensor_coord0{0_n, 0_n, FFOrdered{0_n}};
 
-  std::unordered_map<parallel_layer_guid_t, MappedOperatorTaskGroup> mapping = {
+  std::map<parallel_layer_guid_t, MappedOperatorTaskGroup> mapping = {
       {inputs_layer.parallel_layer,
        MappedOperatorTaskGroup{
            {{cpu0,

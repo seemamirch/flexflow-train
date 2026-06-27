@@ -2,8 +2,8 @@
 #include "substitutions/apply_substitution/perform_shape_inference.h"
 #include "substitutions/output_graph/output_operator_attrs_assignment.h"
 #include "substitutions/sub_parallel_computation_graph.h"
-#include "utils/bidict/algorithms/transform_keys.h"
-#include "utils/bidict/algorithms/transform_values.h"
+#include "utils/bidict/algorithms/bidict_transform_keys.h"
+#include "utils/bidict/algorithms/bidict_transform_values.h"
 #include "utils/bidict/generate_bidict.h"
 #include "utils/containers/map_keys.h"
 #include "utils/containers/map_values.h"
@@ -70,8 +70,8 @@ std::pair<SubParallelComputationGraph, OutputExprToResultSubPCGMapping>
           });
 
   bidict<input_parallel_tensor_guid_t, OutputGraphExprInput> result_input_map =
-      transform_keys(
-          transform_values(new_input_id_permutation,
+      bidict_transform_keys(
+          bidict_transform_values(new_input_id_permutation,
                            [](KwargDataflowGraphInput<int> const &i) {
                              return OutputGraphExprInput{i};
                            }),
@@ -80,8 +80,8 @@ std::pair<SubParallelComputationGraph, OutputExprToResultSubPCGMapping>
           });
 
   bidict<parallel_layer_guid_t, OutputGraphExprNode> result_node_map =
-      transform_keys(
-          transform_values(
+      bidict_transform_keys(
+          bidict_transform_values(
               new_node_id_permutation,
               [](Node const &n) { return OutputGraphExprNode{n}; }),
           [](NewNode const &n) { return parallel_layer_guid_t{n.raw_node}; });

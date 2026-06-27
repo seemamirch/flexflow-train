@@ -2,14 +2,13 @@ namespace = "FlexFlow"
 name = "PCGTaskGraph"
 type = "struct"
 
-features = [
-]
+features = []
 
 includes = [
   "utils/graph/digraph/digraph_view.h",
   "compiler/task_graph_simulator/pcg_task.dtg.h",
   "<set>",
-  "<map>"
+  "<map>",
   "utils/many_to_one/many_to_one.h",
   "pcg/machine_space_coordinate.dtg.h",
 ]
@@ -18,7 +17,7 @@ src_includes = [
   "utils/fmt/set.h",
   "utils/hash/set.h",
   "utils/fmt/map.h",
-  "utils/hash/map.h"
+  "utils/hash/map.h",
 ]
 
 [[fields]]

@@ -6,6 +6,8 @@
 #include "task-spec/dynamic_graph/dynamic_open_dataflow_graph.dtg.h"
 #include "task-spec/dynamic_graph/dynamic_slot_site.dtg.h"
 #include "utils/graph/labelled_open_kwarg_dataflow_graph/labelled_open_kwarg_dataflow_graph.h"
+#include "task-spec/dynamic_graph/dynamic_invocation_id_t.dtg.h"
+#include "task-spec/dynamic_graph/dynamic_value_id_t.dtg.h"
 
 namespace FlexFlow {
 
@@ -30,9 +32,7 @@ bool no_part_of_dynamic_graph_satisfies(
 
 void require_full_dynamic_graph_satisfies(
     DynamicOpenDataflowGraph const &,
-    std::function<void(DynamicNodeAttrs const &)> const &,
-    std::function<void(DynamicValueAttrs const &)> const &,
-    std::function<void(DynamicTensorSlot const &)> const &);
+    std::function<void(DynamicNodeInvocation const &)> const &);
 
 std::multiset<DynamicNodeAttrs>
     get_dynamic_nodes(DynamicOpenDataflowGraph const &);
@@ -43,27 +43,51 @@ std::multiset<DynamicTensorSlot>
 std::set<DynamicNodeInvocation>
     get_dynamic_invocation_set(DynamicOpenDataflowGraph const &);
 
-std::unordered_set<DynamicGraphEdge>
+std::set<DynamicValueAttrs>
+  dynamic_graph_get_internal_values(DynamicOpenDataflowGraph const &);
+std::set<DynamicValueAttrs>
+  dynamic_graph_get_external_values(DynamicOpenDataflowGraph const &);
+
+dynamic_invocation_id_t dynamic_graph_get_id_for_invocation(DynamicOpenDataflowGraph const &,
+                                                            DynamicNodeInvocation const &);
+DynamicNodeInvocation dynamic_graph_get_invocation_for_id(DynamicOpenDataflowGraph const &,
+                                                          dynamic_invocation_id_t const &);
+
+dynamic_value_id_t dynamic_graph_get_id_for_value(DynamicOpenDataflowGraph const &,
+                                                  DynamicValueAttrs const &);
+DynamicValueAttrs dynamic_graph_get_value_for_id(DynamicOpenDataflowGraph const &,
+                                                 dynamic_value_id_t const &);
+
+std::set<DynamicGraphEdge>
     get_dynamic_graph_edges(DynamicOpenDataflowGraph const &);
-std::unordered_set<DynamicGraphEdge>
+std::set<DynamicGraphEdge>
     get_dynamic_graph_edges_incoming_to_invocation(
         DynamicOpenDataflowGraph const &, DynamicNodeInvocation const &);
-std::unordered_set<DynamicGraphEdge>
+std::set<DynamicGraphEdge>
     get_dynamic_graph_edges_outgoing_from_invocation(
         DynamicOpenDataflowGraph const &, DynamicNodeInvocation const &);
 
-std::unordered_set<InternalDynamicSlotSite>
+std::set<InternalDynamicSlotSite>
     get_internal_dynamic_slot_sites(DynamicOpenDataflowGraph const &);
 
-std::unordered_set<DynamicSlotSite>
+std::set<DynamicSlotSite>
     get_dynamic_slot_sites(DynamicOpenDataflowGraph const &);
+
+DynamicSlotSite
+    dynamic_graph_find_source_of_slot_site(DynamicOpenDataflowGraph const &,
+                                           InternalDynamicSlotSite const &);
+std::set<InternalDynamicSlotSite>
+    dynamic_graph_find_sinks_of_slot_site(DynamicOpenDataflowGraph const &,
+                                          InternalDynamicSlotSite const &);
 
 DynamicSlotSite
     dynamic_graph_find_source_of_value(DynamicOpenDataflowGraph const &,
                                        DynamicValueAttrs const &);
-std::unordered_set<InternalDynamicSlotSite>
+std::set<InternalDynamicSlotSite>
     dynamic_graph_find_sinks_of_value(DynamicOpenDataflowGraph const &,
                                       DynamicValueAttrs const &);
+
+DynamicValueAttrs dynamic_value_attrs_for_slot_site(DynamicOpenDataflowGraph const &, DynamicSlotSite const &);
 
 std::optional<DynamicValueAttrs>
     find_output_value_attrs(DynamicOpenDataflowGraph const &,

@@ -1,10 +1,10 @@
 #include "utils/orthotope/down_projection.h"
-#include "utils/archetypes/ordered_value_type.h"
+#include "utils/archetypes/jsonable_ordered_value_type.h"
 
 namespace FlexFlow {
 
-using L = ordered_value_type<0>;
-using R = ordered_value_type<1>;
+using L = jsonable_ordered_value_type<0>;
+using R = jsonable_ordered_value_type<1>;
 
 template DownProjection<L, R> make_empty_down_projection();
 
@@ -26,9 +26,9 @@ template void project_dims(DownProjection<L, R> &,
 template UpProjection<R, L>
     invert_down_projection(DownProjection<L, R> const &);
 
-using T1 = ordered_value_type<2>;
-using T2 = ordered_value_type<3>;
-using T3 = ordered_value_type<4>;
+using T1 = jsonable_ordered_value_type<2>;
+using T2 = jsonable_ordered_value_type<3>;
+using T3 = jsonable_ordered_value_type<4>;
 
 template DownProjection<T1, T3>
     compose_down_projections(DownProjection<T1, T2> const &,

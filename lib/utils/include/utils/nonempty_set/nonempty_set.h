@@ -5,6 +5,7 @@
 #include <libassert/assert.hpp>
 #include "utils/hash-utils.h"
 #include "utils/hash/set.h"
+#include "utils/hash/tuple.h"
 #include "utils/fmt/set.h"
 #include "utils/positive_int/positive_int.h"
 #include "utils/containers/set_of.h"

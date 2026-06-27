@@ -76,6 +76,7 @@ TEST_SUITE(FF_TEST_SUITE) {
               },
           }},
           /*parallel_tensor_shape=*/std::nullopt,
+          /*create_grad=*/std::nullopt,
           /*shard_coord=*/shard_coord,
           /*mapping=*/std::nullopt,
           /*accessor=*/std::nullopt,
@@ -114,7 +115,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         /*node_attrs=*/
         DynamicNodeAttrs{
             /*task_type=*/std::nullopt,
-            /*device_coords=*/nonempty_set{mc2},
+            /*device_ids=*/nonempty_set{mc2},
             /*mapping=*/std::nullopt,
             /*op_attrs=*/std::nullopt,
             /*layer_guid=*/

@@ -34,14 +34,14 @@ PerDeviceOpStateBacking perform_distributed_per_device_op_state_initialization(
   for (DynamicNodeInvocation const &invocation : dg.invocations) {
     // Nodes mapped to multiple devices are always parallel operators and don't
     // have any initialization to perform anyway
-    std::optional<MachineSpaceCoordinate> device_coord =
-        maybe_get_only(assert_unwrap(invocation.node_attrs.device_coords));
-    if (!device_coord.has_value()) {
+    std::optional<global_device_id_t> device_id =
+        maybe_get_only(assert_unwrap(invocation.node_attrs.device_ids));
+    if (!device_id.has_value()) {
       continue;
     }
 
     Realm::Processor target_proc = ctx.processor_from_global_device_id(
-        assert_unwrap(device_coord));
+        assert_unwrap(device_id));
 
     TensorInstanceBacking tensor_backing =
         subset_tensor_instance_backing_for_invocation(tensor_instance_backing,

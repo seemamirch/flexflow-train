@@ -29,7 +29,7 @@ type = "std::optional<::FlexFlow::DynamicTaskType>"
 
 [[fields]]
 name = "device_ids"
-type = "std::optional<::FlexFlow::nonempty_set<::FlexFlow::global_device_id_t>+"
+type = "std::optional<::FlexFlow::nonempty_set<::FlexFlow::global_device_id_t>>"
 docstring = '''
 \brief The devices on which this task should execute.
 

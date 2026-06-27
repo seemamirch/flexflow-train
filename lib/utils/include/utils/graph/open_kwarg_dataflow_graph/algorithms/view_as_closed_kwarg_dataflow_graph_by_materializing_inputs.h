@@ -14,6 +14,7 @@
 #include "utils/graph/open_kwarg_dataflow_graph/open_kwarg_dataflow_graph_view.h"
 #include "utils/overload.h"
 #include "utils/containers/set_of.h"
+#include "utils/json/optional.h"
 
 namespace FlexFlow {
 

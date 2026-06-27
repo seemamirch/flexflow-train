@@ -22,12 +22,16 @@
 namespace FlexFlow {
 
 DynamicNodeInvocation make_dynamic_node_invocation_from_mapped(
-    MappedParallelLayerInvocationInfo const &invocation_info)
+    MappedParallelLayerInvocationInfo const &invocation_info,
+    DeviceType device_type)
 {
   DynamicNodeAttrs result_attrs{
       /*task_type=*/std::nullopt,
-      /*device_coord=*/std::nullopt,
-      /*mapping=*/invocation_info.layer_info.mapping,
+      /*device_ids=*/std::nullopt,
+      /*mapping=*/DynamicNodeMapping{
+        /*op_task_group=*/invocation_info.layer_info.mapping,
+        /*device_type=*/device_type,
+      },
       /*op_attrs=*/TrainingOperationAttrs{invocation_info.layer_info.attrs.op_attrs},
       /*pcg_layer_guid=*/dynamic_layer_guid_t{invocation_info.layer_info.guid},
       /*per_device_op_state=*/std::nullopt,
@@ -47,6 +51,7 @@ DynamicNodeInvocation make_dynamic_node_invocation_from_mapped(
       DynamicValueAttrs{
         /*tensor_guid=*/dynamic_tensor_guid_t{tensor.guid},
         /*parallel_tensor_shape=*/tensor.attrs.shape,
+        /*create_grad=*/(tensor.attrs.create_grad == CreateGrad::YES),
         /*shard_coord=*/std::nullopt,
         /*mapping=*/std::nullopt,
         /*accessor=*/std::nullopt,
@@ -71,10 +76,15 @@ DynamicNodeInvocation make_dynamic_node_invocation_from_mapped(
 }
 
 DynamicOpenDataflowGraph make_dynamic_open_dataflow_graph_from_mapped_pcg(
-    MappedParallelComputationGraph const &mpcg) {
+    MappedParallelComputationGraph const &mpcg, DeviceType device_type) {
 
   return dynamic_open_dataflow_graph_from_invocation_set(
-    transform(set_of(mpcg_get_invocation_set(mpcg)), make_dynamic_node_invocation_from_mapped));
+    transform(mpcg_get_invocation_set(mpcg), 
+              [&](MappedParallelLayerInvocationInfo const &mpcg_invocation) 
+                -> DynamicNodeInvocation
+              {
+                return make_dynamic_node_invocation_from_mapped(mpcg_invocation, device_type);
+              }));
 }
 
 } // namespace FlexFlow
