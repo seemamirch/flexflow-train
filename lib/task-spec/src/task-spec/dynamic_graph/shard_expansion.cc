@@ -105,12 +105,6 @@ static DynamicNodeInvocationShardingInfo invocation_sharding_info_for_binding(
     };
   };
 
-  DynamicNodeAttrs expanded_node_attrs = [&]() {
-    DynamicNodeAttrs result = i.node_attrs;
-    result.device_ids = nonempty_set{device_id};
-    return result;
-  }();
-
   DynamicNodeInvocationShardingInfo result = DynamicNodeInvocationShardingInfo{
       /*device_coord=*/nonempty_set{device_id},
       /*value_sharding=*/
