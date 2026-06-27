@@ -75,10 +75,9 @@ TEST_SUITE(FF_TEST_SUITE) {
         };
 
         std::set<UndirectedEdge> result = g.query_edges(query);
-        std::set<UndirectedEdge> correct =
-            std::set<UndirectedEdge>{
-                e.at(0),
-            };
+        std::set<UndirectedEdge> correct = std::set<UndirectedEdge>{
+            e.at(0),
+        };
 
         CHECK(result == correct);
       }
@@ -107,11 +106,9 @@ TEST_SUITE(FF_TEST_SUITE) {
       g.remove_edge(e.at(0));
 
       CHECK(g.query_edges(undirected_edge_query_all()) ==
-            std::set<UndirectedEdge>{
-                e.at(1), e.at(2), e.at(3), e.at(4)});
+            std::set<UndirectedEdge>{e.at(1), e.at(2), e.at(3), e.at(4)});
       CHECK(g.query_nodes(node_query_all()) ==
-            std::set<Node>{
-                n.at(0), n.at(1), n.at(2), n.at(3), n.at(4)});
+            std::set<Node>{n.at(0), n.at(1), n.at(2), n.at(3), n.at(4)});
 
       g.remove_edge(e.at(1));
       g.remove_edge(e.at(3));

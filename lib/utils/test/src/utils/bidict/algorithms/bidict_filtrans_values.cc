@@ -10,8 +10,8 @@ TEST_SUITE(FF_TEST_SUITE) {
         {2, "two"},
     };
 
-    bidict<int, int> result =
-        bidict_filtrans_values(dict, [](std::string const &v) -> std::optional<int> {
+    bidict<int, int> result = bidict_filtrans_values(
+        dict, [](std::string const &v) -> std::optional<int> {
           if (v == "two") {
             return std::nullopt;
           } else {

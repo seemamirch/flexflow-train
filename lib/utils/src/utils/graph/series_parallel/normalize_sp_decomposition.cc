@@ -1,12 +1,12 @@
 #include "utils/graph/series_parallel/normalize_sp_decomposition.h"
 #include "utils/containers/filter.h"
 #include "utils/containers/get_only.h"
+#include "utils/containers/multiset_of.h"
 #include "utils/containers/transform.h"
 #include "utils/exception.h"
 #include "utils/graph/series_parallel/non_normal_sp_decomposition.h"
 #include "utils/graph/series_parallel/series_parallel_decomposition.h"
 #include "utils/variant.h"
-#include "utils/containers/multiset_of.h"
 
 namespace FlexFlow {
 

@@ -98,8 +98,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
       KwargNodeAddedResult<std::optional<int>> n1_added = g.add_node(
           /*inputs=*/
-          std::map<std::optional<int>,
-                             KwargDataflowOutput<std::optional<int>>>{
+          std::map<std::optional<int>, KwargDataflowOutput<std::optional<int>>>{
               {
                   1,
                   input1,
@@ -122,8 +121,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
       KwargNodeAddedResult<std::optional<int>> n2_added = g.add_node(
           /*inputs=*/
-          std::map<std::optional<int>,
-                             KwargDataflowOutput<std::optional<int>>>{
+          std::map<std::optional<int>, KwargDataflowOutput<std::optional<int>>>{
               {
                   4,
                   input2,

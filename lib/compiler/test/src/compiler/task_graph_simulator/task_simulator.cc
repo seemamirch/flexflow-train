@@ -26,8 +26,8 @@
 #include "utils/graph/open_dataflow_graph/algorithms/get_source_nodes.h"
 #include "utils/nonnegative_int/nonnegative_int.h"
 #include <doctest/doctest.h>
-#include <optional>
 #include <map>
+#include <optional>
 #include <set>
 
 namespace FlexFlow {

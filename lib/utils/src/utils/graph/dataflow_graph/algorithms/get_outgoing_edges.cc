@@ -5,7 +5,7 @@
 namespace FlexFlow {
 
 std::set<DataflowEdge> get_outgoing_edges(DataflowGraphView const &g,
-                                                    Node const &n) {
+                                          Node const &n) {
   return g.query_edges(DataflowEdgeQuery{
       query_set<Node>::match_single_value(n),
       query_set<nonnegative_int>::matchall(),
@@ -14,9 +14,8 @@ std::set<DataflowEdge> get_outgoing_edges(DataflowGraphView const &g,
   });
 }
 
-std::set<DataflowEdge>
-    get_outgoing_edges(DataflowGraphView const &g,
-                       std::set<Node> const &ns) {
+std::set<DataflowEdge> get_outgoing_edges(DataflowGraphView const &g,
+                                          std::set<Node> const &ns) {
   DataflowEdgeQuery query = DataflowEdgeQuery{
       query_set<Node>::match_values_in(set_of(ns)),
       query_set<nonnegative_int>::matchall(),

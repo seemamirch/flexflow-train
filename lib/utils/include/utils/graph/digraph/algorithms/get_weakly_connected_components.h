@@ -5,8 +5,7 @@
 
 namespace FlexFlow {
 
-std::set<std::set<Node>>
-    get_weakly_connected_components(DiGraphView const &);
+std::set<std::set<Node>> get_weakly_connected_components(DiGraphView const &);
 
 } // namespace FlexFlow
 

@@ -24,9 +24,8 @@ LabelledKwargDataflowGraphView<NodeLabel, OutputLabel, SlotName>
   std::map<Node, NodeLabel> g_node_labelling =
       get_labelled_kwarg_dataflow_graph_node_label_map(g);
 
-  std::map<KwargDataflowOutput<SlotName>, OutputLabel>
-      g_output_labelling =
-          get_labelled_kwarg_dataflow_graph_output_label_map(g);
+  std::map<KwargDataflowOutput<SlotName>, OutputLabel> g_output_labelling =
+      get_labelled_kwarg_dataflow_graph_output_label_map(g);
 
   return kwarg_dataflow_graph_view_with_labelling(
       unlabelled_subgraph,

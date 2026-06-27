@@ -32,8 +32,7 @@ DimProjection<L, R>
 }
 
 template <typename L, typename R>
-std::set<L>
-    input_dims_of_projection(DimProjection<L, R> const &projection) {
+std::set<L> input_dims_of_projection(DimProjection<L, R> const &projection) {
   return projection.template visit<std::set<L>>(overload{
       [](UpProjection<L, R> const &p) {
         return input_dims_of_up_projection(p);
@@ -48,8 +47,7 @@ std::set<L>
 }
 
 template <typename L, typename R>
-std::set<R>
-    output_dims_of_projection(DimProjection<L, R> const &projection) {
+std::set<R> output_dims_of_projection(DimProjection<L, R> const &projection) {
   return projection.template visit<std::set<R>>(overload{
       [](UpProjection<L, R> const &p) {
         return output_dims_of_up_projection(p);
@@ -102,8 +100,7 @@ DimCoord<R> compute_dim_projection(DimProjection<L, R> const &projection,
   {
     std::set<L> nontrivial_input_domain_dims =
         get_nontrivial_domain_dims(input_domain);
-    std::set<L> projection_input_dims =
-        input_dims_of_projection(projection);
+    std::set<L> projection_input_dims = input_dims_of_projection(projection);
     std::set<L> all_input_domain_dims = get_domain_dims(input_domain);
 
     ASSERT(is_subseteq_of(nontrivial_input_domain_dims, projection_input_dims),
@@ -117,10 +114,8 @@ DimCoord<R> compute_dim_projection(DimProjection<L, R> const &projection,
   {
     std::set<R> nontrivial_output_domain_dims =
         get_nontrivial_domain_dims(output_domain);
-    std::set<R> projection_output_dims =
-        output_dims_of_projection(projection);
-    std::set<R> all_output_domain_dims =
-        get_domain_dims(output_domain);
+    std::set<R> projection_output_dims = output_dims_of_projection(projection);
+    std::set<R> all_output_domain_dims = get_domain_dims(output_domain);
 
     ASSERT(
         is_subseteq_of(nontrivial_output_domain_dims, projection_output_dims),

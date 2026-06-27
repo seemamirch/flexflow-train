@@ -99,28 +99,26 @@ MachineMappingResult
 
     ASSERT(get_all_layers(sub_constraints) == get_all_leaf_paths(root));
 
-    std::set<BinaryTreePath> unconstrained_boundary_layers =
-        set_minus(boundary_layers, set_of(get_constrained_layers(sub_constraints)));
+    std::set<BinaryTreePath> unconstrained_boundary_layers = set_minus(
+        boundary_layers, set_of(get_constrained_layers(sub_constraints)));
 
-    std::map<BinaryTreePath, std::set<MachineView>>
-        allowed = generate_map(
-            unconstrained_boundary_layers,
-            [&](BinaryTreePath const &l) -> std::set<MachineView> {
-              UnmappedRuntimeOnlyOpCostEstimateKey leaf =
-                  mm_problem_tree_get_subtree_at_path(root, l)
-                      .value()
-                      .get<UnmappedRuntimeOnlyOpCostEstimateKey>();
-              return context.allowed_machine_views(leaf, resources);
-            });
+    std::map<BinaryTreePath, std::set<MachineView>> allowed =
+        generate_map(unconstrained_boundary_layers,
+                     [&](BinaryTreePath const &l) -> std::set<MachineView> {
+                       UnmappedRuntimeOnlyOpCostEstimateKey leaf =
+                           mm_problem_tree_get_subtree_at_path(root, l)
+                               .value()
+                               .get<UnmappedRuntimeOnlyOpCostEstimateKey>();
+                       return context.allowed_machine_views(leaf, resources);
+                     });
 
-    std::set<std::map<BinaryTreePath, MachineView>>
-        assignments = get_all_assignments(allowed);
+    std::set<std::map<BinaryTreePath, MachineView>> assignments =
+        get_all_assignments(allowed);
 
-    return transform(
-        assignments,
-        [](std::map<BinaryTreePath, MachineView> const &m) {
-          return ParallelLayerGuidObliviousMachineMapping{m};
-        });
+    return transform(assignments,
+                     [](std::map<BinaryTreePath, MachineView> const &m) {
+                       return ParallelLayerGuidObliviousMachineMapping{m};
+                     });
   };
 
   auto eval_pre_boundary_mapping =

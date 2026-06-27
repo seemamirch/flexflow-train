@@ -19,26 +19,24 @@ struct UnorderedSetKwargDataflowGraph final
     : public IKwargDataflowGraph<SlotName> {
   UnorderedSetKwargDataflowGraph() = default;
 
-  KwargNodeAddedResult<SlotName> add_node(
-      std::map<SlotName, KwargDataflowOutput<SlotName>> const &inputs,
-      std::set<SlotName> const &output_slots) override {
+  KwargNodeAddedResult<SlotName>
+      add_node(std::map<SlotName, KwargDataflowOutput<SlotName>> const &inputs,
+               std::set<SlotName> const &output_slots) override {
 
     Node new_node = this->node_source.new_node();
 
-    std::map<SlotName, KwargDataflowOutput<SlotName>> outputs =
-        generate_map(
-            output_slots,
-            [&](SlotName const &output_slot) -> KwargDataflowOutput<SlotName> {
-              KwargDataflowOutput<SlotName> output =
-                  KwargDataflowOutput<SlotName>{
-                      /*node=*/new_node,
-                      /*slot_name=*/output_slot,
-                  };
+    std::map<SlotName, KwargDataflowOutput<SlotName>> outputs = generate_map(
+        output_slots,
+        [&](SlotName const &output_slot) -> KwargDataflowOutput<SlotName> {
+          KwargDataflowOutput<SlotName> output = KwargDataflowOutput<SlotName>{
+              /*node=*/new_node,
+              /*slot_name=*/output_slot,
+          };
 
-              this->outputs.insert(output);
+          this->outputs.insert(output);
 
-              return output;
-            });
+          return output;
+        });
 
     this->add_node_unsafe(new_node, inputs, outputs);
 
@@ -51,8 +49,8 @@ struct UnorderedSetKwargDataflowGraph final
   void add_node_unsafe(
       Node const &node,
       std::map<SlotName, KwargDataflowOutput<SlotName>> const &inputs,
-      std::map<SlotName, KwargDataflowOutput<SlotName>> const
-          &outputs) override {
+      std::map<SlotName, KwargDataflowOutput<SlotName>> const &outputs)
+      override {
     this->nodes.insert(node);
 
     for (auto const &[input_slot_name, src] : inputs) {

@@ -8,5 +8,4 @@ using V = value_type<1>;
 
 bool is_submapeq_of(std::map<K, V> const &, std::map<K, V> const &);
 
-
 } // namespace FlexFlow

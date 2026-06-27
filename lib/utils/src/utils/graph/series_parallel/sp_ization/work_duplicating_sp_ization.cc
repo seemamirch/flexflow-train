@@ -2,9 +2,9 @@
 #include "utils/containers/filter.h"
 #include "utils/containers/get_only.h"
 #include "utils/containers/group_by.h"
+#include "utils/containers/multiset_of.h"
 #include "utils/containers/slice.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/multiset_of.h"
 #include "utils/fmt/variant.h"
 #include "utils/graph/digraph/algorithms/get_initial_nodes.h"
 #include "utils/graph/digraph/algorithms/get_predecessors.h"
@@ -113,9 +113,8 @@ static SeriesParallelDecomposition
   for (Node const &node : get_topological_ordering(g)) {
 
     std::multiset<NonNormalSPDecomposition> predecessors_as_sp =
-        multiset_of(
-            transform(get_predecessors(g, node),
-                      [&](Node const &p) { return node_to_sp.at(p); }));
+        multiset_of(transform(get_predecessors(g, node),
+                              [&](Node const &p) { return node_to_sp.at(p); }));
 
     NonNormalSPDecomposition parallel_comp =
         non_normal_parallel_composition(predecessors_as_sp);

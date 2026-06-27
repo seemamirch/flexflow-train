@@ -475,25 +475,24 @@ Substitution create_partition_attention_combine(positive_int num_heads,
   OutputGraphExprValue o_replicate_weight_output =
       insert_replicate(b, degree, o_weights);
 
-  std::map<TensorSlotName, OutputGraphExprValue> o_attention_inputs =
+  std::map<TensorSlotName, OutputGraphExprValue> o_attention_inputs = {
       {
-          {
-              TensorSlotName::QUERY,
-              o_partition_query_input_output,
-          },
-          {
-              TensorSlotName::KEY,
-              o_partition_key_input_output,
-          },
-          {
-              TensorSlotName::VALUE,
-              o_partition_value_input_output,
-          },
-          {
-              TensorSlotName::WEIGHT,
-              o_replicate_weight_output,
-          },
-      };
+          TensorSlotName::QUERY,
+          o_partition_query_input_output,
+      },
+      {
+          TensorSlotName::KEY,
+          o_partition_key_input_output,
+      },
+      {
+          TensorSlotName::VALUE,
+          o_partition_value_input_output,
+      },
+      {
+          TensorSlotName::WEIGHT,
+          o_replicate_weight_output,
+      },
+  };
 
   OutputOperatorAttrsAssignment attention_expr = OutputOperatorAttrsAssignment{
       b.pattern_node_named(attention_name),
@@ -569,25 +568,24 @@ Substitution create_replicate_attention_reduce(positive_int num_heads,
   OutputGraphExprValue o_partition_weight_output =
       insert_partition(b, degree, ff_dim_t{1_n}, o_weights);
 
-  std::map<TensorSlotName, OutputGraphExprValue> o_attention_inputs =
+  std::map<TensorSlotName, OutputGraphExprValue> o_attention_inputs = {
       {
-          {
-              TensorSlotName::QUERY,
-              o_replicate_query_input_output,
-          },
-          {
-              TensorSlotName::KEY,
-              o_replicate_key_input_output,
-          },
-          {
-              TensorSlotName::VALUE,
-              o_replicate_value_input_output,
-          },
-          {
-              TensorSlotName::WEIGHT,
-              o_partition_weight_output,
-          },
-      };
+          TensorSlotName::QUERY,
+          o_replicate_query_input_output,
+      },
+      {
+          TensorSlotName::KEY,
+          o_replicate_key_input_output,
+      },
+      {
+          TensorSlotName::VALUE,
+          o_replicate_value_input_output,
+      },
+      {
+          TensorSlotName::WEIGHT,
+          o_partition_weight_output,
+      },
+  };
 
   OutputOperatorAttrsAssignment attention_expr = OutputOperatorAttrsAssignment{
       b.pattern_node_named(attention_name),

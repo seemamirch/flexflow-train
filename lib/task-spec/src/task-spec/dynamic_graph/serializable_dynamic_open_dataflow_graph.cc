@@ -4,19 +4,19 @@
 namespace FlexFlow {
 
 SerializableDynamicOpenDataflowGraph
-    dynamic_open_dataflow_graph_to_serializable(DynamicOpenDataflowGraph const &g)
-{
+    dynamic_open_dataflow_graph_to_serializable(
+        DynamicOpenDataflowGraph const &g) {
   return SerializableDynamicOpenDataflowGraph{
-    /*invocations=*/transform(g.invocations, dynamic_node_invocation_to_serializable),
+      /*invocations=*/transform(g.invocations,
+                                dynamic_node_invocation_to_serializable),
   };
 }
 
 DynamicOpenDataflowGraph dynamic_open_dataflow_graph_from_serializable(
-    SerializableDynamicOpenDataflowGraph const &serializable)
-{
+    SerializableDynamicOpenDataflowGraph const &serializable) {
   return DynamicOpenDataflowGraph{
-    /*invocations=*/transform(serializable.invocations, 
-                              dynamic_node_invocation_from_serializable),
+      /*invocations=*/transform(serializable.invocations,
+                                dynamic_node_invocation_from_serializable),
   };
 }
 

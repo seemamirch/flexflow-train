@@ -416,8 +416,7 @@ positive_int get_oSize(TensorShape const &) {
   NOT_IMPLEMENTED();
 }
 
-tl::expected<std::map<TensorSlotName, ParallelTensorShape>,
-             std::string>
+tl::expected<std::map<TensorSlotName, ParallelTensorShape>, std::string>
     get_weight_shapes(MultiHeadAttentionAttrs const &attrs,
                       ParallelTensorShape const &input_q,
                       ParallelTensorShape const &input_k,

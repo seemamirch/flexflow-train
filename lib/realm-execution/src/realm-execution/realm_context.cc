@@ -15,8 +15,8 @@
 #include "realm-execution/tasks/task_id_t.h"
 #include "task-spec/global_device_id_t.h"
 #include "utils/bidict/algorithms/bidict_from_enumerating.h"
-#include "utils/bidict/algorithms/merge_disjoint_bidicts.h"
 #include "utils/bidict/algorithms/bidict_transform_values.h"
+#include "utils/bidict/algorithms/merge_disjoint_bidicts.h"
 #include "utils/containers/are_all_same.h"
 #include "utils/containers/contains_key.h"
 #include "utils/containers/group_by.h"
@@ -56,13 +56,14 @@ bidict<Realm::Processor, local_device_id_t> build_local_machine_topology(
             set_of(by_proc_kind.at_l(k).unwrap_as_unordered_set()))
             .reversed();
 
-    bidict<Realm::Processor, local_device_id_t> result = bidict_transform_values(
-        enumerated, [&](nonnegative_int idx) -> local_device_id_t {
-          return local_device_id_t{
-              /*idx=*/device_in_node_idx_t{idx},
-              /*device_type=*/device_type_from_processor_kind(k),
-          };
-        });
+    bidict<Realm::Processor, local_device_id_t> result =
+        bidict_transform_values(
+            enumerated, [&](nonnegative_int idx) -> local_device_id_t {
+              return local_device_id_t{
+                  /*idx=*/device_in_node_idx_t{idx},
+                  /*device_type=*/device_type_from_processor_kind(k),
+              };
+            });
 
     return result;
   };

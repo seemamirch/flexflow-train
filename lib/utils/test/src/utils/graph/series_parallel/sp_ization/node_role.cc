@@ -36,12 +36,11 @@ TEST_SUITE(FF_TEST_SUITE) {
       DiGraph result =
           contract_out_nodes_of_given_role(g, NodeRole::DUMMY, node_roles);
 
-      CHECK(get_nodes(result) ==
-            std::set<Node>{n.at(0), n.at(3), n.at(4)});
+      CHECK(get_nodes(result) == std::set<Node>{n.at(0), n.at(3), n.at(4)});
       CHECK(get_edges(result) ==
             std::set<DirectedEdge>{DirectedEdge{n.at(0), n.at(4)},
-                                             DirectedEdge{n.at(0), n.at(3)},
-                                             DirectedEdge{n.at(3), n.at(4)}});
+                                   DirectedEdge{n.at(0), n.at(3)},
+                                   DirectedEdge{n.at(3), n.at(4)}});
     }
 
     SUBCASE("graph is unchanged when no node has the target role") {

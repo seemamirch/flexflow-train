@@ -1,5 +1,5 @@
-#include "utils/containers/multiset_of.h"
 #include "test/utils/doctest/fmt/multiset.h"
+#include "utils/containers/multiset_of.h"
 #include <doctest/doctest.h>
 #include <vector>
 

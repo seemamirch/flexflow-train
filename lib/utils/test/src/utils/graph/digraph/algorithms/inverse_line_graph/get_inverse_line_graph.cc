@@ -76,12 +76,11 @@ TEST_SUITE(FF_TEST_SUITE) {
       }
 
       SUBCASE("inverse_edge_to_line_node_bidict") {
-        std::map<Node, DirectedEdge> result_bidict =
-            map_values(result.inverse_edge_to_line_node_bidict.reversed()
-                           .as_map(),
-                       [&](MultiDiEdge const &e) {
-                         return get_directed_edge(result.graph, e);
-                       });
+        std::map<Node, DirectedEdge> result_bidict = map_values(
+            result.inverse_edge_to_line_node_bidict.reversed().as_map(),
+            [&](MultiDiEdge const &e) {
+              return get_directed_edge(result.graph, e);
+            });
         std::map<Node, DirectedEdge> correct_bidict = {
             {n.at(0), DirectedEdge{inv.at(0), inv.at(1)}},
             {n.at(1), DirectedEdge{inv.at(1), inv.at(2)}},
@@ -134,12 +133,11 @@ TEST_SUITE(FF_TEST_SUITE) {
       }
 
       SUBCASE("inverse_edge_to_line_node_bidict") {
-        std::map<Node, DirectedEdge> result_bidict =
-            map_values(result.inverse_edge_to_line_node_bidict.reversed()
-                           .as_map(),
-                       [&](MultiDiEdge const &e) {
-                         return get_directed_edge(result.graph, e);
-                       });
+        std::map<Node, DirectedEdge> result_bidict = map_values(
+            result.inverse_edge_to_line_node_bidict.reversed().as_map(),
+            [&](MultiDiEdge const &e) {
+              return get_directed_edge(result.graph, e);
+            });
         std::map<Node, DirectedEdge> correct_bidict = {
             {n.at(0), DirectedEdge{inv.at(0), inv.at(1)}},
             {n.at(1), DirectedEdge{inv.at(0), inv.at(1)}},

@@ -10,8 +10,8 @@ bidict<global_device_id_t, OperatorAtomicTaskShardBinding>
     dynamic_node_mapping_get_shard_bindings(DynamicNodeMapping const &);
 
 OperatorAtomicTaskShardBinding
-    dynamic_node_mapping_get_shard_binding_for_device(DynamicNodeMapping const &,
-                                                      global_device_id_t const &);
+    dynamic_node_mapping_get_shard_binding_for_device(
+        DynamicNodeMapping const &, global_device_id_t const &);
 
 bidict<ParallelTensorSpaceCoordinate, global_device_id_t>
     dynamic_node_mapping_bindings_for_slot_name(DynamicNodeMapping const &,

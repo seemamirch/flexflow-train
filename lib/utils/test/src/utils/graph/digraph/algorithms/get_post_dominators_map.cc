@@ -14,8 +14,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
       g.add_edge(DirectedEdge{n.at(0), n.at(1)});
 
-      std::map<Node, std::set<Node>> result =
-          get_post_dominators_map(g);
+      std::map<Node, std::set<Node>> result = get_post_dominators_map(g);
       std::map<Node, std::set<Node>> correct = {
           {n.at(0), {n.at(0), n.at(1)}},
           {n.at(1), {n.at(1)}},
@@ -41,8 +40,7 @@ TEST_SUITE(FF_TEST_SUITE) {
                     DirectedEdge{n.at(8), n.at(9)},
                 });
 
-      std::map<Node, std::set<Node>> result =
-          get_post_dominators_map(g);
+      std::map<Node, std::set<Node>> result = get_post_dominators_map(g);
       std::map<Node, std::set<Node>> correct = {
           {n.at(0), {n.at(0), n.at(9)}},
           {n.at(1), {n.at(1), n.at(7), n.at(9)}},
@@ -85,8 +83,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           {n.at(5), {n.at(5)}},
       };
 
-      std::map<Node, std::set<Node>> result =
-          get_post_dominators_map(g);
+      std::map<Node, std::set<Node>> result = get_post_dominators_map(g);
 
       CHECK(result == correct);
     }

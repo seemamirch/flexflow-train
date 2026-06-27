@@ -95,8 +95,7 @@ TEST_SUITE(FF_TEST_SUITE) {
       CHECK(is_binary_sp_tree_right_associative(result));
 
       std::multiset<Node> result_nodes = get_nodes(input);
-      std::multiset<Node> correct_nodes = {
-          n1, n2, n3, n3, n5, n6, n4, n5};
+      std::multiset<Node> correct_nodes = {n1, n2, n3, n3, n5, n6, n4, n5};
 
       CHECK(result_nodes == correct_nodes);
     }

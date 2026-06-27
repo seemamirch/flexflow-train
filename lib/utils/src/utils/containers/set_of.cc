@@ -15,5 +15,4 @@ using V = ordered_value_type<1>;
 
 template std::set<std::pair<K, V>> set_of(std::map<K, V> const &);
 
-
 } // namespace FlexFlow

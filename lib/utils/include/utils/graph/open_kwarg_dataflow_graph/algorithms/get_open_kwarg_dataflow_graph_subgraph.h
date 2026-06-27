@@ -2,6 +2,7 @@
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_GRAPH_OPEN_KWARG_DATAFLOW_GRAPH_ALGORITHMS_GET_OPEN_KWARG_DATAFLOW_GRAPH_SUBGRAPH_H
 
 #include "utils/bidict/generate_bidict.h"
+#include "utils/containers/set_of.h"
 #include "utils/containers/set_union.h"
 #include "utils/containers/values.h"
 #include "utils/graph/kwarg_dataflow_graph/kwarg_dataflow_output_query.h"
@@ -11,7 +12,6 @@
 #include "utils/graph/open_kwarg_dataflow_graph/algorithms/open_kwarg_dataflow_subgraph_result.dtg.h"
 #include "utils/graph/open_kwarg_dataflow_graph/algorithms/view_from_open_kwarg_dataflow_graph_data.h"
 #include "utils/overload.h"
-#include "utils/containers/set_of.h"
 
 namespace FlexFlow {
 
@@ -71,7 +71,8 @@ OpenKwargDataflowGraphData<GraphInputName, SlotName>
 
   std::set<OpenKwargDataflowEdge<GraphInputName, SlotName>>
       subgraph_input_edges = transform(
-          set_of(get_open_kwarg_dataflow_subgraph_incoming_edges(g, set_of(subgraph_nodes))),
+          set_of(get_open_kwarg_dataflow_subgraph_incoming_edges(
+              g, set_of(subgraph_nodes))),
           [&](OpenKwargDataflowEdge<GraphInputName, SlotName> const &edge) {
             return edge.template visit<
                 OpenKwargDataflowEdge<GraphInputName, SlotName>>(overload{
@@ -115,7 +116,8 @@ OpenKwargDataflowGraphData<GraphInputName, SlotName>
       };
 
   std::set<OpenKwargDataflowEdge<GraphInputName, SlotName>>
-      subgraph_interior_edges = set_of(g.query_edges(subgraph_interior_edges_query));
+      subgraph_interior_edges =
+          set_of(g.query_edges(subgraph_interior_edges_query));
 
   std::set<KwargDataflowGraphInput<GraphInputName>> subgraph_inputs =
       set_of(values(full_graph_values_to_subgraph_inputs));

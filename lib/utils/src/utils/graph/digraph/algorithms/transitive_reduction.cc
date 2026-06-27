@@ -22,8 +22,7 @@ std::set<DirectedEdge>
   return set_intersection(g.query_edges(q), this->edge_mask);
 }
 
-std::set<Node>
-    DirectedEdgeMaskView::query_nodes(NodeQuery const &q) const {
+std::set<Node> DirectedEdgeMaskView::query_nodes(NodeQuery const &q) const {
   return g.query_nodes(q);
 }
 
@@ -40,9 +39,9 @@ DiGraph transitive_reduction(DiGraphView const &g) {
   // transitive_closure inlined to avoid any drifts in node numbering
   // between transitive_closure and transitive_reduction
 
-  bidict<int, Node> nodes =
-      bidict_transform_keys(bidict_from_enumerating(get_nodes(g)),
-                     [](nonnegative_int x) { return x.unwrap_nonnegative(); });
+  bidict<int, Node> nodes = bidict_transform_keys(
+      bidict_from_enumerating(get_nodes(g)),
+      [](nonnegative_int x) { return x.unwrap_nonnegative(); });
   int num_nodes = nodes.size();
 
   std::vector<bool> edge_matrix(num_nodes * num_nodes, false);

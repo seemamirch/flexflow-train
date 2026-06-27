@@ -43,8 +43,8 @@
 
 namespace FlexFlow {
 
-static std::set<Node>
-    get_component(DiGraph const &sp, std::set<Node> const &nodes) {
+static std::set<Node> get_component(DiGraph const &sp,
+                                    std::set<Node> const &nodes) {
   std::set<Node> parents = set_union(
       transform(nodes, [&](Node const &n) { return get_predecessors(sp, n); }));
   std::set<Node> children = set_union(transform(
@@ -141,8 +141,7 @@ static UpDownPartition
   partitions.insert(
       UpDownPartition{base_up, set_union(base_down, assignable_nodes)});
 
-  std::set<UpDownPartition> valid_partitions =
-      filter(partitions, is_valid);
+  std::set<UpDownPartition> valid_partitions = filter(partitions, is_valid);
   ASSERT(!valid_partitions.empty());
 
   auto partition_cost = [&](UpDownPartition const &p) {
@@ -155,11 +154,11 @@ static UpDownPartition
   return argmin(valid_partitions, partition_cost);
 }
 
-static std::set<DirectedEdge> edges_to_remove_flexible(
-    DiGraph const &sp,
-    std::set<Node> const &up,
-    std::set<Node> const &down,
-    std::map<Node, NodeRole> const &node_roles) {
+static std::set<DirectedEdge>
+    edges_to_remove_flexible(DiGraph const &sp,
+                             std::set<Node> const &up,
+                             std::set<Node> const &down,
+                             std::map<Node, NodeRole> const &node_roles) {
   std::set<DirectedEdge> to_remove;
 
   // from up to down
@@ -210,10 +209,9 @@ static Node add_sync_node(DiGraph &sp,
   return sync_node;
 }
 
-static std::set<Node>
-    get_next_nodes(DiGraph const &sp,
-                   DiGraph const &g,
-                   std::map<Node, float> const &cost_map) {
+static std::set<Node> get_next_nodes(DiGraph const &sp,
+                                     DiGraph const &g,
+                                     std::map<Node, float> const &cost_map) {
   std::map<Node, float> sp_longest_paths =
       get_weighted_longest_path_lengths_from_root(sp, cost_map);
 
@@ -221,14 +219,13 @@ static std::set<Node>
   std::set<Node> g_nodes = get_nodes(g);
 
   // candidate nodes: not in sp but all predecessors in sp
-  std::set<Node> candidate_nodes =
-      filter(g_nodes, [&](Node const &node) {
-        if (contains(sp_nodes, node)) {
-          return false;
-        }
-        std::set<Node> preds = get_predecessors(g, node);
-        return is_subseteq_of(preds, sp_nodes);
-      });
+  std::set<Node> candidate_nodes = filter(g_nodes, [&](Node const &node) {
+    if (contains(sp_nodes, node)) {
+      return false;
+    }
+    std::set<Node> preds = get_predecessors(g, node);
+    return is_subseteq_of(preds, sp_nodes);
+  });
 
   ASSERT(!candidate_nodes.empty());
 
@@ -265,8 +262,7 @@ SeriesParallelDecomposition
   DiGraph g_reduced =
       materialize_digraph_view<AdjacencyDiGraph>(transitive_reduction(g));
 
-  std::map<Node, NodeRole> node_roles =
-      get_initial_node_role_map(g_reduced);
+  std::map<Node, NodeRole> node_roles = get_initial_node_role_map(g_reduced);
 
   DiGraph sp = DiGraph::create<AdjacencyDiGraph>();
   Node root = get_only(get_initial_nodes(g_reduced));

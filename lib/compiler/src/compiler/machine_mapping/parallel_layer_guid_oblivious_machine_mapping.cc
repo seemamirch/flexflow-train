@@ -5,11 +5,11 @@
 #include "op-attrs/get_operator_task_space.h"
 #include "op-attrs/parallel_tensor_shape.h"
 #include "pcg/parallel_computation_graph/parallel_computation_graph.h"
+#include "utils/containers/binary_merge_disjoint_maps.h"
 #include "utils/containers/map_keys.h"
 #include "utils/containers/require_same.h"
 #include "utils/containers/try_at.h"
 #include "utils/full_binary_tree/binary_tree_path.h"
-#include "utils/containers/binary_merge_disjoint_maps.h"
 
 namespace FlexFlow {
 
@@ -47,12 +47,11 @@ std::map<BinaryTreePath, MachineSpaceStencil>
   std::set<BinaryTreePath> leaf_paths = require_same(
       pcg_sp_tree_get_all_leaf_paths(decomposition), keys(mapping.raw_mapping));
 
-  std::map<BinaryTreePath, OperatorTaskSpace>
-      path_to_op_task_space_map =
-          map_values(pcg_sp_tree_get_path_to_leaf_map(decomposition),
-                     [&](parallel_layer_guid_t l) -> OperatorTaskSpace {
-                       return get_operator_task_space(pcg, l);
-                     });
+  std::map<BinaryTreePath, OperatorTaskSpace> path_to_op_task_space_map =
+      map_values(pcg_sp_tree_get_path_to_leaf_map(decomposition),
+                 [&](parallel_layer_guid_t l) -> OperatorTaskSpace {
+                   return get_operator_task_space(pcg, l);
+                 });
 
   return generate_map(
       leaf_paths, [&](BinaryTreePath const &p) -> MachineSpaceStencil {
@@ -68,8 +67,8 @@ std::map<BinaryTreePath, std::optional<MachineSpaceStencil>>
         MachineMappingProblemTree const &tree,
         ParallelLayerGuidObliviousMachineMapping const &mapping) {
 
-  std::map<BinaryTreePath, UnmappedRuntimeOnlyOpCostEstimateKey>
-      tree_leaf_map = mm_problem_tree_get_path_to_leaf_map(tree);
+  std::map<BinaryTreePath, UnmappedRuntimeOnlyOpCostEstimateKey> tree_leaf_map =
+      mm_problem_tree_get_path_to_leaf_map(tree);
 
   std::set<BinaryTreePath> mapping_paths = keys(mapping.raw_mapping);
   std::set<BinaryTreePath> tree_paths = keys(tree_leaf_map);
@@ -88,11 +87,10 @@ std::map<BinaryTreePath, std::optional<MachineSpaceStencil>>
         ComputationGraphOpAttrs leaf_op_attrs =
             compgraph_op_attrs_from_pcg_op_attrs(leaf.op_attrs).value();
 
-        std::map<TensorSlotName, ParallelTensorDimDegrees>
-            leaf_input_degrees =
-                map_values(leaf.input_shapes, [](ParallelTensorShape const &s) {
-                  return get_parallel_degrees(s);
-                });
+        std::map<TensorSlotName, ParallelTensorDimDegrees> leaf_input_degrees =
+            map_values(leaf.input_shapes, [](ParallelTensorShape const &s) {
+              return get_parallel_degrees(s);
+            });
 
         return MachineSpaceStencil{
             /*operator_task_space=*/get_operator_task_space(leaf_op_attrs,

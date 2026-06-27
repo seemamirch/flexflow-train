@@ -47,8 +47,7 @@ TaskGraphExecutionTrace simulate_task_graph_execution(
   };
 
   auto dependencies_are_satisfied = [&](Node const &task) {
-    std::set<Node> incoming_dependencies =
-        get_predecessors(task_graph, task);
+    std::set<Node> incoming_dependencies = get_predecessors(task_graph, task);
     return is_subseteq_of(incoming_dependencies,
                           execution_state.finished_tasks);
   };
@@ -80,9 +79,9 @@ TaskGraphExecutionTrace simulate_task_graph_execution(
   while (!is_processing_done()) {
     auto ready_tasks_copy = execution_state.ready_tasks;
     for (Node const &task : ready_tasks_copy) {
-      std::set<Node> raw_in_progress_tasks = transform(
-          set_of(execution_state.in_progress_tasks.contents()),
-          [](InProgressTask const &t) { return t.node; });
+      std::set<Node> raw_in_progress_tasks =
+          transform(set_of(execution_state.in_progress_tasks.contents()),
+                    [](InProgressTask const &t) { return t.node; });
 
       if (constraint.is_satisfied(
               task, raw_in_progress_tasks, execution_state.finished_tasks)) {

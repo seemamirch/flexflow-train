@@ -17,8 +17,7 @@ std::set<DirectedEdge>
   });
 }
 
-std::set<Node>
-    ContractNodeView::query_nodes(NodeQuery const &q) const {
+std::set<Node> ContractNodeView::query_nodes(NodeQuery const &q) const {
   return transform(g.query_nodes(q), [&](Node const &n) {
     if (n == this->from) {
       return this->to;

@@ -1,7 +1,7 @@
 #include "utils/many_to_one/many_to_one.h"
 #include "utils/archetypes/jsonable_ordered_value_type.h"
-#include "utils/archetypes/rapidcheckable_value_type.h"
 #include "utils/archetypes/ordered_value_type.h"
+#include "utils/archetypes/rapidcheckable_value_type.h"
 
 using namespace ::FlexFlow;
 
@@ -12,16 +12,15 @@ using R = ordered_value_type<1>;
 
 template struct ManyToOne<L, R>;
 
-template std::map<nonempty_set<L>, R>
-    format_as(ManyToOne<L, R> const &);
+template std::map<nonempty_set<L>, R> format_as(ManyToOne<L, R> const &);
 
 template std::ostream &operator<<(std::ostream &, ManyToOne<L, R> const &);
 
 template std::set<std::pair<L, R>>
     unstructured_relation_from_many_to_one(ManyToOne<L, R> const &);
 
-template ManyToOne<L, R> many_to_one_from_unstructured_relation(
-    std::set<std::pair<L, R>> const &);
+template ManyToOne<L, R>
+    many_to_one_from_unstructured_relation(std::set<std::pair<L, R>> const &);
 
 } // namespace FlexFlow
 

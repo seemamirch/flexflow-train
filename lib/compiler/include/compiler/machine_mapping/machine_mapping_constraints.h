@@ -10,8 +10,8 @@
 
 namespace FlexFlow {
 
-MachineMappingConstraints get_unconstrained_solution_for_layers(
-    std::set<BinaryTreePath> const &);
+MachineMappingConstraints
+    get_unconstrained_solution_for_layers(std::set<BinaryTreePath> const &);
 
 std::set<BinaryTreePath>
     get_unconstrained_layers(MachineMappingConstraints const &);
@@ -19,8 +19,7 @@ std::set<BinaryTreePath>
 std::set<BinaryTreePath>
     get_constrained_layers(MachineMappingConstraints const &);
 
-std::set<BinaryTreePath>
-    get_all_layers(MachineMappingConstraints const &);
+std::set<BinaryTreePath> get_all_layers(MachineMappingConstraints const &);
 
 std::optional<MachineView>
     get_machine_view_for_layer(MachineMappingConstraints const &,

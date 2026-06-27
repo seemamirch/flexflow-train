@@ -11,8 +11,7 @@ std::set<DirectedEdge>
       q.dsts,
       matchall<nonnegative_int>(),
   };
-  std::set<DataflowEdge> dataflow_edges =
-      this->query_edges(dataflow_query);
+  std::set<DataflowEdge> dataflow_edges = this->query_edges(dataflow_query);
 
   return transform(dataflow_edges, [](DataflowEdge const &e) {
     return DirectedEdge{e.src.node, e.dst.node};

@@ -1,11 +1,9 @@
 #include "utils/one_to_many/one_to_many.h"
 #include "test/utils/doctest/fmt/multiset.h"
-#include "test/utils/doctest/fmt/set.h"
+#include "test/utils/doctest/fmt/pair.h"
 #include "test/utils/doctest/fmt/set.h"
 #include "utils/containers/multiset_of.h"
 #include "utils/one_to_many/one_to_many_from_l_to_r_mapping.h"
-#include "test/utils/doctest/fmt/pair.h"
-#include "test/utils/doctest/fmt/set.h"
 #include <doctest/doctest.h>
 
 using namespace ::FlexFlow;

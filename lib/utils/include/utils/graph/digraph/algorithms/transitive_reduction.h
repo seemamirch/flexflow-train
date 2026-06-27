@@ -11,8 +11,7 @@ struct DirectedEdgeMaskView final : public IDiGraphView {
   explicit DirectedEdgeMaskView(DiGraphView const &,
                                 std::set<DirectedEdge> const &);
 
-  std::set<DirectedEdge>
-      query_edges(DirectedEdgeQuery const &) const override;
+  std::set<DirectedEdge> query_edges(DirectedEdgeQuery const &) const override;
   std::set<Node> query_nodes(NodeQuery const &) const override;
 
   DirectedEdgeMaskView *clone() const override;

@@ -17,27 +17,29 @@ std::map<BinaryTreePath, Leaf> get_path_to_leaf_map(
     Tree const &tree,
     FullBinaryTreeImplementation<Tree, Parent, Leaf> const &impl) {
 
-  auto visitor = FullBinaryTreeVisitor<std::map<BinaryTreePath, Leaf>,
-                                       Tree,
-                                       Parent,
-                                       Leaf>{
-      [&](Parent const &parent) -> std::map<BinaryTreePath, Leaf> {
-        std::map<BinaryTreePath, Leaf> left_map = map_keys(
-            get_path_to_leaf_map(impl.get_left_child(parent), impl),
-            [](BinaryTreePath const &p) { return nest_inside_left_child(p); });
+  auto visitor =
+      FullBinaryTreeVisitor<std::map<BinaryTreePath, Leaf>, Tree, Parent, Leaf>{
+          [&](Parent const &parent) -> std::map<BinaryTreePath, Leaf> {
+            std::map<BinaryTreePath, Leaf> left_map = map_keys(
+                get_path_to_leaf_map(impl.get_left_child(parent), impl),
+                [](BinaryTreePath const &p) {
+                  return nest_inside_left_child(p);
+                });
 
-        std::map<BinaryTreePath, Leaf> right_map = map_keys(
-            get_path_to_leaf_map(impl.get_right_child(parent), impl),
-            [](BinaryTreePath const &p) { return nest_inside_right_child(p); });
+            std::map<BinaryTreePath, Leaf> right_map = map_keys(
+                get_path_to_leaf_map(impl.get_right_child(parent), impl),
+                [](BinaryTreePath const &p) {
+                  return nest_inside_right_child(p);
+                });
 
-        return binary_merge_disjoint_maps(left_map, right_map);
-      },
-      [](Leaf const &leaf) -> std::map<BinaryTreePath, Leaf> {
-        return std::map<BinaryTreePath, Leaf>{
-            {binary_tree_root_path(), leaf},
-        };
-      },
-  };
+            return binary_merge_disjoint_maps(left_map, right_map);
+          },
+          [](Leaf const &leaf) -> std::map<BinaryTreePath, Leaf> {
+            return std::map<BinaryTreePath, Leaf>{
+                {binary_tree_root_path(), leaf},
+            };
+          },
+      };
 
   return visit(tree, impl, visitor);
 }

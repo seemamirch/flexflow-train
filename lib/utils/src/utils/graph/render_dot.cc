@@ -59,9 +59,9 @@ std::string render_node_label(
   return oss.str();
 }
 
-std::string render_dot(
-    LabelledDataflowGraphView<std::map<std::string, std::string>,
-                              std::string> const &g) {
+std::string
+    render_dot(LabelledDataflowGraphView<std::map<std::string, std::string>,
+                                         std::string> const &g) {
   std::vector<std::string> lines;
   lines.push_back("digraph {");
 

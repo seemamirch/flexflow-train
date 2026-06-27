@@ -1,7 +1,7 @@
 #include "utils/graph/cow_ptr_t.h"
 #include <doctest/doctest.h>
-#include <string>
 #include <map>
+#include <string>
 #include <vector>
 
 using namespace FlexFlow;

@@ -6,8 +6,8 @@
 #include "utils/containers/set_union.h"
 #include "utils/containers/transform.h"
 #include "utils/full_binary_tree/binary_tree_path.h"
-#include "utils/hash/tuple.h"
 #include "utils/hash/set.h"
+#include "utils/hash/tuple.h"
 
 namespace FlexFlow {
 

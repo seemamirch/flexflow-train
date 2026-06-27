@@ -22,8 +22,7 @@ TEST_SUITE(FF_TEST_SUITE) {
               UnorderedSetKwargDataflowGraph<std::string>>();
 
       KwargNodeAddedResult<std::string> n0_added = g.add_node(
-          /*inputs=*/std::map<std::string,
-                                        KwargDataflowOutput<std::string>>{},
+          /*inputs=*/std::map<std::string, KwargDataflowOutput<std::string>>{},
           /*outputs=*/std::set<std::string>{
               "a",
           });
@@ -32,8 +31,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           require_only_key(n0_added.outputs, std::string{"a"});
 
       KwargNodeAddedResult<std::string> n1_added = g.add_node(
-          /*inputs=*/std::map<std::string,
-                                        KwargDataflowOutput<std::string>>{},
+          /*inputs=*/std::map<std::string, KwargDataflowOutput<std::string>>{},
           /*outputs=*/std::set<std::string>{
               "b",
               "c",
@@ -56,10 +54,11 @@ TEST_SUITE(FF_TEST_SUITE) {
       return g;
     }();
 
-    std::function<std::vector<std::string>(
-        std::set<std::string> const &)>
-        slot_ordering = [](std::set<std::string> const &slots)
-        -> std::vector<std::string> { return reversed(sorted(slots)); };
+    std::function<std::vector<std::string>(std::set<std::string> const &)>
+        slot_ordering =
+            [](std::set<std::string> const &slots) -> std::vector<std::string> {
+      return reversed(sorted(slots));
+    };
 
     DataflowGraphView result =
         dataflow_graph_from_kwarg_dataflow_graph(input, slot_ordering);

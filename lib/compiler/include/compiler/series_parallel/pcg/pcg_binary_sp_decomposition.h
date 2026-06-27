@@ -34,9 +34,8 @@ SPDecompositionTreeNodeType get_node_type(PCGBinarySPDecomposition const &);
 std::set<BinaryTreePath>
     pcg_sp_tree_get_all_leaf_paths(PCGBinarySPDecomposition const &);
 
-std::set<BinaryTreePath>
-    find_paths_to_leaf(PCGBinarySPDecomposition const &,
-                       parallel_layer_guid_t const &);
+std::set<BinaryTreePath> find_paths_to_leaf(PCGBinarySPDecomposition const &,
+                                            parallel_layer_guid_t const &);
 
 std::map<BinaryTreePath, parallel_layer_guid_t>
     pcg_sp_tree_get_path_to_leaf_map(PCGBinarySPDecomposition const &);

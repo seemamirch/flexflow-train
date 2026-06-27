@@ -171,8 +171,7 @@ TEST_SUITE(FF_TEST_SUITE) {
             bidict<PatternInput,
                    OpenKwargDataflowValue<int, TensorSlotName>>{}};
 
-    std::map<TensorSlotName,
-                       OpenKwargDataflowEdge<int, TensorSlotName>>
+    std::map<TensorSlotName, OpenKwargDataflowEdge<int, TensorSlotName>>
         n1_incoming = {
             {
                 TensorSlotName::INPUT,
@@ -187,21 +186,17 @@ TEST_SUITE(FF_TEST_SUITE) {
 
     SUBCASE("get_incoming_open_kwarg_dataflow_edges_for_node") {
       SUBCASE("n0") {
-        std::map<TensorSlotName,
-                           OpenKwargDataflowEdge<int, TensorSlotName>>
+        std::map<TensorSlotName, OpenKwargDataflowEdge<int, TensorSlotName>>
             result = get_incoming_open_kwarg_dataflow_edges_for_node(graph, n0);
-        std::map<TensorSlotName,
-                           OpenKwargDataflowEdge<int, TensorSlotName>>
+        std::map<TensorSlotName, OpenKwargDataflowEdge<int, TensorSlotName>>
             correct = {};
         CHECK(result == correct);
       }
 
       SUBCASE("n1") {
-        std::map<TensorSlotName,
-                           OpenKwargDataflowEdge<int, TensorSlotName>>
+        std::map<TensorSlotName, OpenKwargDataflowEdge<int, TensorSlotName>>
             result = get_incoming_open_kwarg_dataflow_edges_for_node(graph, n1);
-        std::map<TensorSlotName,
-                           OpenKwargDataflowEdge<int, TensorSlotName>>
+        std::map<TensorSlotName, OpenKwargDataflowEdge<int, TensorSlotName>>
             correct = n1_incoming;
         CHECK(result == correct);
       }
@@ -210,8 +205,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     SUBCASE("get_open_kwarg_dataflow_subgraph_inputs") {
       std::set<OpenKwargDataflowValue<int, TensorSlotName>> result =
           get_open_kwarg_dataflow_subgraph_inputs(graph, {n0, n1});
-      std::set<OpenKwargDataflowValue<int, TensorSlotName>> correct =
-          {};
+      std::set<OpenKwargDataflowValue<int, TensorSlotName>> correct = {};
       CHECK(result == correct);
     }
 
@@ -228,8 +222,7 @@ TEST_SUITE(FF_TEST_SUITE) {
       }
 
       SUBCASE("inputs") {
-        std::set<KwargDataflowGraphInput<int>> result =
-            g.get_inputs();
+        std::set<KwargDataflowGraphInput<int>> result = g.get_inputs();
         std::set<KwargDataflowGraphInput<int>> correct = {};
         CHECK(result == correct);
       }

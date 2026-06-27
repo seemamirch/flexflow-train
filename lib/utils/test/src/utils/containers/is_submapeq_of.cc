@@ -1,14 +1,13 @@
 #include "utils/containers/is_submapeq_of.h"
 #include <doctest/doctest.h>
-#include <string>
 #include <map>
+#include <string>
 
 using namespace ::FlexFlow;
 
 TEST_SUITE(FF_TEST_SUITE) {
   TEST_CASE("is_submapeq_of") {
-    std::map<int, std::string> super = {
-        {1, "one"}, {2, "two"}, {3, "three"}};
+    std::map<int, std::string> super = {{1, "one"}, {2, "two"}, {3, "three"}};
 
     SUBCASE("keys and values match") {
       std::map<int, std::string> sub = {{1, "one"}, {2, "two"}};
@@ -21,8 +20,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     SUBCASE("keys match but values don't") {
-      std::map<int, std::string> sub = {{1, "wrong_value"},
-                                                  {2, "two"}};
+      std::map<int, std::string> sub = {{1, "wrong_value"}, {2, "two"}};
       CHECK_FALSE(is_submapeq_of(sub, super));
     }
 

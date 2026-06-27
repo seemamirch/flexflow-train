@@ -132,10 +132,8 @@ bool is_isomorphic_to(Substitution const &l, Substitution const &r) {
 
 bool is_valid_substitution(Substitution const &sub) {
   {
-    std::set<PatternInput> pattern_inputs =
-        get_inputs(sub.pcg_pattern);
-    std::set<PatternInput> mapped_inputs =
-        left_entries(sub.inputs_mapping);
+    std::set<PatternInput> pattern_inputs = get_inputs(sub.pcg_pattern);
+    std::set<PatternInput> mapped_inputs = left_entries(sub.inputs_mapping);
 
     if (pattern_inputs != mapped_inputs) {
       return false;

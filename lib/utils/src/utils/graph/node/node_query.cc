@@ -29,7 +29,7 @@ NodeQuery query_union(NodeQuery const &lhs, NodeQuery const &rhs) {
 }
 
 std::set<Node> apply_node_query(NodeQuery const &query,
-                                          std::set<Node> const &ns) {
+                                std::set<Node> const &ns) {
   return apply_query(query.nodes, ns);
 }
 

@@ -1,6 +1,6 @@
 #include "utils/containers/transform_pairs.h"
-#include "utils/archetypes/value_type.h"
 #include "utils/archetypes/ordered_value_type.h"
+#include "utils/archetypes/value_type.h"
 
 namespace FlexFlow {
 
@@ -17,7 +17,7 @@ using O_R = ordered_value_type<1>;
 using O_Out = ordered_value_type<2>;
 using O_F = std::function<O_Out(O_L const &, O_R const &)>;
 
-template std::set<O_Out>
-    transform_pairs(std::set<std::pair<O_L, O_R>> const &, O_F &&);
+template std::set<O_Out> transform_pairs(std::set<std::pair<O_L, O_R>> const &,
+                                         O_F &&);
 
 } // namespace FlexFlow

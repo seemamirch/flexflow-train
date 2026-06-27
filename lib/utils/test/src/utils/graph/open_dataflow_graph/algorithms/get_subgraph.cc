@@ -1,9 +1,9 @@
 #include "utils/graph/open_dataflow_graph/algorithms/get_subgraph.h"
+#include "test/utils/doctest/fmt/set.h"
 #include "utils/bidict/algorithms/left_entries.h"
 #include "utils/containers/contains.h"
 #include "utils/containers/get_only.h"
 #include "utils/graph/instances/unordered_set_dataflow_graph.h"
-#include "test/utils/doctest/fmt/set.h"
 #include "utils/graph/node/algorithms.h"
 #include "utils/graph/open_dataflow_graph/algorithms/get_open_dataflow_values.h"
 #include "utils/graph/open_dataflow_graph/open_dataflow_graph.h"
@@ -59,9 +59,8 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
   }
 
-  TEST_CASE(
-      "get_subgraph_data(OpenDataflowGraphView, std::set<Node>, "
-      "bidict<OpenDataflowValue, DataflowGraphInput>)") {
+  TEST_CASE("get_subgraph_data(OpenDataflowGraphView, std::set<Node>, "
+            "bidict<OpenDataflowValue, DataflowGraphInput>)") {
     SUBCASE("2-node graph without inputs") {
       OpenDataflowGraph graph =
           OpenDataflowGraph::create<UnorderedSetDataflowGraph>();

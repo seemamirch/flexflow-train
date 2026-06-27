@@ -120,8 +120,8 @@ TEST_SUITE(FF_TEST_SUITE) {
 
     SUBCASE("node set includes only some graph nodes") {
       LabelledKwargDataflowGraphView<std::string, float, int> result =
-          get_labelled_kwarg_dataflow_graph_subgraph(
-              input, std::set<Node>{n2, n3});
+          get_labelled_kwarg_dataflow_graph_subgraph(input,
+                                                     std::set<Node>{n2, n3});
       LabelledKwargDataflowGraphData<std::string, float, int> result_data =
           get_labelled_kwarg_dataflow_graph_data(result);
 
@@ -148,8 +148,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
     SUBCASE("node set includes no graph nodes") {
       LabelledKwargDataflowGraphView<std::string, float, int> result =
-          get_labelled_kwarg_dataflow_graph_subgraph(
-              input, std::set<Node>{});
+          get_labelled_kwarg_dataflow_graph_subgraph(input, std::set<Node>{});
       LabelledKwargDataflowGraphData<std::string, float, int> result_data =
           get_labelled_kwarg_dataflow_graph_data(result);
 

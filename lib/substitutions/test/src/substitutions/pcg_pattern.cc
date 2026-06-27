@@ -166,8 +166,8 @@ TEST_SUITE(FF_TEST_SUITE) {
 
       PCGPattern pattern = PCGPattern{g};
 
-      std::set<PCGPatternMatch> result = set_of(
-          find_pattern_matches(pattern, sub_pcg_from_full_pcg(pcg)));
+      std::set<PCGPatternMatch> result =
+          set_of(find_pattern_matches(pattern, sub_pcg_from_full_pcg(pcg)));
 
       PCGPatternMatch match1 = PCGPatternMatch{
           bidict<PatternNode, parallel_layer_guid_t>{
@@ -350,8 +350,8 @@ TEST_SUITE(FF_TEST_SUITE) {
 
       PCGPattern pattern = PCGPattern{g};
 
-      std::set<PCGPatternMatch> result = set_of(
-          find_pattern_matches(pattern, sub_pcg_from_full_pcg(pcg)));
+      std::set<PCGPatternMatch> result =
+          set_of(find_pattern_matches(pattern, sub_pcg_from_full_pcg(pcg)));
 
       CHECK(result.size() == 3);
     }

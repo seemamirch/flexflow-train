@@ -205,8 +205,7 @@ ParallelTensorDimDegrees
   };
 }
 
-tl::expected<std::map<TensorSlotName, ParallelTensorShape>,
-             std::string>
+tl::expected<std::map<TensorSlotName, ParallelTensorShape>, std::string>
     get_weight_shapes(LinearAttrs const &attrs,
                       ParallelTensorShape const &input_shape) {
 

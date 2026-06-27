@@ -1,8 +1,8 @@
 #include "utils/containers/foldl1.h"
 #include "utils/containers/get_only.h"
+#include "utils/containers/multiset_of.h"
 #include "utils/containers/slice.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/multiset_of.h"
 #include "utils/containers/vector_of.h"
 #include "utils/graph/series_parallel/binary_sp_decomposition_tree/binary_parallel_split.dtg.h"
 #include "utils/graph/series_parallel/binary_sp_decomposition_tree/binary_sp_decomposition_tree.dtg.h"
@@ -13,7 +13,6 @@
 #include "utils/overload.h"
 #include <functional>
 #include <optional>
-#include "utils/containers/multiset_of.h"
 
 namespace FlexFlow {
 
@@ -45,8 +44,7 @@ BinarySPDecompositionTree
     }
 
     auto s1 = multiset_of(slice(children, 0, children.size() / 2));
-    auto s2 = multiset_of(
-        slice(children, children.size() / 2, std::nullopt));
+    auto s2 = multiset_of(slice(children, children.size() / 2, std::nullopt));
 
     return BinarySPDecompositionTree{BinaryParallelSplit{
         from_parallel(ParallelSplit{s1}), from_parallel(ParallelSplit{s2})}};

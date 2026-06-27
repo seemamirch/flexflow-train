@@ -14,14 +14,15 @@ bool is_isomorphic_under(
     OpenDataflowGraphIsomorphism const &candidate_isomorphism) {
 
   bidict<NewNode, Node> node_permutation =
-      bidict_transform_values(candidate_isomorphism.node_mapping,
-                       [](Node const &dst_node) { return NewNode{dst_node}; })
+      bidict_transform_values(
+          candidate_isomorphism.node_mapping,
+          [](Node const &dst_node) { return NewNode{dst_node}; })
           .reversed();
   bidict<NewDataflowGraphInput, DataflowGraphInput> input_permutation =
       bidict_transform_values(candidate_isomorphism.input_mapping,
-                       [](DataflowGraphInput const &dst_input) {
-                         return NewDataflowGraphInput{dst_input};
-                       })
+                              [](DataflowGraphInput const &dst_input) {
+                                return NewDataflowGraphInput{dst_input};
+                              })
           .reversed();
   return get_graph_data(permute_input_ids(
              permute_node_ids(src, node_permutation), input_permutation)) ==

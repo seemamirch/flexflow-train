@@ -98,19 +98,23 @@ bool GenericTensorAccessorW::operator!=(
   return this->tie() != other.tie();
 }
 
-bool GenericTensorAccessorW::operator<(GenericTensorAccessorW const &other) const {
+bool GenericTensorAccessorW::operator<(
+    GenericTensorAccessorW const &other) const {
   return this->tie() < other.tie();
 }
 
-bool GenericTensorAccessorW::operator<=(GenericTensorAccessorW const &other) const {
+bool GenericTensorAccessorW::operator<=(
+    GenericTensorAccessorW const &other) const {
   return this->tie() <= other.tie();
 }
 
-bool GenericTensorAccessorW::operator>(GenericTensorAccessorW const &other) const {
+bool GenericTensorAccessorW::operator>(
+    GenericTensorAccessorW const &other) const {
   return this->tie() > other.tie();
 }
 
-bool GenericTensorAccessorW::operator>=(GenericTensorAccessorW const &other) const {
+bool GenericTensorAccessorW::operator>=(
+    GenericTensorAccessorW const &other) const {
   return this->tie() >= other.tie();
 }
 
@@ -166,19 +170,23 @@ bool GenericTensorAccessorR::operator!=(
   return this->tie() != other.tie();
 }
 
-bool GenericTensorAccessorR::operator<(GenericTensorAccessorR const &other) const {
+bool GenericTensorAccessorR::operator<(
+    GenericTensorAccessorR const &other) const {
   return this->tie() < other.tie();
 }
 
-bool GenericTensorAccessorR::operator<=(GenericTensorAccessorR const &other) const {
+bool GenericTensorAccessorR::operator<=(
+    GenericTensorAccessorR const &other) const {
   return this->tie() <= other.tie();
 }
 
-bool GenericTensorAccessorR::operator>(GenericTensorAccessorR const &other) const {
+bool GenericTensorAccessorR::operator>(
+    GenericTensorAccessorR const &other) const {
   return this->tie() > other.tie();
 }
 
-bool GenericTensorAccessorR::operator>=(GenericTensorAccessorR const &other) const {
+bool GenericTensorAccessorR::operator>=(
+    GenericTensorAccessorR const &other) const {
   return this->tie() >= other.tie();
 }
 

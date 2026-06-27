@@ -233,8 +233,7 @@ TEST_SUITE(FF_TEST_SUITE) {
       GenericTensorAccessorW label_tensor =
           allocator.allocate_tensor(cfg.label_shape);
 
-      std::map<DynamicValueAttrs, DynamicTensorAccessor>
-          input_tensors;
+      std::map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
 
       DistributedFfHandle device_handle =
           create_distributed_ff_handle(ctx,
@@ -312,8 +311,7 @@ TEST_SUITE(FF_CUDA_TEST_SUITE) {
           GenericTensorAccessorW label_tensor =
               allocator.allocate_tensor(cfg.label_shape);
 
-          std::map<DynamicValueAttrs, DynamicTensorAccessor>
-              input_tensors;
+          std::map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
 
           DistributedFfHandle device_handle = create_distributed_ff_handle(
               ctx,

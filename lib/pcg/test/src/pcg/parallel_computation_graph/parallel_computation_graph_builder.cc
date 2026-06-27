@@ -175,11 +175,10 @@ TEST_SUITE(FF_TEST_SUITE) {
                                              /*paddingH=*/paddingH,
                                              /*paddingW=*/paddingW);
 
-    std::map<parallel_layer_guid_t, ParallelLayerAttrs> layers =
-        generate_map(pcg_get_parallel_layers(b.pcg),
-                     [&](parallel_layer_guid_t const &l) {
-                       return get_parallel_layer_attrs(b.pcg, l);
-                     });
+    std::map<parallel_layer_guid_t, ParallelLayerAttrs> layers = generate_map(
+        pcg_get_parallel_layers(b.pcg), [&](parallel_layer_guid_t const &l) {
+          return get_parallel_layer_attrs(b.pcg, l);
+        });
     CHECK_MESSAGE(layers.size() == 7, "Incorrect layers ", layers);
 
     auto num_attrs_of_type = [&](OperatorType op_type) -> nonnegative_int {

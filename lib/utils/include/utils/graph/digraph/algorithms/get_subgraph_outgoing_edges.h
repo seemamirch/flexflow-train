@@ -5,9 +5,8 @@
 
 namespace FlexFlow {
 
-std::set<DirectedEdge>
-    get_subgraph_outgoing_edges(DiGraphView const &,
-                                std::set<Node> const &);
+std::set<DirectedEdge> get_subgraph_outgoing_edges(DiGraphView const &,
+                                                   std::set<Node> const &);
 
 } // namespace FlexFlow
 

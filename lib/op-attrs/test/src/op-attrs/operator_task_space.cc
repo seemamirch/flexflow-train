@@ -12,8 +12,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
       std::set<TaskSpaceCoordinate> correct = {
           TaskSpaceCoordinate{OrthotopeCoord{{}}}};
-      std::set<TaskSpaceCoordinate> result =
-          get_task_space_coordinates(task);
+      std::set<TaskSpaceCoordinate> result = get_task_space_coordinates(task);
       CHECK(correct == result);
     }
 
@@ -28,8 +27,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           TaskSpaceCoordinate{OrthotopeCoord{{1_n, 0_n}}},
           TaskSpaceCoordinate{OrthotopeCoord{{1_n, 1_n}}},
       }};
-      std::set<TaskSpaceCoordinate> result =
-          get_task_space_coordinates(task);
+      std::set<TaskSpaceCoordinate> result = get_task_space_coordinates(task);
       CHECK(correct == result);
     }
 
@@ -52,8 +50,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           TaskSpaceCoordinate{OrthotopeCoord{{2_n, 1_n, 0_n}}},
           TaskSpaceCoordinate{OrthotopeCoord{{2_n, 1_n, 1_n}}},
       }};
-      std::set<TaskSpaceCoordinate> result =
-          get_task_space_coordinates(task);
+      std::set<TaskSpaceCoordinate> result = get_task_space_coordinates(task);
       CHECK(correct == result);
     }
   }

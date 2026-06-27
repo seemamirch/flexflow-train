@@ -43,8 +43,8 @@ parallel_tensor_guid_t add_single_output_layer(
     ParallelLayerAttrs const &layer_attrs,
     std::map<TensorSlotName, parallel_tensor_guid_t> const &inputs,
     std::map<TensorSlotName, parallel_tensor_guid_t> const &weights,
-    std::optional<std::map<TensorSlotName, CreateGrad>> const
-        &outputs = std::nullopt) {
+    std::optional<std::map<TensorSlotName, CreateGrad>> const &outputs =
+        std::nullopt) {
 
   return get_single_output(
       add_parallel_layer(pcg, layer_attrs, inputs, weights, outputs));

@@ -7,8 +7,7 @@ namespace FlexFlow {
 using K = value_type<0>;
 using V = value_type<1>;
 
-template 
-  std::unordered_set<std::pair<K, V>> 
+template std::unordered_set<std::pair<K, V>>
     unordered_items(std::unordered_map<K, V> const &);
 
 } // namespace FlexFlow

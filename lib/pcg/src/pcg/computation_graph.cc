@@ -2,6 +2,7 @@
 #include "op-attrs/computation_graph_op_attrs.h"
 #include "op-attrs/get_incoming_tensor_roles.h"
 #include "op-attrs/shape_inference.h"
+#include "utils/containers/binary_merge_disjoint_maps.h"
 #include "utils/containers/concat_vectors.h"
 #include "utils/containers/filter_values.h"
 #include "utils/containers/filtrans.h"
@@ -34,7 +35,6 @@
 #include "utils/graph/labelled_open_kwarg_dataflow_graph/algorithms/labelled_open_kwarg_dataflow_graph_view_as_dot.h"
 #include "utils/graph/node/algorithms.h"
 #include "utils/record_formatter.h"
-#include "utils/containers/binary_merge_disjoint_maps.h"
 
 namespace FlexFlow {
 
@@ -52,13 +52,13 @@ std::set<layer_guid_t> get_layers(ComputationGraph const &cg) {
                    [&](Node const &n) { return layer_guid_t{n}; });
 }
 
-LayerAddedResult add_layer(
-    ComputationGraph &computation_graph,
-    LayerAttrs const &layer_attrs,
-    std::map<TensorSlotName, tensor_guid_t> const &inputs,
-    std::map<TensorSlotName, tensor_guid_t> const &weights,
-    std::optional<std::map<TensorSlotName, CreateGrad>> const
-        &maybe_output_flags) {
+LayerAddedResult
+    add_layer(ComputationGraph &computation_graph,
+              LayerAttrs const &layer_attrs,
+              std::map<TensorSlotName, tensor_guid_t> const &inputs,
+              std::map<TensorSlotName, tensor_guid_t> const &weights,
+              std::optional<std::map<TensorSlotName, CreateGrad>> const
+                  &maybe_output_flags) {
 
   std::map<TensorSlotName, TensorShape> input_shapes =
       map_values(inputs, [&](tensor_guid_t const &i) {
@@ -73,13 +73,13 @@ LayerAddedResult add_layer(
   std::map<TensorSlotName, TensorShape> expected_weight_shapes =
       get_weight_shapes(layer_attrs.op_attrs, input_shapes);
 
-  std::map<TensorSlotName, KwargDataflowOutput<TensorSlotName>>
-      raw_inputs = map_values(
-          inputs, [&](tensor_guid_t const &t) { return t.raw_graph_output; });
+  std::map<TensorSlotName, KwargDataflowOutput<TensorSlotName>> raw_inputs =
+      map_values(inputs,
+                 [&](tensor_guid_t const &t) { return t.raw_graph_output; });
 
-  std::map<TensorSlotName, KwargDataflowOutput<TensorSlotName>>
-      raw_weights = map_values(
-          weights, [&](tensor_guid_t const &t) { return t.raw_graph_output; });
+  std::map<TensorSlotName, KwargDataflowOutput<TensorSlotName>> raw_weights =
+      map_values(weights,
+                 [&](tensor_guid_t const &t) { return t.raw_graph_output; });
   std::map<TensorSlotName, TensorShape> output_shapes =
       get_output_shapes(layer_attrs.op_attrs, input_shapes);
 
@@ -230,9 +230,9 @@ std::map<tensor_guid_t, TensorAttrs>
   return all_tensor_attrs;
 }
 
-std::set<ComputationGraphEdge> get_subgraph_incoming_edges(
-    ComputationGraph const &cg,
-    std::set<layer_guid_t> const &subgraph_nodes) {
+std::set<ComputationGraphEdge>
+    get_subgraph_incoming_edges(ComputationGraph const &cg,
+                                std::set<layer_guid_t> const &subgraph_nodes) {
 
   std::set<Node> raw_subgraph_nodes = transform(
       subgraph_nodes, [](layer_guid_t const &l) { return l.raw_node; });
@@ -246,9 +246,9 @@ std::set<ComputationGraphEdge> get_subgraph_incoming_edges(
                    });
 }
 
-std::set<ComputationGraphEdge> get_subgraph_outgoing_edges(
-    ComputationGraph const &cg,
-    std::set<layer_guid_t> const &subgraph_nodes) {
+std::set<ComputationGraphEdge>
+    get_subgraph_outgoing_edges(ComputationGraph const &cg,
+                                std::set<layer_guid_t> const &subgraph_nodes) {
 
   std::set<Node> raw_subgraph_nodes = transform(
       subgraph_nodes, [](layer_guid_t const &l) { return l.raw_node; });
@@ -262,9 +262,9 @@ std::set<ComputationGraphEdge> get_subgraph_outgoing_edges(
                    });
 }
 
-std::set<layer_guid_t> get_subgraph_successors(
-    ComputationGraph const &cg,
-    std::set<layer_guid_t> const &subgraph_nodes) {
+std::set<layer_guid_t>
+    get_subgraph_successors(ComputationGraph const &cg,
+                            std::set<layer_guid_t> const &subgraph_nodes) {
 
   std::set<Node> raw_subgraph_nodes = transform(
       subgraph_nodes, [](layer_guid_t const &l) { return l.raw_node; });
@@ -347,10 +347,11 @@ std::string as_dot(ComputationGraph const &cg) {
     return result;
   };
 
-  std::function<std::vector<TensorSlotName>(
-      std::set<TensorSlotName> const &)>
-      order_slots = [](std::set<TensorSlotName> const &unordered)
-      -> nlohmann::json { return sorted(unordered); };
+  std::function<std::vector<TensorSlotName>(std::set<TensorSlotName> const &)>
+      order_slots =
+          [](std::set<TensorSlotName> const &unordered) -> nlohmann::json {
+    return sorted(unordered);
+  };
 
   return labelled_open_kwarg_dataflow_graph_view_as_dot(
       view_as_labelled_open_kwarg_dataflow_graph<LayerAttrs,

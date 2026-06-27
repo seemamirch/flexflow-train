@@ -28,9 +28,9 @@ bool labelled_open_kwarg_dataflow_graphs_are_isomorphic_under(
     OpenKwargDataflowGraphIsomorphism<GraphInputName> const
         &candidate_isomorphism) {
   bidict<NewNode, Node> new_node_to_old_node =
-      bidict_transform_values(candidate_isomorphism.node_mapping, [](Node const &n) {
-        return NewNode{n};
-      }).reversed();
+      bidict_transform_values(candidate_isomorphism.node_mapping,
+                              [](Node const &n) { return NewNode{n}; })
+          .reversed();
 
   bidict<KwargDataflowGraphInput<GraphInputName>,
          KwargDataflowGraphInput<GraphInputName>>

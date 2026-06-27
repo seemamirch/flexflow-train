@@ -32,15 +32,13 @@ static std::optional<OpenDataflowGraphIsomorphism>
         bidict<DataflowGraphInput, DataflowGraphInput> const
             &unused_graph_inputs_mapping) {
   {
-    std::set<Node> already_mapped_src_nodes =
-        left_entries(sink_node_mapping);
+    std::set<Node> already_mapped_src_nodes = left_entries(sink_node_mapping);
     std::set<Node> src_g_sink_nodes = set_of(get_terminal_nodes(src_g));
     ASSERT(already_mapped_src_nodes == src_g_sink_nodes);
   }
 
   {
-    std::set<Node> already_mapped_dst_nodes =
-        right_entries(sink_node_mapping);
+    std::set<Node> already_mapped_dst_nodes = right_entries(sink_node_mapping);
     std::set<Node> dst_g_sink_nodes = set_of(get_terminal_nodes(dst_g));
     ASSERT(already_mapped_dst_nodes == dst_g_sink_nodes);
   }

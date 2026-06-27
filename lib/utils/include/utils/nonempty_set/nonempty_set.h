@@ -1,17 +1,17 @@
 #ifndef _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_NONEMPTY_SET_NONEMPTY_SET_H
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_NONEMPTY_SET_NONEMPTY_SET_H
 
-#include <set>
-#include <libassert/assert.hpp>
+#include "utils/containers/set_of.h"
+#include "utils/containers/unordered_set_of.h"
+#include "utils/fmt/set.h"
 #include "utils/hash-utils.h"
 #include "utils/hash/set.h"
 #include "utils/hash/tuple.h"
-#include "utils/fmt/set.h"
-#include "utils/positive_int/positive_int.h"
-#include "utils/containers/set_of.h"
 #include "utils/json/check_is_json_deserializable.h"
 #include "utils/json/check_is_json_serializable.h"
-#include "utils/containers/unordered_set_of.h"
+#include "utils/positive_int/positive_int.h"
+#include <libassert/assert.hpp>
+#include <set>
 
 namespace FlexFlow {
 
@@ -106,14 +106,12 @@ private:
 };
 
 template <typename T>
-bool operator==(std::set<T> const &lhs,
-                nonempty_set<T> const &rhs) {
+bool operator==(std::set<T> const &lhs, nonempty_set<T> const &rhs) {
   return lhs == rhs.unwrap_as_set();
 }
 
 template <typename T>
-bool operator!=(std::set<T> const &lhs,
-                nonempty_set<T> const &rhs) {
+bool operator!=(std::set<T> const &lhs, nonempty_set<T> const &rhs) {
   return lhs != rhs.unwrap_as_set();
 }
 

@@ -3,8 +3,8 @@
 #include "op-attrs/parallel_tensor_dim_idx_t.h"
 #include "utils/containers/contains_key.h"
 #include "utils/containers/filtermap_keys.h"
-#include "utils/nonnegative_int/num_elements.h"
 #include "utils/containers/generate_map.h"
+#include "utils/nonnegative_int/num_elements.h"
 
 namespace FlexFlow {
 
@@ -22,11 +22,10 @@ num_ptensor_shard_dims_t
   };
 }
 
-std::set<parallel_tensor_dim_idx_t>
-    get_dim_idxs_in_ptensor_space_coord(
-        ParallelTensorSpaceCoordinate const &coord) {
+std::set<parallel_tensor_dim_idx_t> get_dim_idxs_in_ptensor_space_coord(
+    ParallelTensorSpaceCoordinate const &coord) {
 
-  std::set<parallel_tensor_dim_idx_t> result = 
+  std::set<parallel_tensor_dim_idx_t> result =
       dim_idxs_for_num_shard_dims(ptensor_coord_num_shard_dims(coord));
   result.insert(sum_dim_idx());
   result.insert(discard_copy_dim_idx());

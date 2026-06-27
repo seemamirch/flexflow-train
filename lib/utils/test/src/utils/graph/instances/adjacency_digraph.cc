@@ -75,8 +75,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         };
 
         std::set<DirectedEdge> result = g.query_edges(query);
-        std::set<DirectedEdge> correct =
-            std::set<DirectedEdge>{e[0]};
+        std::set<DirectedEdge> correct = std::set<DirectedEdge>{e[0]};
         CHECK(result == correct);
       }
     }

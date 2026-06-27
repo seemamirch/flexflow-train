@@ -23,8 +23,7 @@ std::map<Node, nonnegative_int>
 float work_cost(SeriesParallelDecomposition const &sp,
                 std::map<Node, float> cost_map);
 
-float work_cost(DiGraphView const &g,
-                std::map<Node, float> const &cost_map);
+float work_cost(DiGraphView const &g, std::map<Node, float> const &cost_map);
 
 /**
  * @brief Computes the total number of edges the decomposition has when viewed

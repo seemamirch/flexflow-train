@@ -12,8 +12,7 @@ bool are_disjoint(std::unordered_set<T> const &l,
 }
 
 template <typename T>
-bool are_disjoint(std::set<T> const &l,
-                  std::set<T> const &r) {
+bool are_disjoint(std::set<T> const &l, std::set<T> const &r) {
   return set_intersection<T>(l, r).empty();
 }
 

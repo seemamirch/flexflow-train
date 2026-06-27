@@ -33,6 +33,7 @@
 #include "op-attrs/tensor_slot_name.h"
 #include "pcg/computation_graph.h"
 #include "utils/containers/any_of.h"
+#include "utils/containers/binary_merge_disjoint_maps.h"
 #include "utils/containers/concat_vectors.h"
 #include "utils/containers/enumerate_vector.h"
 #include "utils/containers/get_only.h"
@@ -48,7 +49,6 @@
 #include "utils/fmt/set.h"
 #include "utils/stack_vector/stack_vector_of.h"
 #include <fmt/format.h>
-#include "utils/containers/binary_merge_disjoint_maps.h"
 
 namespace FlexFlow {
 
@@ -77,18 +77,17 @@ tensor_guid_t ComputationGraphBuilder::create_input(
       maybe_name,
   };
 
-  return require_only_key(
-      this->add_layer(/*layer=*/layer_attrs,
-                      /*inputs=*/{},
-                      /*weights=*/{},
-                      /*outputs=*/
-                      std::map<TensorSlotName, CreateGrad>{
-                          {
-                              TensorSlotName::OUTPUT,
-                              create_grad,
-                          },
-                      }),
-      TensorSlotName::OUTPUT);
+  return require_only_key(this->add_layer(/*layer=*/layer_attrs,
+                                          /*inputs=*/{},
+                                          /*weights=*/{},
+                                          /*outputs=*/
+                                          std::map<TensorSlotName, CreateGrad>{
+                                              {
+                                                  TensorSlotName::OUTPUT,
+                                                  create_grad,
+                                              },
+                                          }),
+                          TensorSlotName::OUTPUT);
 }
 
 tensor_guid_t ComputationGraphBuilder::create_weight(
@@ -107,10 +106,10 @@ tensor_guid_t ComputationGraphBuilder::create_weight(
                           TensorSlotName::OUTPUT);
 }
 
-static void check_incoming_tensor_roles(
-    LayerAttrs const &layer,
-    std::set<TensorSlotName> const &input_slots,
-    std::set<TensorSlotName> const &weight_slots) {
+static void
+    check_incoming_tensor_roles(LayerAttrs const &layer,
+                                std::set<TensorSlotName> const &input_slots,
+                                std::set<TensorSlotName> const &weight_slots) {
   std::map<TensorSlotName, IncomingTensorRole> correct =
       restrict_keys(get_incoming_tensor_roles(layer.op_attrs),
                     set_union(input_slots, weight_slots));
@@ -127,14 +126,11 @@ static void check_incoming_tensor_roles(
          "check_incoming_tensor_roles found deviation in incoming tensors");
 }
 
-std::map<TensorSlotName, tensor_guid_t>
-    ComputationGraphBuilder::add_layer(
-        LayerAttrs const &layer,
-        std::map<TensorSlotName, tensor_guid_t> const &inputs,
-        std::map<TensorSlotName, InitializerAttrs> const
-            &weight_initializers,
-        std::optional<std::map<TensorSlotName, CreateGrad>> const
-            &outputs) {
+std::map<TensorSlotName, tensor_guid_t> ComputationGraphBuilder::add_layer(
+    LayerAttrs const &layer,
+    std::map<TensorSlotName, tensor_guid_t> const &inputs,
+    std::map<TensorSlotName, InitializerAttrs> const &weight_initializers,
+    std::optional<std::map<TensorSlotName, CreateGrad>> const &outputs) {
   ASSERT(are_disjoint(keys(inputs), keys(weight_initializers)));
   check_incoming_tensor_roles(layer, keys(inputs), keys(weight_initializers));
 
@@ -144,13 +140,12 @@ std::map<TensorSlotName, tensor_guid_t>
   std::map<TensorSlotName, TensorShape> weight_shapes =
       get_weight_shapes(layer.op_attrs, input_shapes);
 
-  std::map<TensorSlotName, tensor_guid_t> weights =
-      zip_values_strict_with(
-          weight_shapes,
-          weight_initializers,
-          [&](TensorShape const &shape, InitializerAttrs const &initializer) {
-            return this->create_weight(shape, initializer);
-          });
+  std::map<TensorSlotName, tensor_guid_t> weights = zip_values_strict_with(
+      weight_shapes,
+      weight_initializers,
+      [&](TensorShape const &shape, InitializerAttrs const &initializer) {
+        return this->create_weight(shape, initializer);
+      });
 
   LayerAddedResult added = ::FlexFlow::add_layer(
       this->computation_graph, layer, inputs, weights, outputs);
@@ -853,8 +848,7 @@ tensor_guid_t ComputationGraphBuilder::concat(
   LayerAttrs layer = LayerAttrs{ComputationGraphOpAttrs{attrs}, name};
 
   return require_only_key(
-      this->add_layer(
-          layer, map_from_pairs(zip(input_slot_names, inputs)), {}),
+      this->add_layer(layer, map_from_pairs(zip(input_slot_names, inputs)), {}),
       TensorSlotName::OUTPUT);
 }
 

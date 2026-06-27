@@ -8,7 +8,7 @@ using R = ordered_value_type<1>;
 using R2 = ordered_value_type<2>;
 using F = std::function<R2(R const &)>;
 
-template
-  BinaryRelation<L, R2> binary_relation_transform_right(BinaryRelation<L, R> const &, F &&);
+template BinaryRelation<L, R2>
+    binary_relation_transform_right(BinaryRelation<L, R> const &, F &&);
 
 } // namespace FlexFlow

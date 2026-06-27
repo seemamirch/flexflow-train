@@ -9,9 +9,9 @@ namespace FlexFlow {
 DynamicValueAttrs decide_dynamic_value_attrs_role(DynamicValueAttrs const &,
                                                   DynamicTensorRole);
 
-DynamicValueAttrs decide_dynamic_value_attrs_mapping(
-    DynamicValueAttrs const &,
-    ParallelTensorMapping const &);
+DynamicValueAttrs
+    decide_dynamic_value_attrs_mapping(DynamicValueAttrs const &,
+                                       ParallelTensorMapping const &);
 
 } // namespace FlexFlow
 

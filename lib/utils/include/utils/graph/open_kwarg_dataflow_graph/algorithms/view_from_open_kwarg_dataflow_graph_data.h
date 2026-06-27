@@ -1,13 +1,13 @@
 #ifndef _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_GRAPH_OPEN_KWARG_DATAFLOW_GRAPH_ALGORITHMS_VIEW_FROM_OPEN_KWARG_DATAFLOW_GRAPH_DATA_H
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_GRAPH_OPEN_KWARG_DATAFLOW_GRAPH_ALGORITHMS_VIEW_FROM_OPEN_KWARG_DATAFLOW_GRAPH_DATA_H
 
+#include "utils/containers/set_of.h"
 #include "utils/graph/kwarg_dataflow_graph/kwarg_dataflow_output_query.h"
 #include "utils/graph/node/node_query.h"
 #include "utils/graph/open_kwarg_dataflow_graph/algorithms/open_kwarg_dataflow_graph_data.dtg.h"
 #include "utils/graph/open_kwarg_dataflow_graph/algorithms/open_kwarg_dataflow_graph_data.h"
 #include "utils/graph/open_kwarg_dataflow_graph/open_kwarg_dataflow_edge_query.h"
 #include "utils/graph/open_kwarg_dataflow_graph/open_kwarg_dataflow_graph_view.h"
-#include "utils/containers/set_of.h"
 
 namespace FlexFlow {
 
@@ -27,9 +27,9 @@ struct ViewFromOpenKwargDataflowGraphData final
     return set_of(this->data.inputs);
   }
 
-  std::set<OpenKwargDataflowEdge<GraphInputName, SlotName>>
-      query_edges(OpenKwargDataflowEdgeQuery<GraphInputName, SlotName> const
-                      &query) const override {
+  std::set<OpenKwargDataflowEdge<GraphInputName, SlotName>> query_edges(
+      OpenKwargDataflowEdgeQuery<GraphInputName, SlotName> const &query)
+      const override {
     return filter(
         set_of(this->data.edges),
         [&](OpenKwargDataflowEdge<GraphInputName, SlotName> const &e) {

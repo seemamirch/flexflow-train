@@ -106,8 +106,7 @@ tl::expected<ParallelTensorShape, std::string>
                      ParallelTensorShape const &input_k,
                      ParallelTensorShape const &input_v);
 
-tl::expected<std::map<TensorSlotName, ParallelTensorShape>,
-             std::string>
+tl::expected<std::map<TensorSlotName, ParallelTensorShape>, std::string>
     get_weight_shapes(MultiHeadAttentionAttrs const &,
                       ParallelTensorShape const &input_q,
                       ParallelTensorShape const &input_k,

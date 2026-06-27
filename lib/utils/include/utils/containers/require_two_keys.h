@@ -7,9 +7,8 @@
 namespace FlexFlow {
 
 template <typename K, typename V>
-std::pair<V, V> require_two_keys(std::map<K, V> const &m,
-                                 K const &k1,
-                                 K const &k2) {
+std::pair<V, V>
+    require_two_keys(std::map<K, V> const &m, K const &k1, K const &k2) {
   ASSERT(k1 != k2);
   ASSERT(m.size() == 2);
 

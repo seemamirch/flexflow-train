@@ -2,8 +2,8 @@
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_GET_ONLY_H
 
 #include "utils/containers/maybe_get_only.h"
-#include <libassert/assert.hpp>
 #include "utils/optional.h"
+#include <libassert/assert.hpp>
 
 namespace FlexFlow {
 

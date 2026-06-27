@@ -6,8 +6,9 @@
 namespace FlexFlow {
 
 template <typename K, typename V>
-std::map<K, V> binary_merge_maps_with_right_dominating(
-    std::map<K, V> const &lhs, std::map<K, V> const &rhs) {
+std::map<K, V>
+    binary_merge_maps_with_right_dominating(std::map<K, V> const &lhs,
+                                            std::map<K, V> const &rhs) {
   std::map<K, V> result;
   merge_in_map(lhs, result);
   merge_in_map(rhs, result);

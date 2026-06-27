@@ -17,8 +17,7 @@ struct unchecked_dfs_iterator {
   using reference = Node const &;
 
   unchecked_dfs_iterator(DiGraphView const &g, std::vector<Node> const &);
-  unchecked_dfs_iterator(DiGraphView const &g,
-                         std::set<Node> const &);
+  unchecked_dfs_iterator(DiGraphView const &g, std::set<Node> const &);
 
   reference operator*() const;
   pointer operator->();
@@ -77,8 +76,7 @@ struct bfs_iterator {
   bfs_iterator(DiGraphView const &,
                std::queue<Node> const &,
                std::optional<std::set<Node>> const &);
-  bfs_iterator(DiGraphView const &,
-               std::set<Node> const &starting_points);
+  bfs_iterator(DiGraphView const &, std::set<Node> const &starting_points);
 
   reference operator*() const;
   pointer operator->();
@@ -126,8 +124,7 @@ private:
 
 struct BFSView {
   BFSView() = delete;
-  explicit BFSView(DiGraphView const &,
-                   std::set<Node> const &starting_points);
+  explicit BFSView(DiGraphView const &, std::set<Node> const &starting_points);
 
   bfs_iterator begin() const;
   bfs_iterator end() const;
@@ -175,10 +172,8 @@ UncheckedDFSView unchecked_dfs(DiGraphView const &,
                                std::set<Node> const &starting_points);
 /* BoundaryDFSView boundary_dfs(IDiGraphView const &, std::set<Node>
  * const &starting_points); */
-CheckedDFSView dfs(DiGraphView const &,
-                   std::set<Node> const &starting_points);
-BFSView bfs(DiGraphView const &,
-            std::set<Node> const &starting_points);
+CheckedDFSView dfs(DiGraphView const &, std::set<Node> const &starting_points);
+BFSView bfs(DiGraphView const &, std::set<Node> const &starting_points);
 
 } // namespace FlexFlow
 

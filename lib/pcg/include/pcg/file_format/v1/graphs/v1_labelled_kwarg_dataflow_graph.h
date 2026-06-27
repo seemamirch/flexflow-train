@@ -4,10 +4,10 @@
 #include "pcg/file_format/v1/graphs/v1_kwarg_dataflow_graph.h"
 #include "pcg/file_format/v1/graphs/v1_labelled_kwarg_dataflow_graph.dtg.h"
 #include "utils/bidict/algorithms/bidict_from_enumerating.h"
+#include "utils/containers/map_from_pairs.h"
 #include "utils/containers/map_keys.h"
 #include "utils/containers/map_values.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/map_from_pairs.h"
 #include "utils/graph/kwarg_dataflow_graph/algorithms/get_all_kwarg_dataflow_outputs.h"
 #include "utils/graph/labelled_kwarg_dataflow_graph/algorithms/kwarg_dataflow_graph_view_with_labelling.h"
 #include "utils/graph/labelled_kwarg_dataflow_graph/labelled_kwarg_dataflow_graph_view.h"
@@ -26,8 +26,8 @@ std::pair<V1LabelledKwargDataflowGraph<NodeLabel, OutputLabel, SlotName>,
 
   V1KwargDataflowGraph<SlotName> unlabelled = to_v1(g, nodes.reversed());
 
-  std::map<nonnegative_int, NodeLabel> node_labels = map_values(
-      nodes.as_map(), [&](Node const &n) { return g.at(n); });
+  std::map<nonnegative_int, NodeLabel> node_labels =
+      map_values(nodes.as_map(), [&](Node const &n) { return g.at(n); });
 
   std::map<V1KwargGraphOutput<SlotName>, OutputLabel> output_labels =
       map_from_pairs(

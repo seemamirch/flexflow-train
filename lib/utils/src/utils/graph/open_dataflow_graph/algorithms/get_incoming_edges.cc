@@ -8,13 +8,11 @@
 
 namespace FlexFlow {
 
-std::set<DataflowInputEdge>
-    get_incoming_edges(OpenDataflowGraphView const &g) {
-  std::set<OpenDataflowEdge> raw_edges =
-      g.query_edges(OpenDataflowEdgeQuery{
-          dataflow_input_edge_query_all(),
-          dataflow_edge_query_none(),
-      });
+std::set<DataflowInputEdge> get_incoming_edges(OpenDataflowGraphView const &g) {
+  std::set<OpenDataflowEdge> raw_edges = g.query_edges(OpenDataflowEdgeQuery{
+      dataflow_input_edge_query_all(),
+      dataflow_edge_query_none(),
+  });
 
   return transform(raw_edges, [](OpenDataflowEdge const &e) {
     return e.get<DataflowInputEdge>();

@@ -19,8 +19,7 @@ num_ptensor_shard_dims_t num_shard_dims(ParallelTensorShape const &s) {
   return num_shard_dims(s.dims);
 }
 
-std::set<ReplicaParallelDim>
-    replica_dims(ParallelTensorShape const &s) {
+std::set<ReplicaParallelDim> replica_dims(ParallelTensorShape const &s) {
   return replica_dims(s.dims);
 }
 

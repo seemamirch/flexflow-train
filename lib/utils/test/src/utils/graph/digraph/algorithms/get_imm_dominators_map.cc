@@ -34,8 +34,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         {n.at(5), n.at(1)},
     };
 
-    std::map<Node, std::optional<Node>> result =
-        get_imm_dominators_map(g);
+    std::map<Node, std::optional<Node>> result = get_imm_dominators_map(g);
 
     CHECK(result == correct);
   }

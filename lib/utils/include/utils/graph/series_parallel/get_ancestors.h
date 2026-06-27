@@ -43,7 +43,7 @@ namespace FlexFlow {
  *
  */
 std::set<Node> get_ancestors(SeriesParallelDecomposition const &sp,
-                                       Node const &node);
+                             Node const &node);
 
 } // namespace FlexFlow
 

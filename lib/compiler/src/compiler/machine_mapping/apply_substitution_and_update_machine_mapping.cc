@@ -39,9 +39,8 @@ SearchResult apply_substitution_and_update_machine_mapping(
   std::map<parallel_layer_guid_t, ParallelLayerAttrs> post_node_data =
       get_sub_pcg_data(post_substitution_graph).node_data;
 
-  std::set<parallel_layer_guid_t>
-      substitution_output_parallel_layers =
-          spcg_get_parallel_layers(substitution_output_result.first);
+  std::set<parallel_layer_guid_t> substitution_output_parallel_layers =
+      spcg_get_parallel_layers(substitution_output_result.first);
 
   std::map<parallel_layer_guid_t, MachineView> machine_views =
       mapped_pcg.machine_mapping.machine_views;
@@ -61,12 +60,11 @@ SearchResult apply_substitution_and_update_machine_mapping(
 
   ASSERT(is_subseteq_of(keys(post_node_data), keys(machine_views)));
 
-  std::map<parallel_layer_guid_t, MachineView>
-      post_node_machine_views =
-          filter(machine_views,
-                 [&](std::pair<parallel_layer_guid_t, MachineView> const &p) {
-                   return post_node_data.count(p.first);
-                 });
+  std::map<parallel_layer_guid_t, MachineView> post_node_machine_views =
+      filter(machine_views,
+             [&](std::pair<parallel_layer_guid_t, MachineView> const &p) {
+               return post_node_data.count(p.first);
+             });
 
   ASSERT(keys(post_node_data) == keys(post_node_machine_views));
 

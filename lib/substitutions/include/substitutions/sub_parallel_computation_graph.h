@@ -40,12 +40,12 @@ std::map<TensorSlotName, parallel_tensor_guid_t>
     get_outgoing_tensors(SubParallelComputationGraph const &,
                          parallel_layer_guid_t const &);
 
-std::set<SubParallelComputationGraphEdge> get_subgraph_incoming_edges(
-    SubParallelComputationGraph const &,
-    std::set<parallel_layer_guid_t> const &);
-std::set<ParallelComputationGraphEdge> get_subgraph_outgoing_edges(
-    SubParallelComputationGraph const &,
-    std::set<parallel_layer_guid_t> const &);
+std::set<SubParallelComputationGraphEdge>
+    get_subgraph_incoming_edges(SubParallelComputationGraph const &,
+                                std::set<parallel_layer_guid_t> const &);
+std::set<ParallelComputationGraphEdge>
+    get_subgraph_outgoing_edges(SubParallelComputationGraph const &,
+                                std::set<parallel_layer_guid_t> const &);
 
 std::set<parallel_tensor_use_t>
     get_open_parallel_tensor_uses(SubParallelComputationGraph const &,

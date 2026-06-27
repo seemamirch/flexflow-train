@@ -83,8 +83,7 @@ PCGInstance create_pcg_instance(
     MappedParallelComputationGraph const &mpcg,
     OptimizerAttrs const &optimizer_attrs,
     std::optional<ParallelLossConfig> const &loss,
-    std::map<DynamicValueAttrs, DynamicTensorAccessor> const
-        &input_tensors,
+    std::map<DynamicValueAttrs, DynamicTensorAccessor> const &input_tensors,
     ProfilingSettings const &profiling_settings,
     DistributedFfHandle const &ff_handle,
     DeviceType device_type);

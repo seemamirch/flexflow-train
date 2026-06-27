@@ -24,8 +24,7 @@ std::set<DataflowOutput> FromOpenDataflowGraphDataView::query_outputs(
   return apply_dataflow_output_query(q, this->data.outputs);
 }
 
-std::set<DataflowGraphInput>
-    FromOpenDataflowGraphDataView::get_inputs() const {
+std::set<DataflowGraphInput> FromOpenDataflowGraphDataView::get_inputs() const {
   return this->data.inputs;
 }
 

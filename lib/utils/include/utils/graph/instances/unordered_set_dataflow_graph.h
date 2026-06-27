@@ -39,13 +39,12 @@ private:
                        std::vector<OpenDataflowValue> const &inputs,
                        std::vector<DataflowOutput> const &outputs);
 
-  UnorderedSetDataflowGraph(
-      NodeSource const &node_source,
-      DataflowGraphInputSource const &graph_input_source,
-      std::set<Node> const &nodes,
-      std::set<OpenDataflowEdge> const &edges,
-      std::set<DataflowOutput> const &outputs,
-      std::set<DataflowGraphInput> const &graph_inputs);
+  UnorderedSetDataflowGraph(NodeSource const &node_source,
+                            DataflowGraphInputSource const &graph_input_source,
+                            std::set<Node> const &nodes,
+                            std::set<OpenDataflowEdge> const &edges,
+                            std::set<DataflowOutput> const &outputs,
+                            std::set<DataflowGraphInput> const &graph_inputs);
 
 private:
   NodeSource node_source;

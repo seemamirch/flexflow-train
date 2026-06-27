@@ -14,8 +14,8 @@
 #include "task-spec/dynamic_graph/dynamic_value_attrs.dtg.h"
 #include "task-spec/global_device_id_t.dtg.h"
 #include "utils/units/milliseconds_t.h"
-#include <optional>
 #include <map>
+#include <optional>
 
 namespace FlexFlow {
 
@@ -44,8 +44,7 @@ ComputationGraphInstance create_computation_graph_instance(
     ComputationGraph const &cg,
     OptimizerAttrs const &optimizer_attrs,
     std::optional<LossConfig> const &loss,
-    std::map<DynamicValueAttrs, DynamicTensorAccessor> const
-        &input_tensors,
+    std::map<DynamicValueAttrs, DynamicTensorAccessor> const &input_tensors,
     Allocator &allocator,
     ProfilingSettings const &profiling_settings,
     device_handle_t const &device_handle,

@@ -11,8 +11,7 @@ template <typename GraphInputName, typename SlotName>
 struct IOpenKwargDataflowGraph
     : virtual public IOpenKwargDataflowGraphView<GraphInputName, SlotName> {
   virtual KwargNodeAddedResult<SlotName> add_node(
-      std::map<SlotName,
-                         OpenKwargDataflowValue<GraphInputName, SlotName>> const
+      std::map<SlotName, OpenKwargDataflowValue<GraphInputName, SlotName>> const
           &inputs,
       std::set<SlotName> const &outputs) = 0;
   virtual KwargDataflowGraphInput<GraphInputName>

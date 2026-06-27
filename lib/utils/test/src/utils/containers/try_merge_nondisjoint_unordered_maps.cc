@@ -1,6 +1,6 @@
-#include "utils/containers/try_merge_nondisjoint_maps.h"
-#include "test/utils/doctest/fmt/optional.h"
 #include "test/utils/doctest/fmt/map.h"
+#include "test/utils/doctest/fmt/optional.h"
+#include "utils/containers/try_merge_nondisjoint_maps.h"
 #include <doctest/doctest.h>
 
 using namespace ::FlexFlow;
@@ -32,8 +32,7 @@ TEST_SUITE(FF_TEST_SUITE) {
       d1.insert({2, "three"});
       std::optional<std::map<int, std::string>> result =
           try_merge_nondisjoint_maps(d1, d2);
-      std::optional<std::map<int, std::string>> correct =
-          std::nullopt;
+      std::optional<std::map<int, std::string>> correct = std::nullopt;
       CHECK(result == correct);
     }
 

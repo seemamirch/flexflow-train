@@ -119,8 +119,7 @@ TEST_SUITE(FF_TEST_SUITE) {
             dataflow_edge_query_for_edge(
                 DataflowEdge{n0_output, DataflowInput{n1, 1_n}}),
         };
-        std::set<OpenDataflowEdge> result_nodes =
-            result.query_edges(query);
+        std::set<OpenDataflowEdge> result_nodes = result.query_edges(query);
         std::set<OpenDataflowEdge> correct = {};
         CHECK(result_nodes == correct);
       }
@@ -139,8 +138,7 @@ TEST_SUITE(FF_TEST_SUITE) {
             dataflow_edge_query_for_edge(new_standard_edge),
         };
 
-        std::set<OpenDataflowEdge> result_nodes =
-            result.query_edges(query);
+        std::set<OpenDataflowEdge> result_nodes = result.query_edges(query);
         std::set<OpenDataflowEdge> correct = {
             OpenDataflowEdge{new_standard_edge},
             OpenDataflowEdge{new_input_edge},
@@ -156,8 +154,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
         DataflowOutputQuery query =
             dataflow_output_query_for_output(old_output);
-        std::set<DataflowOutput> result_outputs =
-            result.query_outputs(query);
+        std::set<DataflowOutput> result_outputs = result.query_outputs(query);
 
         std::set<DataflowOutput> correct = {};
 
@@ -169,8 +166,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
         DataflowOutputQuery query =
             dataflow_output_query_for_output(new_output);
-        std::set<DataflowOutput> result_outputs =
-            result.query_outputs(query);
+        std::set<DataflowOutput> result_outputs = result.query_outputs(query);
 
         std::set<DataflowOutput> correct = {new_output};
 

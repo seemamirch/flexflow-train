@@ -1,8 +1,8 @@
 #include "utils/containers/vector_of.h"
+#include "utils/archetypes/ordered_value_type.h"
 #include "utils/archetypes/value_type.h"
 #include <set>
 #include <unordered_set>
-#include "utils/archetypes/ordered_value_type.h"
 
 namespace FlexFlow {
 

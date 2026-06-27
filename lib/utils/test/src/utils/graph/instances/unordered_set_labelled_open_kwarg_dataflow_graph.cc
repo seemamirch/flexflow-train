@@ -25,11 +25,10 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     {
-      std::set<OpenKwargDataflowEdge<std::string, std::string>>
-          result = g.query_edges(
+      std::set<OpenKwargDataflowEdge<std::string, std::string>> result =
+          g.query_edges(
               open_kwarg_dataflow_edge_query_all<std::string, std::string>());
-      std::set<OpenKwargDataflowEdge<std::string, std::string>>
-          correct = {};
+      std::set<OpenKwargDataflowEdge<std::string, std::string>> correct = {};
       REQUIRE(result == correct);
     }
 
@@ -75,11 +74,10 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     {
-      std::set<OpenKwargDataflowEdge<std::string, std::string>>
-          result = g.query_edges(
+      std::set<OpenKwargDataflowEdge<std::string, std::string>> result =
+          g.query_edges(
               open_kwarg_dataflow_edge_query_all<std::string, std::string>());
-      std::set<OpenKwargDataflowEdge<std::string, std::string>>
-          correct = {};
+      std::set<OpenKwargDataflowEdge<std::string, std::string>> correct = {};
       REQUIRE(result == correct);
     }
 
@@ -130,8 +128,8 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     {
-      std::set<OpenKwargDataflowEdge<std::string, std::string>>
-          result = g.query_edges(
+      std::set<OpenKwargDataflowEdge<std::string, std::string>> result =
+          g.query_edges(
               open_kwarg_dataflow_edge_query_all<std::string, std::string>());
 
       auto internal_edge = [](KwargDataflowOutput<std::string> const &src,
@@ -164,11 +162,10 @@ TEST_SUITE(FF_TEST_SUITE) {
         };
       };
 
-      std::set<OpenKwargDataflowEdge<std::string, std::string>>
-          correct = {
-              internal_edge(added_output_1, added2.node, "input_1"),
-              internal_edge(added_output_3, added2.node, "input_2"),
-          };
+      std::set<OpenKwargDataflowEdge<std::string, std::string>> correct = {
+          internal_edge(added_output_1, added2.node, "input_1"),
+          internal_edge(added_output_3, added2.node, "input_2"),
+      };
 
       REQUIRE(result == correct);
     }

@@ -2,16 +2,15 @@
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_BINARY_MERGE_DISJOINT_MAPS_H
 
 #include "utils/containers/binary_merge_maps_with.h"
-#include <libassert/assert.hpp>
 #include "utils/containers/keys.h"
 #include "utils/containers/set_intersection.h"
+#include <libassert/assert.hpp>
 
 namespace FlexFlow {
 
 template <typename K, typename V>
-std::map<K, V>
-    binary_merge_disjoint_maps(std::map<K, V> const &lhs,
-                               std::map<K, V> const &rhs) {
+std::map<K, V> binary_merge_disjoint_maps(std::map<K, V> const &lhs,
+                                          std::map<K, V> const &rhs) {
 
   std::set<K> lhs_keys = keys(lhs);
   std::set<K> rhs_keys = keys(rhs);

@@ -7,6 +7,7 @@ namespace FlexFlow {
 using K = ordered_value_type<0>;
 using V = value_type<0>;
 
-template std::unordered_map<K, V> unordered_map_from_map(std::map<K, V> const &);
+template std::unordered_map<K, V>
+    unordered_map_from_map(std::map<K, V> const &);
 
 } // namespace FlexFlow

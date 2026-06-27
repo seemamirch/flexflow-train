@@ -10,17 +10,16 @@ namespace FlexFlow {
 template <typename SlotName>
 struct KwargDataflowGraph : virtual public KwargDataflowGraphView<SlotName> {
 public:
-  KwargNodeAddedResult<SlotName> add_node(
-      std::map<SlotName, KwargDataflowOutput<SlotName>> const &inputs,
-      std::set<SlotName> const &outputs) {
+  KwargNodeAddedResult<SlotName>
+      add_node(std::map<SlotName, KwargDataflowOutput<SlotName>> const &inputs,
+               std::set<SlotName> const &outputs) {
     return this->get_interface().add_node(inputs, outputs);
   }
 
   void add_node_unsafe(
       Node const &node,
       std::map<SlotName, KwargDataflowOutput<SlotName>> const &inputs,
-      std::map<SlotName, KwargDataflowOutput<SlotName>> const
-          &outputs) {
+      std::map<SlotName, KwargDataflowOutput<SlotName>> const &outputs) {
     return this->get_interface().add_node_unsafe(node, inputs, outputs);
   }
 

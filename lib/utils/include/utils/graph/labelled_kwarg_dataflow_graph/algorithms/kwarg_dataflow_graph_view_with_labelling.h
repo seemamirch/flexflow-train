@@ -15,8 +15,7 @@ public:
   KwargDataflowGraphLabellingWrapper(
       KwargDataflowGraphView<SlotName> const &unlabelled,
       std::map<Node, NodeLabel> const &node_labels,
-      std::map<KwargDataflowOutput<SlotName>, OutputLabel> const
-          &output_labels)
+      std::map<KwargDataflowOutput<SlotName>, OutputLabel> const &output_labels)
       : unlabelled(unlabelled), node_labels(node_labels),
         output_labels(output_labels) {}
 

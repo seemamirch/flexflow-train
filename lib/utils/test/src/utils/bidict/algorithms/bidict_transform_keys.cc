@@ -10,11 +10,12 @@ TEST_SUITE(FF_TEST_SUITE) {
         {2, "two"},
     };
 
-    bidict<std::string, std::string> result = bidict_transform_keys(dict, [](int k) {
-      std::ostringstream oss;
-      oss << k;
-      return oss.str();
-    });
+    bidict<std::string, std::string> result =
+        bidict_transform_keys(dict, [](int k) {
+          std::ostringstream oss;
+          oss << k;
+          return oss.str();
+        });
     bidict<std::string, std::string> correct = {
         {"1", "one"},
         {"2", "two"},

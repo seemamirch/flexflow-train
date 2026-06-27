@@ -2,8 +2,8 @@
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_MAP_KEYS_AND_VALUES_H
 
 #include <libassert/assert.hpp>
-#include <unordered_map>
 #include <map>
+#include <unordered_map>
 
 namespace FlexFlow {
 
@@ -33,8 +33,8 @@ template <typename K,
           typename FV,
           typename K2 = std::invoke_result_t<FK, K>,
           typename V2 = std::invoke_result_t<FV, V>>
-std::map<K2, V2> map_keys_and_values(
-    std::map<K, V> const &m, FK const &fk, FV const &fv) {
+std::map<K2, V2>
+    map_keys_and_values(std::map<K, V> const &m, FK const &fk, FV const &fv) {
 
   std::map<K2, V2> result;
   for (auto const &kv : m) {

@@ -220,8 +220,7 @@ tl::expected<ParallelTensorShape, std::string>
   return get_gamma_weights_shape(attrs, input_shape);
 }
 
-tl::expected<std::map<TensorSlotName, ParallelTensorShape>,
-             std::string>
+tl::expected<std::map<TensorSlotName, ParallelTensorShape>, std::string>
     get_weight_shapes(LayerNormAttrs const &attrs,
                       ParallelTensorShape const &input_shape) {
 

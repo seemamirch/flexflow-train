@@ -3,11 +3,11 @@
 #include "compiler/machine_mapping/abstracted_tensor_set_movement/abstracted_single_tensor_movement.dtg.h"
 #include "compiler/machine_mapping/abstracted_tensor_set_movement/abstracted_single_tensor_movement.h"
 #include "compiler/machine_mapping/parallel_layer_guid_oblivious_machine_mapping.h"
+#include "utils/containers/binary_merge_maps_with.h"
 #include "utils/containers/flatmap.h"
 #include "utils/containers/map_keys_with_value_merging.h"
 #include "utils/containers/merge_maps_with.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/binary_merge_maps_with.h"
 
 namespace FlexFlow {
 
@@ -23,8 +23,7 @@ AbstractedTensorSetMovement
   };
 }
 
-std::set<BinaryTreePath>
-    get_src_layers(AbstractedTensorSetMovement const &m) {
+std::set<BinaryTreePath> get_src_layers(AbstractedTensorSetMovement const &m) {
   return transform(
       m.single_tensor_movements,
       [](AbstractedSingleTensorMovement const &e) -> BinaryTreePath {
@@ -32,19 +31,17 @@ std::set<BinaryTreePath>
       });
 }
 
-std::set<BinaryTreePath>
-    get_dst_layers(AbstractedTensorSetMovement const &m) {
-  return flatmap(m.single_tensor_movements,
-                 [](AbstractedSingleTensorMovement const &m)
-                     -> std::set<BinaryTreePath> {
-                   return abstracted_single_tensor_movement_get_dst_layers(m);
-                 });
+std::set<BinaryTreePath> get_dst_layers(AbstractedTensorSetMovement const &m) {
+  return flatmap(
+      m.single_tensor_movements,
+      [](AbstractedSingleTensorMovement const &m) -> std::set<BinaryTreePath> {
+        return abstracted_single_tensor_movement_get_dst_layers(m);
+      });
 }
 
 TensorSetMovement concretize_abstracted_tensor_set_movement(
     AbstractedTensorSetMovement const &abstracted,
-    std::map<BinaryTreePath, MachineSpaceStencil> const
-        &pre_machine_stencils,
+    std::map<BinaryTreePath, MachineSpaceStencil> const &pre_machine_stencils,
     std::map<BinaryTreePath, MachineSpaceStencil> const
         &post_machine_stencils) {
 

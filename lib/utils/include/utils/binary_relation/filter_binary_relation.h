@@ -7,12 +7,13 @@
 namespace FlexFlow {
 
 template <typename L, typename R, typename F>
-BinaryRelation<L, R> filter_binary_relation(BinaryRelation<L, R> const &rel, F &&f) {
+BinaryRelation<L, R> filter_binary_relation(BinaryRelation<L, R> const &rel,
+                                            F &&f) {
   return BinaryRelation<L, R>{
-    filter(rel.unwrap_as_set(),
-           [&](std::pair<L, R> const &p) -> bool {
-             return f(p.first, p.second);
-           }),
+      filter(rel.unwrap_as_set(),
+             [&](std::pair<L, R> const &p) -> bool {
+               return f(p.first, p.second);
+             }),
   };
 }
 

@@ -10,8 +10,7 @@ public:
   FlippedView() = delete;
   explicit FlippedView(DiGraphView const &);
 
-  std::set<DirectedEdge>
-      query_edges(DirectedEdgeQuery const &) const override;
+  std::set<DirectedEdge> query_edges(DirectedEdgeQuery const &) const override;
   std::set<Node> query_nodes(NodeQuery const &) const override;
 
   FlippedView *clone() const override;

@@ -33,8 +33,8 @@ LabelledOpenKwargDataflowGraphView<ParallelLayerAttrs,
                                            std::monostate,
                                            int,
                                            TensorSlotName> const &g,
-        std::map<KwargDataflowGraphInput<int>,
-                           ParallelTensorShape> const &input_shapes);
+        std::map<KwargDataflowGraphInput<int>, ParallelTensorShape> const
+            &input_shapes);
 
 } // namespace FlexFlow
 

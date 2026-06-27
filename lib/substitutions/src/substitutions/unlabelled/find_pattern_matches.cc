@@ -35,8 +35,7 @@ static std::optional<UnlabelledKwargDataflowGraphPatternMatch>
 
   std::map<TensorSlotName, PatternValue> pattern_outputs =
       get_outputs_from_pattern_node(pattern, pattern_node);
-  std::map<TensorSlotName,
-                     OpenKwargDataflowValue<int, TensorSlotName>>
+  std::map<TensorSlotName, OpenKwargDataflowValue<int, TensorSlotName>>
       graph_outputs = map_values(
           get_outgoing_kwarg_dataflow_outputs_for_node(graph, graph_node),
           [](KwargDataflowOutput<TensorSlotName> const &o) {
@@ -49,15 +48,13 @@ static std::optional<UnlabelledKwargDataflowGraphPatternMatch>
 
   std::map<TensorSlotName, PatternValue> pattern_node_inputs =
       get_inputs_to_pattern_node(pattern, pattern_node);
-  std::set<PatternInput> pattern_graph_inputs =
-      get_pattern_inputs(pattern);
+  std::set<PatternInput> pattern_graph_inputs = get_pattern_inputs(pattern);
 
   ASSERT(set_of(values(pattern_node_inputs)) ==
          transform(pattern_graph_inputs,
                    [](PatternInput const &i) { return PatternValue{i}; }));
 
-  std::map<TensorSlotName,
-                     OpenKwargDataflowValue<int, TensorSlotName>>
+  std::map<TensorSlotName, OpenKwargDataflowValue<int, TensorSlotName>>
       graph_node_inputs =
           get_incoming_open_kwarg_dataflow_values_for_node(graph, graph_node);
 

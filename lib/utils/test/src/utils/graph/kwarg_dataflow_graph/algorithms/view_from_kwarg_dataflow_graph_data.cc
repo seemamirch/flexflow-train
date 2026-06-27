@@ -1,9 +1,9 @@
 #include "utils/graph/kwarg_dataflow_graph/algorithms/view_from_kwarg_dataflow_graph_data.h"
+#include "test/utils/doctest/fmt/set.h"
 #include "utils/graph/kwarg_dataflow_graph/algorithms/get_all_kwarg_dataflow_edges.h"
 #include "utils/graph/kwarg_dataflow_graph/algorithms/get_all_kwarg_dataflow_outputs.h"
 #include "utils/graph/node/algorithms.h"
 #include <doctest/doctest.h>
-#include "test/utils/doctest/fmt/set.h"
 
 using namespace ::FlexFlow;
 
@@ -75,16 +75,14 @@ TEST_SUITE(FF_TEST_SUITE) {
     SUBCASE("get_all_kwarg_dataflow_edges") {
       std::set<KwargDataflowEdge<std::optional<int>>> result =
           get_all_kwarg_dataflow_edges(g);
-      std::set<KwargDataflowEdge<std::optional<int>>> correct =
-          all_edges;
+      std::set<KwargDataflowEdge<std::optional<int>>> correct = all_edges;
       ASSERT(result == correct);
     }
 
     SUBCASE("get_all_kwarg_dataflow_outputs") {
       std::set<KwargDataflowOutput<std::optional<int>>> result =
           get_all_kwarg_dataflow_outputs(g);
-      std::set<KwargDataflowOutput<std::optional<int>>> correct =
-          all_outputs;
+      std::set<KwargDataflowOutput<std::optional<int>>> correct = all_outputs;
       ASSERT(result == correct);
     }
   }

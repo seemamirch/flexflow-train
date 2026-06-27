@@ -57,8 +57,7 @@ std::set<DataflowOutput> UnorderedSetOpenDataflowGraph::query_outputs(
   });
 }
 
-std::set<DataflowGraphInput>
-    UnorderedSetOpenDataflowGraph::get_inputs() const {
+std::set<DataflowGraphInput> UnorderedSetOpenDataflowGraph::get_inputs() const {
   return this->graph_inputs;
 }
 

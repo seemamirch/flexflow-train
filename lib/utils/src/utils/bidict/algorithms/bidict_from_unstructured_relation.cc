@@ -6,7 +6,7 @@ namespace FlexFlow {
 using L = ordered_value_type<0>;
 using R = ordered_value_type<1>;
 
-template bidict<L, R> bidict_from_unstructured_relation(
-    std::set<std::pair<L, R>> const &);
+template bidict<L, R>
+    bidict_from_unstructured_relation(std::set<std::pair<L, R>> const &);
 
 } // namespace FlexFlow

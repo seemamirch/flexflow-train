@@ -9,13 +9,11 @@
 namespace FlexFlow {
 
 template <typename K, typename V, typename F>
-std::map<K, V>
-    merge_maps_with(std::vector<std::map<K, V>> const &to_merge,
-                    F &&f) {
+std::map<K, V> merge_maps_with(std::vector<std::map<K, V>> const &to_merge,
+                               F &&f) {
   return foldl(to_merge,
                std::map<K, V>{},
-               [&](std::map<K, V> const &accum,
-                   std::map<K, V> const &m) {
+               [&](std::map<K, V> const &accum, std::map<K, V> const &m) {
                  return binary_merge_maps_with(accum, m, f);
                });
 }

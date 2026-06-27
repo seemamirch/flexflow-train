@@ -7,8 +7,7 @@ std::set<UndirectedEdge>
   return this->get_ptr().query_edges(q);
 }
 
-std::set<Node>
-    UndirectedGraphView::query_nodes(NodeQuery const &q) const {
+std::set<Node> UndirectedGraphView::query_nodes(NodeQuery const &q) const {
   return this->get_ptr().query_nodes(q);
 }
 

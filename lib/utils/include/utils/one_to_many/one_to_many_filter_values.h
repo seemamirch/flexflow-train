@@ -18,5 +18,4 @@ OneToMany<L, R> one_to_many_filter_values(OneToMany<L, R> const &m, F &&f) {
 
 } // namespace FlexFlow
 
-
 #endif

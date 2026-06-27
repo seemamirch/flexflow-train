@@ -19,8 +19,7 @@ std::vector<T> without_nullopts(std::vector<std::optional<T>> const &v) {
 }
 
 template <typename T>
-std::set<T>
-    without_nullopts(std::set<std::optional<T>> const &s) {
+std::set<T> without_nullopts(std::set<std::optional<T>> const &s) {
   std::set<T> result;
   for (std::optional<T> const &t : s) {
     if (t.has_value()) {

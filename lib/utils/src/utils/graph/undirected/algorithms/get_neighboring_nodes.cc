@@ -4,7 +4,7 @@
 namespace FlexFlow {
 
 std::set<Node> get_neighboring_nodes(UndirectedGraphView const &g,
-                                               Node const &n) {
+                                     Node const &n) {
   std::set<UndirectedEdge> edges = g.query_edges(
       UndirectedEdgeQuery{query_set<Node>::match_single_value(n)});
 

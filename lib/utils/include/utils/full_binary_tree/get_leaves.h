@@ -13,17 +13,13 @@ std::multiset<Leaf>
     get_leaves(Tree const &tree,
                FullBinaryTreeImplementation<Tree, Parent, Leaf> const &impl) {
 
-  auto visitor =
-      FullBinaryTreeVisitor<std::multiset<Leaf>, Tree, Parent, Leaf>{
-          [&](Parent const &parent) -> std::multiset<Leaf> {
-            return multiset_union(
-                get_leaves(impl.get_left_child(parent), impl),
-                get_leaves(impl.get_right_child(parent), impl));
-          },
-          [](Leaf const &leaf) -> std::multiset<Leaf> {
-            return {leaf};
-          },
-      };
+  auto visitor = FullBinaryTreeVisitor<std::multiset<Leaf>, Tree, Parent, Leaf>{
+      [&](Parent const &parent) -> std::multiset<Leaf> {
+        return multiset_union(get_leaves(impl.get_left_child(parent), impl),
+                              get_leaves(impl.get_right_child(parent), impl));
+      },
+      [](Leaf const &leaf) -> std::multiset<Leaf> { return {leaf}; },
+  };
 
   return visit(tree, impl, visitor);
 }

@@ -16,7 +16,6 @@ std::unordered_map<V, std::unordered_set<K>>
   return result;
 }
 
-
 } // namespace FlexFlow
 
 #endif

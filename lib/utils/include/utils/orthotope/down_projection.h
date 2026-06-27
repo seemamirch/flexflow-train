@@ -44,8 +44,7 @@ DimCoord<R> compute_down_projection(DownProjection<L, R> const &projection,
          "compute_down_projection expected coord dimensions to match "
          "projection input dimensions");
 
-  std::set<R> output_dims =
-      output_dims_of_down_projection(projection);
+  std::set<R> output_dims = output_dims_of_down_projection(projection);
 
   return DimCoord<R>{
       generate_map(

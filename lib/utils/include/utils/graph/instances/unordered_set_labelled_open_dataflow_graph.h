@@ -23,7 +23,6 @@
 #include "utils/graph/open_dataflow_graph/dataflow_graph_input_source.h"
 #include "utils/graph/open_dataflow_graph/open_dataflow_edge.h"
 #include "utils/graph/open_dataflow_graph/open_dataflow_edge_query.h"
-#include "utils/containers/keys.h"
 
 namespace FlexFlow {
 
@@ -128,9 +127,8 @@ public:
     std::set<Node> nodes = get_nodes(view);
     std::set<DataflowOutput> outputs = get_all_dataflow_outputs(view);
     std::set<DataflowEdge> edges = get_edges(view);
-    std::map<DataflowOutput, ValueLabel> labelled_outputs =
-        generate_map(outputs,
-                     [&](DataflowOutput const &o) { return view.at(o); });
+    std::map<DataflowOutput, ValueLabel> labelled_outputs = generate_map(
+        outputs, [&](DataflowOutput const &o) { return view.at(o); });
 
     this->inputs.clear();
     this->nodes =

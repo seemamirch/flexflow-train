@@ -100,9 +100,9 @@ std::map<TensorSlotName, parallel_tensor_guid_t>
                     });
 }
 
-std::set<ParallelComputationGraphEdge> get_subgraph_outgoing_edges(
-    SubParallelComputationGraph const &spcg,
-    std::set<parallel_layer_guid_t> const &layers) {
+std::set<ParallelComputationGraphEdge>
+    get_subgraph_outgoing_edges(SubParallelComputationGraph const &spcg,
+                                std::set<parallel_layer_guid_t> const &layers) {
   std::set<KwargDataflowEdge<TensorSlotName>> raw_edges =
       get_kwarg_dataflow_subgraph_outgoing_edges(
           spcg.raw_graph, transform(layers, [](parallel_layer_guid_t const &l) {
@@ -120,9 +120,9 @@ std::set<SubParallelComputationGraphEdge> get_subgraph_incoming_edges(
       transform(subgraph, [](parallel_layer_guid_t const &l) {
         return l.raw_graph_node;
       });
-  std::set<OpenKwargDataflowEdge<int, TensorSlotName>>
-      raw_incoming_edges = get_open_kwarg_dataflow_subgraph_incoming_edges(
-          spcg.raw_graph, raw_subgraph);
+  std::set<OpenKwargDataflowEdge<int, TensorSlotName>> raw_incoming_edges =
+      get_open_kwarg_dataflow_subgraph_incoming_edges(spcg.raw_graph,
+                                                      raw_subgraph);
 
   return transform(raw_incoming_edges,
                    [](OpenKwargDataflowEdge<int, TensorSlotName> const &e) {

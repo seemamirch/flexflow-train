@@ -8,7 +8,8 @@ namespace FlexFlow {
 template <typename C,
           typename K = typename C::value_type::key_type,
           typename V = typename C::value_type::mapped_type>
-std::unordered_map<K, V> merge_unordered_maps_with_right_dominating(C const &c) {
+std::unordered_map<K, V>
+    merge_unordered_maps_with_right_dominating(C const &c) {
   std::unordered_map<K, V> result;
 
   for (std::unordered_map<K, V> const &m : c) {

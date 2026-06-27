@@ -16,9 +16,9 @@
 #include "utils/containers/map_values.h"
 #include "utils/containers/maximum.h"
 #include "utils/containers/require_only_key.h"
+#include "utils/containers/set_of.h"
 #include "utils/containers/sum.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/set_of.h"
 #include "utils/containers/values.h"
 #include "utils/exception.h"
 #include "utils/optional.h"
@@ -129,15 +129,15 @@ OpCostMetrics LocalCostEstimator::estimate_cost(
   // execute layer
   dynamic_layer_guid_t operator_layer_guid{get_layer_by_name(cg, "operator")};
 
-  std::map<dynamic_layer_guid_t, std::optional<milliseconds_t>>
-      fwd_timing = perform_forward_pass_for_computation_graph_instance(
+  std::map<dynamic_layer_guid_t, std::optional<milliseconds_t>> fwd_timing =
+      perform_forward_pass_for_computation_graph_instance(
           instance,
           this->profiling_settings,
           this->device_handle,
           this->device_idx);
   milliseconds_t fwd = fwd_timing.at(operator_layer_guid).value();
-  std::map<dynamic_layer_guid_t, std::optional<milliseconds_t>>
-      bwd_timing = perform_backward_pass_for_computation_graph_instance(
+  std::map<dynamic_layer_guid_t, std::optional<milliseconds_t>> bwd_timing =
+      perform_backward_pass_for_computation_graph_instance(
           instance,
           this->profiling_settings,
           this->device_handle,

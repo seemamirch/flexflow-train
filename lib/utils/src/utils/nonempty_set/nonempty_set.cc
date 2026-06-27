@@ -1,6 +1,6 @@
 #include "utils/nonempty_set/nonempty_set.h"
-#include "utils/archetypes/ordered_value_type.h"
 #include "utils/archetypes/jsonable_ordered_value_type.h"
+#include "utils/archetypes/ordered_value_type.h"
 
 using T = ::FlexFlow::ordered_value_type<0>;
 using J = ::FlexFlow::jsonable_ordered_value_type<0>;

@@ -3,8 +3,8 @@
 #include "utils/containers/contains_key.h"
 #include "utils/containers/get_one_of.h"
 #include "utils/containers/group_by.h"
-#include "utils/containers/transform.h"
 #include "utils/containers/set_of.h"
+#include "utils/containers/transform.h"
 #include "utils/containers/values.h"
 #include "utils/graph/digraph/directed_edge.dtg.h"
 #include "utils/graph/multidigraph/algorithms/get_directed_edge.h"
@@ -40,20 +40,18 @@ std::optional<ParallelReduction>
 
 std::set<ExtendedParallelReduction>
     find_all_extended_parallel_reductions(MultiDiGraphView const &g) {
-  std::map<DirectedEdge, std::set<MultiDiEdge>>
-      reduction_groups;
+  std::map<DirectedEdge, std::set<MultiDiEdge>> reduction_groups;
   for (MultiDiEdge const &edge : get_edges(g)) {
     reduction_groups[get_directed_edge(g, edge)].insert(edge);
   }
 
-  std::set<std::set<MultiDiEdge>> reductions = filter(
-      set_of(values(reduction_groups)),
-      [](std::set<MultiDiEdge> const &s) { return s.size() > 1; });
+  std::set<std::set<MultiDiEdge>> reductions =
+      filter(set_of(values(reduction_groups)),
+             [](std::set<MultiDiEdge> const &s) { return s.size() > 1; });
 
-  return transform(reductions,
-                   [&](std::set<MultiDiEdge> const &edges) {
-                     return ExtendedParallelReduction{edges};
-                   });
+  return transform(reductions, [&](std::set<MultiDiEdge> const &edges) {
+    return ExtendedParallelReduction{edges};
+  });
 }
 
 MultiDiEdge apply_parallel_reduction(MultiDiGraph &g,

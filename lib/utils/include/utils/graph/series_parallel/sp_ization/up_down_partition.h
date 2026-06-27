@@ -12,14 +12,14 @@ namespace FlexFlow {
  * is no outgoing edge from n.
  */
 std::set<Node> get_up_frontier(DiGraph const &sp,
-                                         UpDownPartition const &partition);
+                               UpDownPartition const &partition);
 
 /**
  * @brief Returns the nodes n in the down set such that in the down subgraph,
  * there is no incoming edge to n.
  */
 std::set<Node> get_down_frontier(DiGraph const &sp,
-                                           UpDownPartition const &partition);
+                                 UpDownPartition const &partition);
 
 } // namespace FlexFlow
 

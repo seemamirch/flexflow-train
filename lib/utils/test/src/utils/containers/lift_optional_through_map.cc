@@ -1,6 +1,6 @@
 #include "utils/containers/lift_optional_through_map.h"
-#include "test/utils/doctest/fmt/optional.h"
 #include "test/utils/doctest/fmt/map.h"
+#include "test/utils/doctest/fmt/optional.h"
 #include <doctest/doctest.h>
 
 using namespace ::FlexFlow;
@@ -25,8 +25,7 @@ TEST_SUITE(FF_TEST_SUITE) {
       std::optional<std::map<int, std::string>> result =
           lift_optional_through_map(input);
 
-      std::optional<std::map<int, std::string>> correct =
-          std::nullopt;
+      std::optional<std::map<int, std::string>> correct = std::nullopt;
 
       CHECK(result == correct);
     }

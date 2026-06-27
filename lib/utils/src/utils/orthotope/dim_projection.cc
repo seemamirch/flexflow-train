@@ -1,6 +1,6 @@
 #include "utils/orthotope/dim_projection.h"
-#include "utils/archetypes/value_type.h"
 #include "utils/archetypes/jsonable_ordered_value_type.h"
+#include "utils/archetypes/value_type.h"
 
 namespace FlexFlow {
 
@@ -13,11 +13,9 @@ template DimProjection<L, R>
                                 DimOrdering<L> const &,
                                 DimOrdering<R> const &);
 
-template std::set<L>
-    input_dims_of_projection(DimProjection<L, R> const &);
+template std::set<L> input_dims_of_projection(DimProjection<L, R> const &);
 
-template std::set<R>
-    output_dims_of_projection(DimProjection<L, R> const &);
+template std::set<R> output_dims_of_projection(DimProjection<L, R> const &);
 
 template DimProjection<R, L> invert_dim_projection(DimProjection<L, R> const &);
 

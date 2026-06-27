@@ -15,31 +15,29 @@ std::set<BinaryTreePath> find_paths_to_leaf(
     Tree const &tree,
     FullBinaryTreeImplementation<Tree, Parent, Leaf> const &impl,
     Leaf const &needle) {
-  auto visitor = FullBinaryTreeVisitor<std::set<BinaryTreePath>,
-                                       Tree,
-                                       Parent,
-                                       Leaf>{
-      [&](Parent const &parent) -> std::set<BinaryTreePath> {
-        return set_union(
-            transform(
-                find_paths_to_leaf(impl.get_left_child(parent), impl, needle),
-                [](BinaryTreePath const &path) {
-                  return nest_inside_left_child(path);
-                }),
-            transform(
-                find_paths_to_leaf(impl.get_right_child(parent), impl, needle),
-                [](BinaryTreePath const &path) {
-                  return nest_inside_right_child(path);
-                }));
-      },
-      [&](Leaf const &leaf) -> std::set<BinaryTreePath> {
-        if (leaf == needle) {
-          return {binary_tree_root_path()};
-        } else {
-          return {};
-        }
-      },
-  };
+  auto visitor =
+      FullBinaryTreeVisitor<std::set<BinaryTreePath>, Tree, Parent, Leaf>{
+          [&](Parent const &parent) -> std::set<BinaryTreePath> {
+            return set_union(
+                transform(find_paths_to_leaf(
+                              impl.get_left_child(parent), impl, needle),
+                          [](BinaryTreePath const &path) {
+                            return nest_inside_left_child(path);
+                          }),
+                transform(find_paths_to_leaf(
+                              impl.get_right_child(parent), impl, needle),
+                          [](BinaryTreePath const &path) {
+                            return nest_inside_right_child(path);
+                          }));
+          },
+          [&](Leaf const &leaf) -> std::set<BinaryTreePath> {
+            if (leaf == needle) {
+              return {binary_tree_root_path()};
+            } else {
+              return {};
+            }
+          },
+      };
 
   return visit(tree, impl, visitor);
 }

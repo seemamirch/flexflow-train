@@ -14,8 +14,7 @@
 
 namespace FlexFlow {
 
-std::map<Node, Node> parallel_extend(DiGraph &g,
-                                               DiGraphView const &ext) {
+std::map<Node, Node> parallel_extend(DiGraph &g, DiGraphView const &ext) {
   std::map<Node, Node> node_map;
   for (Node const &node : get_nodes(ext)) {
     node_map.emplace(node, g.add_node());
@@ -26,8 +25,7 @@ std::map<Node, Node> parallel_extend(DiGraph &g,
   return node_map;
 }
 
-std::map<Node, Node> serial_extend(DiGraph &g,
-                                             DiGraphView const &ext) {
+std::map<Node, Node> serial_extend(DiGraph &g, DiGraphView const &ext) {
   std::set<Node> original_sinks = get_terminal_nodes(g);
   std::map<Node, Node> node_map = parallel_extend(g, ext);
   for (Node const &node1 : original_sinks) {

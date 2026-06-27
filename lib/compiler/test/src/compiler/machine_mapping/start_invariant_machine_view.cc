@@ -127,10 +127,9 @@ TEST_SUITE(FF_TEST_SUITE) {
       }
 
       SUBCASE("get_machine_space_offsets") {
-        std::set<MachineSpaceOffset> correct = {
-            MachineSpaceOffset{0, 0},
-            MachineSpaceOffset{0, 2},
-            MachineSpaceOffset{0, 4}};
+        std::set<MachineSpaceOffset> correct = {MachineSpaceOffset{0, 0},
+                                                MachineSpaceOffset{0, 2},
+                                                MachineSpaceOffset{0, 4}};
         std::set<MachineSpaceOffset> result =
             get_machine_space_offsets(task, simv);
         CHECK(correct == result);
@@ -205,11 +204,10 @@ TEST_SUITE(FF_TEST_SUITE) {
       }
 
       SUBCASE("get_machine_space_offsets") {
-        std::set<MachineSpaceOffset> correct = {
-            MachineSpaceOffset{0, 0},
-            MachineSpaceOffset{0, 2},
-            MachineSpaceOffset{1, 0},
-            MachineSpaceOffset{1, 2}};
+        std::set<MachineSpaceOffset> correct = {MachineSpaceOffset{0, 0},
+                                                MachineSpaceOffset{0, 2},
+                                                MachineSpaceOffset{1, 0},
+                                                MachineSpaceOffset{1, 2}};
         std::set<MachineSpaceOffset> result =
             get_machine_space_offsets(task, simv);
         CHECK(correct == result);

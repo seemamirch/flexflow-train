@@ -6,9 +6,8 @@
 
 namespace FlexFlow {
 
-std::set<OpenDataflowValue>
-    get_subgraph_inputs(OpenDataflowGraphView const &,
-                        std::set<Node> const &);
+std::set<OpenDataflowValue> get_subgraph_inputs(OpenDataflowGraphView const &,
+                                                std::set<Node> const &);
 
 } // namespace FlexFlow
 

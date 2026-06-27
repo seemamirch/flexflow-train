@@ -18,9 +18,8 @@ std::optional<Node> get_imm_post_dominator(DiGraphView const &g,
   return get_imm_post_dominators_map(g).at(n);
 }
 
-std::optional<Node>
-    get_imm_post_dominator(DiGraphView const &g,
-                           std::set<Node> const &nodes) {
+std::optional<Node> get_imm_post_dominator(DiGraphView const &g,
+                                           std::set<Node> const &nodes) {
 
   if (nodes.empty()) {
     throw mk_runtime_error("Cannot get imm_post_dominator of no nodes");

@@ -6,8 +6,7 @@
 namespace FlexFlow {
 
 template <typename K, typename V>
-void merge_in_map(std::map<K, V> const &m,
-                  std::map<K, V> &result) {
+void merge_in_map(std::map<K, V> const &m, std::map<K, V> &result) {
   for (auto const &[k, v] : m) {
     auto it = result.find(k);
     if (it != result.end()) {

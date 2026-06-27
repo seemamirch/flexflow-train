@@ -3,15 +3,14 @@
 
 #include "utils/containers/zip.h"
 #include <libassert/assert.hpp>
-#include <set>
 #include <map>
+#include <set>
 
 namespace FlexFlow {
 
 template <typename K, typename V>
-std::map<K, V>
-    map_from_keys_and_values(std::vector<K> const &keys,
-                             std::vector<V> const &values) {
+std::map<K, V> map_from_keys_and_values(std::vector<K> const &keys,
+                                        std::vector<V> const &values) {
   ASSERT(keys.size() == values.size());
 
   std::map<K, V> result;

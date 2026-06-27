@@ -14,7 +14,8 @@ template <typename F,
           typename K = get_element_type_t<C>,
           typename V = std::invoke_result_t<F, K>>
 std::map<K, V> generate_map(C const &c, F &&f) {
-  static_assert(is_lt_comparable_v<K>, "Key type should be ordered (but is not)");
+  static_assert(is_lt_comparable_v<K>,
+                "Key type should be ordered (but is not)");
 
   auto transformed =
       vector_transform(vector_of(c), [&](K const &k) -> std::pair<K, V> {

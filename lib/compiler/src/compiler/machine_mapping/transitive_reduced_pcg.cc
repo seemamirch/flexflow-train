@@ -45,8 +45,8 @@ std::set<ParallelComputationGraphEdge>
       binary_series_split_from_pcg_series_split(split);
 
   std::set<KwargDataflowEdge<TensorSlotName>> raw_edges =
-      set_of(get_transitive_reduced_kwarg_dataflow_edges_across_split(raw_tr_g,
-                                                               raw_split));
+      set_of(get_transitive_reduced_kwarg_dataflow_edges_across_split(
+          raw_tr_g, raw_split));
 
   return transform(raw_edges, [](KwargDataflowEdge<TensorSlotName> const &e) {
     return ParallelComputationGraphEdge{e};
@@ -63,8 +63,8 @@ std::set<parallel_tensor_guid_t>
       binary_series_split_from_pcg_series_split(split);
 
   std::set<KwargDataflowOutput<TensorSlotName>> raw_outputs =
-      set_of(get_transitive_reduced_kwarg_dataflow_outputs_across_split(raw_tr_g,
-                                                                 raw_split));
+      set_of(get_transitive_reduced_kwarg_dataflow_outputs_across_split(
+          raw_tr_g, raw_split));
 
   return transform(raw_outputs,
                    [](KwargDataflowOutput<TensorSlotName> const &o) {

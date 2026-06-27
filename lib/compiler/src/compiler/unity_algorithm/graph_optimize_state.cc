@@ -6,13 +6,13 @@
 #include "pcg/parallel_computation_graph/parallel_computation_graph_edge.h"
 #include "pcg/parallel_computation_graph/parallel_tensor_guid_t.h"
 #include "utils/bidict/algorithms/bidict_from_map.h"
+#include "utils/containers/multiset_of.h"
+#include "utils/containers/transform.h"
 #include "utils/containers/zip_values_strict.h"
 #include "utils/containers/zip_values_strict_with.h"
-#include "utils/hash/tuple.h"
 #include "utils/hash/map.h"
 #include "utils/hash/multiset.h"
-#include "utils/containers/transform.h"
-#include "utils/containers/multiset_of.h"
+#include "utils/hash/tuple.h"
 
 namespace FlexFlow {
 
@@ -31,9 +31,9 @@ static std::multiset<std::tuple<
   auto get_layer_signature = [&](parallel_layer_guid_t l)
       -> std::tuple<ParallelLayerAttrs,
                     std::map<TensorSlotName,
-                                       std::tuple<ParallelLayerAttrs,
-                                                  TensorSlotName,
-                                                  ParallelTensorAttrs>>,
+                             std::tuple<ParallelLayerAttrs,
+                                        TensorSlotName,
+                                        ParallelTensorAttrs>>,
                     std::map<TensorSlotName, ParallelTensorAttrs>> {
     ParallelLayerAttrs layer_attrs = get_parallel_layer_attrs(pcg, l);
 
@@ -54,11 +54,10 @@ static std::multiset<std::tuple<
               };
             });
 
-    std::map<TensorSlotName, ParallelTensorAttrs> outputs =
-        map_values(get_outgoing_tensors(pcg, l),
-                   [&](parallel_tensor_guid_t const &o) {
-                     return get_parallel_tensor_attrs(pcg, o);
-                   });
+    std::map<TensorSlotName, ParallelTensorAttrs> outputs = map_values(
+        get_outgoing_tensors(pcg, l), [&](parallel_tensor_guid_t const &o) {
+          return get_parallel_tensor_attrs(pcg, o);
+        });
 
     return {
         layer_attrs,

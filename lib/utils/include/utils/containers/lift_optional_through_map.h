@@ -5,14 +5,14 @@
 #include "utils/containers/map_values.h"
 #include "utils/containers/values.h"
 #include <libassert/assert.hpp>
-#include <optional>
 #include <map>
+#include <optional>
 
 namespace FlexFlow {
 
 template <typename K, typename V>
-static std::optional<std::map<K, V>> lift_optional_through_map(
-    std::map<K, std::optional<V>> const &m) {
+static std::optional<std::map<K, V>>
+    lift_optional_through_map(std::map<K, std::optional<V>> const &m) {
   ASSERT(!m.empty());
 
   std::multiset<std::optional<V>> m_values = values(m);

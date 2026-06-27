@@ -14,10 +14,9 @@ template <typename K,
           typename V2,
           typename F,
           typename Out = std::invoke_result_t<F, V1, V2>>
-std::map<K, Out>
-    zip_values_strict_with(std::map<K, V1> const &m1,
-                           std::map<K, V2> const &m2,
-                           F &&f) {
+std::map<K, Out> zip_values_strict_with(std::map<K, V1> const &m1,
+                                        std::map<K, V2> const &m2,
+                                        F &&f) {
 
   ASSERT(keys(m1) == keys(m2));
 

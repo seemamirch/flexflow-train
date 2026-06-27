@@ -27,6 +27,6 @@ template LabelledOpenKwargDataflowGraphView<NodeLabel,
         OpenKwargDataflowGraphView<GraphInputName, SlotName> const &,
         std::map<Node, NodeLabel> const &,
         std::map<OpenKwargDataflowValue<GraphInputName, SlotName>,
-                           ValueLabel> const &);
+                 ValueLabel> const &);
 
 } // namespace FlexFlow

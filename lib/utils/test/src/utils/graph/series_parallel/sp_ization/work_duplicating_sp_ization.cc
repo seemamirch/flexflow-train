@@ -45,10 +45,9 @@ static std::pair<DiGraph, std::map<Node, float>>
     }
   }
 
-  std::map<Node, float> cost_map =
-      generate_map(get_nodes(g), [](Node const &) {
-        return static_cast<float>(*rc::gen::inRange(1, 101));
-      });
+  std::map<Node, float> cost_map = generate_map(get_nodes(g), [](Node const &) {
+    return static_cast<float>(*rc::gen::inRange(1, 101));
+  });
 
   return {g, cost_map};
 }

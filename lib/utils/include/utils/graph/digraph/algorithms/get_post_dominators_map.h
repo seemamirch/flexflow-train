@@ -5,8 +5,7 @@
 
 namespace FlexFlow {
 
-std::map<Node, std::set<Node>>
-    get_post_dominators_map(DiGraphView const &);
+std::map<Node, std::set<Node>> get_post_dominators_map(DiGraphView const &);
 
 } // namespace FlexFlow
 

@@ -6,8 +6,7 @@
 namespace FlexFlow {
 
 struct Accessor {
-  Accessor(
-      std::map<OperatorAttributeKey, OperatorAttributeValue> const &m)
+  Accessor(std::map<OperatorAttributeKey, OperatorAttributeValue> const &m)
       : m(m) {}
 
   std::map<OperatorAttributeKey, OperatorAttributeValue> const &m;
@@ -29,8 +28,7 @@ struct Accessor {
 };
 
 PCGOperatorAttrs materialize_operator_from_attrs_map(
-    std::map<OperatorAttributeKey, OperatorAttributeValue> const
-        &attrs) {
+    std::map<OperatorAttributeKey, OperatorAttributeValue> const &attrs) {
   OperatorType op_type =
       attrs.at(OperatorAttributeKey::OP_TYPE).get<OperatorType>();
 

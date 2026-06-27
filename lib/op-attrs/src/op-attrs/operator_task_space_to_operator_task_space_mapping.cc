@@ -40,9 +40,10 @@ OperatorTaskSpace op_mapping_get_dst_space(
 
 bidict<TaskSpaceCoordinate, TaskSpaceCoordinate> op_to_op_get_coord_mapping(
     OperatorTaskSpaceToOperatorTaskSpaceMapping const &mapping) {
-  return bidict_transform_values(bidict_transform_keys(mapping.raw_mapping.coord_mapping,
-                                         task_space_coordinate_from_dim_coord),
-                          task_space_coordinate_from_dim_coord);
+  return bidict_transform_values(
+      bidict_transform_keys(mapping.raw_mapping.coord_mapping,
+                            task_space_coordinate_from_dim_coord),
+      task_space_coordinate_from_dim_coord);
 }
 
 OperatorTaskSpaceToOperatorTaskSpaceMapping

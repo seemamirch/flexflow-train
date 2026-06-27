@@ -5,7 +5,6 @@
 #include "utils/containers/set_difference.h"
 #include "utils/containers/set_of.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/set_of.h"
 #include "utils/containers/values.h"
 #include "utils/exception.h"
 #include "utils/graph/digraph/algorithms/get_incoming_edges.h"
@@ -55,8 +54,7 @@ struct GetNodesFunctor {
   }
 };
 
-std::set<Node> query_nodes(GraphView const &g,
-                                     std::set<Node> const &nodes) {
+std::set<Node> query_nodes(GraphView const &g, std::set<Node> const &nodes) {
   NodeQuery query = NodeQuery{
       query_set<Node>::match_values_in(set_of(nodes)),
   };
@@ -127,8 +125,7 @@ void add_edges(DiGraph &g, std::set<DirectedEdge> const &edges) {
   }
 }
 
-void add_edges(UndirectedGraph &g,
-               std::set<UndirectedEdge> const &edges) {
+void add_edges(UndirectedGraph &g, std::set<UndirectedEdge> const &edges) {
   for (UndirectedEdge const &e : edges) {
     g.add_edge(e);
   }
@@ -157,8 +154,7 @@ void remove_edges(DiGraph &g, std::set<DirectedEdge> const &edges) {
   }
 }
 
-void remove_edges(UndirectedGraph &g,
-                  std::set<UndirectedEdge> const &edges) {
+void remove_edges(UndirectedGraph &g, std::set<UndirectedEdge> const &edges) {
   for (UndirectedEdge const &e : edges) {
     ASSERT(contains_edge(g, e),
            "remove_edges expected edge to exist in UndirectedGraph");
@@ -167,7 +163,7 @@ void remove_edges(UndirectedGraph &g,
 }
 
 std::set<UndirectedEdge> get_node_edges(UndirectedGraphView const &g,
-                                                  Node const &n) {
+                                        Node const &n) {
   UndirectedEdgeQuery query = UndirectedEdgeQuery{
       query_set<Node>::match_single_value(n),
   };
@@ -175,22 +171,21 @@ std::set<UndirectedEdge> get_node_edges(UndirectedGraphView const &g,
   return g.query_edges(query);
 }
 
-std::vector<Node> get_unchecked_dfs_ordering(
-    DiGraphView const &g, std::set<Node> const &starting_points) {
+std::vector<Node>
+    get_unchecked_dfs_ordering(DiGraphView const &g,
+                               std::set<Node> const &starting_points) {
   UncheckedDFSView dfs_view = unchecked_dfs(g, starting_points);
   return {dfs_view.begin(), dfs_view.end()};
 }
 
-std::vector<Node>
-    get_dfs_ordering(DiGraphView const &g,
-                     std::set<Node> const &starting_points) {
+std::vector<Node> get_dfs_ordering(DiGraphView const &g,
+                                   std::set<Node> const &starting_points) {
   CheckedDFSView dfs_view = dfs(g, starting_points);
   return {dfs_view.begin(), dfs_view.end()};
 }
 
-std::vector<Node>
-    get_bfs_ordering(DiGraphView const &g,
-                     std::set<Node> const &starting_points) {
+std::vector<Node> get_bfs_ordering(DiGraphView const &g,
+                                   std::set<Node> const &starting_points) {
   BFSView bfs_view = bfs(g, starting_points);
   return {bfs_view.begin(), bfs_view.end()};
 }
@@ -200,8 +195,7 @@ std::set<Node> get_neighbors(DiGraphView const &g, Node const &n) {
   return get_neighbors(undirected, n);
 }
 
-std::set<Node> get_neighbors(UndirectedGraphView const &g,
-                                       Node const &n) {
+std::set<Node> get_neighbors(UndirectedGraphView const &g, Node const &n) {
   return flatmap(get_node_edges(g, n), [&](UndirectedEdge const &edge) {
     return set_difference(get_endpoints(edge), {n});
   });
@@ -212,8 +206,7 @@ UndirectedGraphView get_subgraph(UndirectedGraphView const &g,
   return UndirectedGraphView::create<UndirectedSubgraphView>(g, nodes);
 }
 
-DiGraphView get_subgraph(DiGraphView const &g,
-                         std::set<Node> const &nodes) {
+DiGraphView get_subgraph(DiGraphView const &g, std::set<Node> const &nodes) {
   return DiGraphView::create<DiSubgraphView>(g, nodes);
 }
 

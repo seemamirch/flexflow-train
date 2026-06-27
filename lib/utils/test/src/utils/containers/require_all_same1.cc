@@ -3,13 +3,10 @@
 #include "test/utils/doctest/fmt/multiset.h"
 #include "test/utils/doctest/fmt/optional.h"
 #include "test/utils/doctest/fmt/set.h"
-#include "test/utils/doctest/fmt/multiset.h"
-#include "test/utils/doctest/fmt/set.h"
 #include "test/utils/doctest/fmt/vector.h"
 #include "utils/expected.h"
 #include <doctest/doctest.h>
 #include <optional>
-#include <set>
 #include <set>
 
 using namespace ::FlexFlow;

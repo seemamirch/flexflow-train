@@ -56,7 +56,8 @@ std::string format_as(jsonable_ordered_value_type<TAG> const &) {
 }
 
 template <int TAG>
-std::ostream &operator<<(std::ostream &s, jsonable_ordered_value_type<TAG> const &x) {
+std::ostream &operator<<(std::ostream &s,
+                         jsonable_ordered_value_type<TAG> const &x) {
   PANIC();
 }
 
@@ -70,7 +71,8 @@ struct adl_serializer<::FlexFlow::jsonable_ordered_value_type<TAG>> {
     PANIC();
   }
 
-  static void to_json(json &, ::FlexFlow::jsonable_ordered_value_type<TAG> const &) {
+  static void to_json(json &,
+                      ::FlexFlow::jsonable_ordered_value_type<TAG> const &) {
     PANIC();
   }
 };
@@ -81,7 +83,8 @@ namespace std {
 
 template <int TAG>
 struct hash<::FlexFlow::jsonable_ordered_value_type<TAG>> {
-  size_t operator()(::FlexFlow::jsonable_ordered_value_type<TAG> const &) const {
+  size_t
+      operator()(::FlexFlow::jsonable_ordered_value_type<TAG> const &) const {
     PANIC();
   };
 };

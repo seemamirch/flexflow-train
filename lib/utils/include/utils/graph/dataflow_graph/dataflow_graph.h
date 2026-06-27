@@ -19,8 +19,7 @@ public:
 
   std::set<Node> query_nodes(NodeQuery const &) const;
   std::set<DataflowEdge> query_edges(DataflowEdgeQuery const &) const;
-  std::set<DataflowOutput>
-      query_outputs(DataflowOutputQuery const &) const;
+  std::set<DataflowOutput> query_outputs(DataflowOutputQuery const &) const;
 
   template <typename T>
   static typename std::enable_if<std::is_base_of<IDataflowGraph, T>::value,

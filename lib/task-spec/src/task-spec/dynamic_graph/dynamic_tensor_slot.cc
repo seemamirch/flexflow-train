@@ -18,5 +18,4 @@ DynamicTensorSlot slot_without_task_shard(DynamicTensorSlot const &s) {
   return result;
 }
 
-
 } // namespace FlexFlow

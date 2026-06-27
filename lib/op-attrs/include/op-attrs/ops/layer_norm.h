@@ -33,8 +33,7 @@ tl::expected<ParallelTensorShape, std::string>
 tl::expected<ParallelTensorShape, std::string>
     get_beta_weights_shape(LayerNormAttrs const &, ParallelTensorShape const &);
 
-tl::expected<std::map<TensorSlotName, ParallelTensorShape>,
-             std::string>
+tl::expected<std::map<TensorSlotName, ParallelTensorShape>, std::string>
     get_weight_shapes(LayerNormAttrs const &attrs,
                       ParallelTensorShape const &input_shape);
 

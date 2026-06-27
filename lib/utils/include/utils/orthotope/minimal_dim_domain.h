@@ -2,8 +2,10 @@
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_ORTHOTOPE_MINIMAL_DIM_DOMAIN_H
 
 #include "utils/containers/are_disjoint.h"
+#include "utils/containers/binary_merge_disjoint_maps.h"
 #include "utils/containers/filtermap_values.h"
 #include "utils/containers/generate_map.h"
+#include "utils/containers/keys.h"
 #include "utils/containers/map_from_keys_and_values.h"
 #include "utils/containers/map_values.h"
 #include "utils/containers/restrict_keys.h"
@@ -14,8 +16,6 @@
 #include "utils/orthotope/dim_ordering.dtg.h"
 #include "utils/orthotope/minimal_dim_domain.dtg.h"
 #include "utils/orthotope/minimal_orthotope.dtg.h"
-#include "utils/containers/keys.h"
-#include "utils/containers/binary_merge_disjoint_maps.h"
 
 namespace FlexFlow {
 
@@ -60,8 +60,7 @@ template <typename T>
 DimDomain<T> dim_domain_from_minimal_dim_domain(
     MinimalDimDomain<T> const &minimal_dim_domain,
     std::set<T> const &trivial_dims) {
-  std::set<T> nontrivial_dims =
-      get_minimal_domain_dims(minimal_dim_domain);
+  std::set<T> nontrivial_dims = get_minimal_domain_dims(minimal_dim_domain);
 
   ASSERT(are_disjoint(nontrivial_dims, trivial_dims));
 
@@ -75,8 +74,7 @@ DimDomain<T> dim_domain_from_minimal_dim_domain(
 }
 
 template <typename T>
-std::set<T>
-    get_minimal_domain_dims(MinimalDimDomain<T> const &domain) {
+std::set<T> get_minimal_domain_dims(MinimalDimDomain<T> const &domain) {
   return keys(domain.dims);
 }
 

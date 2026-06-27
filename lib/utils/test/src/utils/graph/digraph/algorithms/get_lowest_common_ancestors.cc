@@ -32,8 +32,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     SUBCASE("trees") {
       SUBCASE("single node") {
         std::vector<Node> n = add_nodes(g, 1);
-        std::optional<std::set<Node>> correct =
-            std::set<Node>{n.at(0)};
+        std::optional<std::set<Node>> correct = std::set<Node>{n.at(0)};
         std::optional<std::set<Node>> result =
             get_lowest_common_ancestors(g, {n.at(0)});
         CHECK(correct == result);
@@ -46,24 +45,21 @@ TEST_SUITE(FF_TEST_SUITE) {
             {DirectedEdge{n.at(0), n.at(1)}, DirectedEdge{n.at(0), n.at(2)}});
 
         SUBCASE("LCA of siblings is parent") {
-          std::optional<std::set<Node>> correct =
-              std::set<Node>{n.at(0)};
+          std::optional<std::set<Node>> correct = std::set<Node>{n.at(0)};
           std::optional<std::set<Node>> result =
               get_lowest_common_ancestors(g, {n.at(1), n.at(2)});
           CHECK(correct == result);
         }
 
         SUBCASE("LCA of a single node is itself") {
-          std::optional<std::set<Node>> correct =
-              std::set<Node>{n.at(1)};
+          std::optional<std::set<Node>> correct = std::set<Node>{n.at(1)};
           std::optional<std::set<Node>> result =
               get_lowest_common_ancestors(g, {n.at(1)});
           CHECK(correct == result);
         }
 
         SUBCASE("LCA of another single node is itself") {
-          std::optional<std::set<Node>> correct =
-              std::set<Node>{n.at(2)};
+          std::optional<std::set<Node>> correct = std::set<Node>{n.at(2)};
           std::optional<std::set<Node>> result =
               get_lowest_common_ancestors(g, {n.at(2)});
           CHECK(correct == result);
@@ -80,35 +76,30 @@ TEST_SUITE(FF_TEST_SUITE) {
                    DirectedEdge{n.at(3), n.at(5)}});
 
         SUBCASE("LCA of nodes at different depths (root is LCA)") {
-          std::optional<std::set<Node>> correct =
-              std::set<Node>{n.at(0)};
+          std::optional<std::set<Node>> correct = std::set<Node>{n.at(0)};
           std::optional<std::set<Node>> result =
               get_lowest_common_ancestors(g, {n.at(5), n.at(2)});
           CHECK(correct == result);
         }
 
         SUBCASE("LCA of node and its ancestor is the ancestor") {
-          std::optional<std::set<Node>> correct =
-              std::set<Node>{n.at(3)};
+          std::optional<std::set<Node>> correct = std::set<Node>{n.at(3)};
           std::optional<std::set<Node>> result =
               get_lowest_common_ancestors(g, {n.at(5), n.at(3)});
           CHECK(correct == result);
         }
 
         SUBCASE("LCA of siblings at depth 2") {
-          std::optional<std::set<Node>> correct =
-              std::set<Node>{n.at(1)};
+          std::optional<std::set<Node>> correct = std::set<Node>{n.at(1)};
           std::optional<std::set<Node>> result =
               get_lowest_common_ancestors(g, {n.at(3), n.at(4)});
           CHECK(correct == result);
         }
 
         SUBCASE("LCA of multiple nodes across different branches") {
-          std::optional<std::set<Node>> correct =
-              std::set<Node>{n.at(0)};
-          std::optional<std::set<Node>> result =
-              get_lowest_common_ancestors(
-                  g, {n.at(1), n.at(2), n.at(3), n.at(4), n.at(5)});
+          std::optional<std::set<Node>> correct = std::set<Node>{n.at(0)};
+          std::optional<std::set<Node>> result = get_lowest_common_ancestors(
+              g, {n.at(1), n.at(2), n.at(3), n.at(4), n.at(5)});
           CHECK(correct == result);
         }
       }
@@ -121,24 +112,21 @@ TEST_SUITE(FF_TEST_SUITE) {
                    DirectedEdge{n.at(2), n.at(3)}});
 
         SUBCASE("LCA of adjacent nodes in a path") {
-          std::optional<std::set<Node>> correct =
-              std::set<Node>{n.at(2)};
+          std::optional<std::set<Node>> correct = std::set<Node>{n.at(2)};
           std::optional<std::set<Node>> result =
               get_lowest_common_ancestors(g, {n.at(2), n.at(3)});
           CHECK(correct == result);
         }
 
         SUBCASE("LCA of non-adjacent nodes in a path") {
-          std::optional<std::set<Node>> correct =
-              std::set<Node>{n.at(1)};
+          std::optional<std::set<Node>> correct = std::set<Node>{n.at(1)};
           std::optional<std::set<Node>> result =
               get_lowest_common_ancestors(g, {n.at(1), n.at(3)});
           CHECK(correct == result);
         }
 
         SUBCASE("LCA of multiple nodes in a path") {
-          std::optional<std::set<Node>> correct =
-              std::set<Node>{n.at(1)};
+          std::optional<std::set<Node>> correct = std::set<Node>{n.at(1)};
           std::optional<std::set<Node>> result =
               get_lowest_common_ancestors(g, {n.at(1), n.at(2), n.at(3)});
           CHECK(correct == result);
@@ -154,8 +142,7 @@ TEST_SUITE(FF_TEST_SUITE) {
             g,
             {DirectedEdge{n.at(0), n.at(2)}, DirectedEdge{n.at(1), n.at(2)}});
 
-        std::optional<std::set<Node>> correct =
-            std::set<Node>{};
+        std::optional<std::set<Node>> correct = std::set<Node>{};
         std::optional<std::set<Node>> result =
             get_lowest_common_ancestors(g, {n.at(0), n.at(1)});
         CHECK(correct == result);
@@ -187,8 +174,7 @@ TEST_SUITE(FF_TEST_SUITE) {
                    DirectedEdge{n.at(3), n.at(5)},
                    DirectedEdge{n.at(1), n.at(5)}});
 
-        std::optional<std::set<Node>> correct =
-            std::set<Node>{n.at(3)};
+        std::optional<std::set<Node>> correct = std::set<Node>{n.at(3)};
         std::optional<std::set<Node>> result =
             get_lowest_common_ancestors(g, {n.at(4), n.at(5)});
         CHECK(correct == result);

@@ -7,7 +7,6 @@ using SlotName = ordered_value_type<0>;
 
 template std::set<KwargDataflowEdge<SlotName>>
     get_kwarg_dataflow_subgraph_incoming_edges(
-        KwargDataflowGraphView<SlotName> const &,
-        std::set<Node> const &);
+        KwargDataflowGraphView<SlotName> const &, std::set<Node> const &);
 
 } // namespace FlexFlow

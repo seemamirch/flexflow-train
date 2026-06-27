@@ -8,8 +8,7 @@
 
 namespace FlexFlow {
 
-std::map<Node, NodeRole>
-    get_initial_node_role_map(DiGraphView const &g);
+std::map<Node, NodeRole> get_initial_node_role_map(DiGraphView const &g);
 
 /**
  * @brief Contracts out nodes of a given role from the graph.

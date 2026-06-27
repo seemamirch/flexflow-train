@@ -83,22 +83,19 @@ MachineMappingWithMemoryResult get_optimal_machine_mapping_with_memory(
       [&](MachineMappingProblemTree const &root,
           std::set<BinaryTreePath> const &boundary_layers)
       -> std::set<ParallelLayerGuidObliviousMachineMapping> {
-    std::map<BinaryTreePath, std::set<MachineView>>
-        allowed = generate_map(
-            boundary_layers,
-            [&](BinaryTreePath const &l) -> std::set<MachineView> {
-              UnmappedRuntimeOnlyOpCostEstimateKey leaf =
-                  mm_problem_tree_get_subtree_at_path(root, l)
-                      .value()
-                      .get<UnmappedRuntimeOnlyOpCostEstimateKey>();
-              return context.allowed_machine_views(leaf, resources);
-            });
-
-    return transform(
-        get_all_assignments(allowed),
-        [](std::map<BinaryTreePath, MachineView> const &m) {
-          return ParallelLayerGuidObliviousMachineMapping{m};
+    std::map<BinaryTreePath, std::set<MachineView>> allowed = generate_map(
+        boundary_layers, [&](BinaryTreePath const &l) -> std::set<MachineView> {
+          UnmappedRuntimeOnlyOpCostEstimateKey leaf =
+              mm_problem_tree_get_subtree_at_path(root, l)
+                  .value()
+                  .get<UnmappedRuntimeOnlyOpCostEstimateKey>();
+          return context.allowed_machine_views(leaf, resources);
         });
+
+    return transform(get_all_assignments(allowed),
+                     [](std::map<BinaryTreePath, MachineView> const &m) {
+                       return ParallelLayerGuidObliviousMachineMapping{m};
+                     });
   };
 
   auto eval_pre_boundary_mapping =
@@ -226,9 +223,8 @@ MachineMappingWithMemoryResult get_optimal_machine_mapping_with_memory(
         return parallel_combine(resource_split, left_result, right_result);
       };
 
-  std::set<MachineMappingWithMemoryResult> parallel_results =
-      transform(get_machine_resource_splits(resources),
-                evaluate_resource_split);
+  std::set<MachineMappingWithMemoryResult> parallel_results = transform(
+      get_machine_resource_splits(resources), evaluate_resource_split);
 
   return minimize_runtime(series_result,
                           get_mapping_with_minimal_runtime(parallel_results));

@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <doctest/doctest.h>
 #include <set>
-#include <set>
 #include <vector>
 
 using namespace FlexFlow;

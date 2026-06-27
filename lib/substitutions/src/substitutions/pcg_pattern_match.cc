@@ -4,9 +4,9 @@
 #include "substitutions/unlabelled/unlabelled_graph_pattern.h"
 #include "utils/bidict/algorithms/bidict_from_keys_and_values.h"
 #include "utils/bidict/algorithms/bidict_from_map.h"
+#include "utils/bidict/algorithms/bidict_transform_values.h"
 #include "utils/bidict/algorithms/binary_merge_disjoint_bidicts.h"
 #include "utils/bidict/algorithms/exhaustive_relational_join.h"
-#include "utils/bidict/algorithms/bidict_transform_values.h"
 #include "utils/containers/is_subseteq_of.h"
 #include "utils/containers/map_values.h"
 #include "utils/containers/values.h"
@@ -57,8 +57,7 @@ void assert_pcg_pattern_match_is_valid_for_pattern_and_subpcg(
     PCGPatternMatch const &match,
     PCGPattern const &pattern,
     SubParallelComputationGraph const &spcg) {
-  std::set<parallel_layer_guid_t> spcg_nodes =
-      spcg_get_parallel_layers(spcg);
+  std::set<parallel_layer_guid_t> spcg_nodes = spcg_get_parallel_layers(spcg);
   std::set<parallel_layer_guid_t> match_nodes =
       match.node_assignment.right_values();
   ASSERT(is_subseteq_of(match_nodes, spcg_nodes));
@@ -75,8 +74,7 @@ void assert_pcg_pattern_match_is_valid_for_pattern_and_subpcg(
   ASSERT(match_pattern_nodes == pattern_nodes);
 
   std::set<PatternInput> pattern_inputs = get_inputs(pattern);
-  std::set<PatternInput> match_pattern_inputs =
-      keys(match.input_assignment);
+  std::set<PatternInput> match_pattern_inputs = keys(match.input_assignment);
   ASSERT(pattern_inputs == match_pattern_inputs);
 }
 

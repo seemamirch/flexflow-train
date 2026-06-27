@@ -44,20 +44,20 @@ LossInsertionResult perform_loss_insertion(
   DynamicNodeInvocation loss_invocation{
       /*inputs=*/{
           {
-            DynamicTensorSlot{
-              /*slot_name=*/TensorSlotName::INPUT,
-              /*slot_tensor_role=*/label_value.role,
-              /*task_shard=*/std::nullopt,
-            },
-            label_value,
+              DynamicTensorSlot{
+                  /*slot_name=*/TensorSlotName::INPUT,
+                  /*slot_tensor_role=*/label_value.role,
+                  /*task_shard=*/std::nullopt,
+              },
+              label_value,
           },
           {
-            DynamicTensorSlot{
-              /*slot_name=*/TensorSlotName::LOGIT,
-              /*slot_tensor_role=*/logit_value.role,
-              /*task_shard=*/std::nullopt,
-            },
-            logit_value,
+              DynamicTensorSlot{
+                  /*slot_name=*/TensorSlotName::LOGIT,
+                  /*slot_tensor_role=*/logit_value.role,
+                  /*task_shard=*/std::nullopt,
+              },
+              logit_value,
           },
       },
       /*node_attrs=*/
@@ -72,12 +72,12 @@ LossInsertionResult perform_loss_insertion(
       /*outputs=*/
       {
           {
-            DynamicTensorSlot{
-              /*slot_name=*/TensorSlotName::LOGIT,
-              /*slot_tensor_role=*/logit_grad_value.role,
-              /*task_shard=*/std::nullopt,
-            },
-            logit_grad_value,
+              DynamicTensorSlot{
+                  /*slot_name=*/TensorSlotName::LOGIT,
+                  /*slot_tensor_role=*/logit_grad_value.role,
+                  /*task_shard=*/std::nullopt,
+              },
+              logit_grad_value,
           },
       },
   };

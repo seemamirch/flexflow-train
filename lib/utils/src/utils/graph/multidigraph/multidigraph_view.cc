@@ -2,8 +2,7 @@
 
 namespace FlexFlow {
 
-std::set<Node>
-    MultiDiGraphView::query_nodes(NodeQuery const &q) const {
+std::set<Node> MultiDiGraphView::query_nodes(NodeQuery const &q) const {
   return this->get_interface().query_nodes(q);
 }
 

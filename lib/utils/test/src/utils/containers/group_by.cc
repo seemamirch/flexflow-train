@@ -1,5 +1,4 @@
 #include "utils/containers/group_by.h"
-#include "test/utils/doctest/fmt/set.h"
 #include "test/utils/doctest/fmt/map.h"
 #include "test/utils/doctest/fmt/set.h"
 #include "test/utils/doctest/fmt/vector.h"

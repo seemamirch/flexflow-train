@@ -2,8 +2,8 @@
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_TRY_MERGE_NONDISJOINT_MAPS_H
 
 #include "utils/containers/contains_key.h"
-#include <optional>
 #include <map>
+#include <optional>
 
 namespace FlexFlow {
 

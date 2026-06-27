@@ -1,8 +1,8 @@
 #include "utils/containers/map_keys.h"
 #include "test/utils/doctest/fmt/map.h"
 #include <doctest/doctest.h>
-#include <string>
 #include <map>
+#include <string>
 
 using namespace FlexFlow;
 

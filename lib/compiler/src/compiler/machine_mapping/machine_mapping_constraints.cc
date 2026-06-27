@@ -103,8 +103,7 @@ MachineMappingConstraints with_additional_constraints(
 
 std::optional<MachineView>
     require_only_root(MachineMappingConstraints const &constraints) {
-  ASSERT(keys(constraints.machine_views) ==
-             std::set{binary_tree_root_path()},
+  ASSERT(keys(constraints.machine_views) == std::set{binary_tree_root_path()},
          fmt::format("require_only_root expected constraints to have only a "
                      "single key (the root path), but received {}",
                      constraints));

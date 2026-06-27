@@ -34,8 +34,7 @@ std::vector<DataflowOutput> get_outputs(DataflowGraphView const &g,
                    });
 }
 
-std::set<DataflowOutput>
-    get_all_dataflow_outputs(DataflowGraphView const &g) {
+std::set<DataflowOutput> get_all_dataflow_outputs(DataflowGraphView const &g) {
   return g.query_outputs(dataflow_output_query_all());
 }
 

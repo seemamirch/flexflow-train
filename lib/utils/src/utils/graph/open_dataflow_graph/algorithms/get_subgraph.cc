@@ -17,9 +17,8 @@
 
 namespace FlexFlow {
 
-OpenDataflowSubgraphResult
-    get_subgraph(OpenDataflowGraphView const &g,
-                 std::set<Node> const &subgraph_nodes) {
+OpenDataflowSubgraphResult get_subgraph(OpenDataflowGraphView const &g,
+                                        std::set<Node> const &subgraph_nodes) {
   bidict<OpenDataflowValue, DataflowGraphInput>
       full_graph_values_to_subgraph_inputs =
           get_full_graph_values_to_subgraph_inputs(g, subgraph_nodes);
@@ -34,8 +33,7 @@ OpenDataflowSubgraphResult
 
 bidict<OpenDataflowValue, DataflowGraphInput>
     get_full_graph_values_to_subgraph_inputs(
-        OpenDataflowGraphView const &g,
-        std::set<Node> const &subgraph_nodes) {
+        OpenDataflowGraphView const &g, std::set<Node> const &subgraph_nodes) {
   DataflowGraphInputSource input_source;
   return generate_bidict(get_subgraph_inputs(g, subgraph_nodes),
                          [&](OpenDataflowValue const &v) -> DataflowGraphInput {

@@ -178,7 +178,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
           DirectedEdge e = get_directed_edge(g, reduction_e1);
           new_edge_counts.at(e) = positive_int{
-            new_edge_counts.at(e).int_from_positive_int() - 1,
+              new_edge_counts.at(e).int_from_positive_int() - 1,
           };
           return new_edge_counts;
         }();

@@ -2,8 +2,7 @@
 
 namespace FlexFlow {
 
-std::set<DataflowGraphInput>
-    OpenDataflowGraphView::get_inputs() const {
+std::set<DataflowGraphInput> OpenDataflowGraphView::get_inputs() const {
   return this->get_interface().get_inputs();
 }
 

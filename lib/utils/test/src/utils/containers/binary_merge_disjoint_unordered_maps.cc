@@ -1,5 +1,5 @@
-#include "utils/containers/binary_merge_disjoint_maps.h"
 #include "test/utils/doctest/fmt/map.h"
+#include "utils/containers/binary_merge_disjoint_maps.h"
 #include <doctest/doctest.h>
 
 using namespace ::FlexFlow;

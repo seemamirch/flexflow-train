@@ -9,14 +9,12 @@
 #include "utils/containers/set_of.h"
 #include "utils/containers/set_union.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/set_of.h"
 #include "utils/exception.h"
 #include "utils/fmt/set.h"
 #include "utils/hash-utils.h"
 #include "utils/hash/set.h"
 #include "utils/optional.h"
 #include <optional>
-#include <set>
 #include <set>
 
 namespace FlexFlow {
@@ -113,8 +111,7 @@ std::set<T> apply_query(query_set<T> const &q, C const &c) {
     return set_of(c);
   }
 
-  return filter(set_of(c),
-                [&](T const &t) { return includes(q, t); });
+  return filter(set_of(c), [&](T const &t) { return includes(q, t); });
 }
 
 template <typename C,

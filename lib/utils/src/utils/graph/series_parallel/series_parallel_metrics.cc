@@ -5,7 +5,6 @@
 #include "utils/containers/values.h"
 #include "utils/containers/vector_of.h"
 #include "utils/fmt/multiset.h"
-#include "utils/fmt/multiset.h"
 #include "utils/graph/digraph/algorithms/get_edges.h"
 #include "utils/graph/digraph/algorithms/get_longest_path_lengths_from_root.h"
 #include "utils/graph/digraph/digraph_view.h"
@@ -55,21 +54,18 @@ float work_cost(SeriesParallelDecomposition const &sp,
                        [&](Node const &node) { return cost_map.at(node); }));
 }
 
-float work_cost(DiGraphView const &g,
-                std::map<Node, float> const &cost_map) {
+float work_cost(DiGraphView const &g, std::map<Node, float> const &cost_map) {
   return sum(transform(vector_of(get_nodes(g)),
                        [&](Node const &node) { return cost_map.at(node); }));
 }
 
-static float
-    critical_path_cost(Node const &node,
-                       std::map<Node, float> const &cost_map) {
+static float critical_path_cost(Node const &node,
+                                std::map<Node, float> const &cost_map) {
   return cost_map.at(node);
 }
 
-static float
-    critical_path_cost(SeriesSplit const &serial,
-                       std::map<Node, float> const &cost_map) {
+static float critical_path_cost(SeriesSplit const &serial,
+                                std::map<Node, float> const &cost_map) {
   return sum(transform(
       serial.children, [&](std::variant<ParallelSplit, Node> const &child) {
         return critical_path_cost(widen<SeriesParallelDecomposition>(child),
@@ -77,9 +73,8 @@ static float
       }));
 }
 
-static float
-    critical_path_cost(ParallelSplit const &parallel,
-                       std::map<Node, float> const &cost_map) {
+static float critical_path_cost(ParallelSplit const &parallel,
+                                std::map<Node, float> const &cost_map) {
   return maximum(transform(parallel.get_children(),
                            [&](std::variant<SeriesSplit, Node> const &child) {
                              return critical_path_cost(

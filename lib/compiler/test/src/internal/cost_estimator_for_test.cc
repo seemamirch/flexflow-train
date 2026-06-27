@@ -36,8 +36,7 @@ CostEstimator make_fake_cost_estimator(
 
 CostEstimator make_fake_cost_estimator(
     std::map<OpCostEstimateKey, OpCostMetrics> const &op_cost_map,
-    std::map<TensorSetMovement, milliseconds_t> const
-        &comm_cost_map) {
+    std::map<TensorSetMovement, milliseconds_t> const &comm_cost_map) {
   return make_fake_cost_estimator(
       [op_cost_map](OpCostEstimateKey const &k) {
         ASSERT(contains_key(op_cost_map, k), k);

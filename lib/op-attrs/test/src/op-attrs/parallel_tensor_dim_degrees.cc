@@ -1,6 +1,5 @@
 #include "op-attrs/parallel_tensor_dim_degrees.h"
 #include "op-attrs/parallel_tensor_dim_idx_t.h"
-#include "test/utils/doctest/fmt/set.h"
 #include "test/utils/doctest/fmt/map.h"
 #include "test/utils/doctest/fmt/set.h"
 #include <doctest/doctest.h>

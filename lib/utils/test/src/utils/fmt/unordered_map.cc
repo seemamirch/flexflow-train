@@ -1,6 +1,6 @@
-#include "utils/fmt/map.h"
 #include "test/utils/doctest/fmt/map.h"
 #include "utils/containers/get_element_counts.h"
+#include "utils/fmt/map.h"
 #include <doctest/doctest.h>
 
 using namespace ::FlexFlow;

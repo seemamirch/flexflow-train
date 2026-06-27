@@ -13,8 +13,7 @@ std::vector<DataflowInput> get_dataflow_inputs(DataflowGraphView const &,
                                                Node const &);
 std::vector<DataflowOutput> get_outputs(DataflowGraphView const &,
                                         Node const &);
-std::set<DataflowOutput>
-    get_all_dataflow_outputs(DataflowGraphView const &);
+std::set<DataflowOutput> get_all_dataflow_outputs(DataflowGraphView const &);
 
 } // namespace FlexFlow
 

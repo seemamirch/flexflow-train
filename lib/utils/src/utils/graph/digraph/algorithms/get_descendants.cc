@@ -9,12 +9,11 @@
 
 namespace FlexFlow {
 std::set<Node> get_descendants(DiGraphView const &g,
-                                         Node const &starting_node) {
+                               Node const &starting_node) {
   assert(is_acyclic(g));
   assert(contains(get_nodes(g), starting_node));
 
-  return set_of(
-      get_bfs_ordering(g, get_successors(g, starting_node)));
+  return set_of(get_bfs_ordering(g, get_successors(g, starting_node)));
 };
 
 } // namespace FlexFlow

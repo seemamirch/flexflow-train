@@ -11,22 +11,20 @@ TEST_SUITE(FF_TEST_SUITE) {
   TEST_CASE("AdjacencyMultiDiGraph") {
     MultiDiGraph g = MultiDiGraph::create<AdjacencyMultiDiGraph>();
 
-    auto check_state =
-        [&](std::set<Node> const &correct_nodes,
-            std::set<MultiDiEdge> const &correct_edges) {
-          {
-            std::set<Node> result = g.query_nodes(node_query_all());
-            std::set<Node> correct = correct_nodes;
-            REQUIRE(result == correct);
-          }
+    auto check_state = [&](std::set<Node> const &correct_nodes,
+                           std::set<MultiDiEdge> const &correct_edges) {
+      {
+        std::set<Node> result = g.query_nodes(node_query_all());
+        std::set<Node> correct = correct_nodes;
+        REQUIRE(result == correct);
+      }
 
-          {
-            std::set<MultiDiEdge> result =
-                g.query_edges(multidiedge_query_all());
-            std::set<MultiDiEdge> correct = correct_edges;
-            REQUIRE(result == correct);
-          }
-        };
+      {
+        std::set<MultiDiEdge> result = g.query_edges(multidiedge_query_all());
+        std::set<MultiDiEdge> correct = correct_edges;
+        REQUIRE(result == correct);
+      }
+    };
 
     check_state({}, {});
 
@@ -138,8 +136,7 @@ TEST_SUITE(FF_TEST_SUITE) {
       }
       SUBCASE("edges") {
         g.add_edge(n1, n2);
-        std::set<MultiDiEdge> result =
-            g2.query_edges(multidiedge_query_all());
+        std::set<MultiDiEdge> result = g2.query_edges(multidiedge_query_all());
         std::set<MultiDiEdge> correct = {e1, e2, e3, e4};
         CHECK(result == correct);
       }

@@ -3,6 +3,7 @@
 
 #include "utils/bidict/algorithms/right_entries.h"
 #include "utils/bidict/generate_bidict.h"
+#include "utils/containers/set_of.h"
 #include "utils/containers/set_union.h"
 #include "utils/containers/transform.h"
 #include "utils/graph/kwarg_dataflow_graph/algorithms/get_all_kwarg_dataflow_edges.h"
@@ -12,9 +13,8 @@
 #include "utils/graph/node/node_source.h"
 #include "utils/graph/open_kwarg_dataflow_graph/algorithms/get_open_kwarg_dataflow_graph_data.h"
 #include "utils/graph/open_kwarg_dataflow_graph/open_kwarg_dataflow_graph_view.h"
-#include "utils/overload.h"
-#include "utils/containers/set_of.h"
 #include "utils/json/optional.h"
+#include "utils/overload.h"
 
 namespace FlexFlow {
 
@@ -91,16 +91,13 @@ std::pair<KwargDataflowGraphView<std::optional<SlotName>>,
   KwargDataflowGraphData<std::optional<SlotName>> closed_g_data =
       KwargDataflowGraphData<std::optional<SlotName>>{
           /*nodes=*/set_of(
-            set_union(
-              open_g_data.nodes,
-              right_entries(graph_input_nodes))),
+              set_union(open_g_data.nodes, right_entries(graph_input_nodes))),
           /*edges=*/set_of(transform(open_g_data.edges, convert_edge)),
           /*outputs=*/
-            set_of(
-              set_union(
-                  transform(open_g_data.outputs, convert_kwarg_dataflow_output),
-                  transform(open_g_data.inputs,
-                            kwarg_dataflow_output_for_graph_input))),
+          set_of(set_union(
+              transform(open_g_data.outputs, convert_kwarg_dataflow_output),
+              transform(open_g_data.inputs,
+                        kwarg_dataflow_output_for_graph_input))),
       };
 
   ASSERT(closed_g_data.edges.size() == open_g_data.edges.size());

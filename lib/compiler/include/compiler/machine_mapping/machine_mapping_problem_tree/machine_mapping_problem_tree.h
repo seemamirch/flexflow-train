@@ -21,8 +21,7 @@ SPDecompositionTreeNodeType get_node_type(MachineMappingProblemTree const &);
 
 std::multiset<UnmappedRuntimeOnlyOpCostEstimateKey>
     get_leaves(MachineMappingProblemTree const &);
-std::set<BinaryTreePath>
-    get_all_leaf_paths(MachineMappingProblemTree const &);
+std::set<BinaryTreePath> get_all_leaf_paths(MachineMappingProblemTree const &);
 
 std::optional<MachineMappingProblemTree>
     mm_problem_tree_get_subtree_at_path(MachineMappingProblemTree const &,

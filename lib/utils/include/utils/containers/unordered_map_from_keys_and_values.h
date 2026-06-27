@@ -11,7 +11,7 @@ namespace FlexFlow {
 template <typename K, typename V>
 std::unordered_map<K, V>
     unordered_map_from_keys_and_values(std::vector<K> const &keys,
-                             std::vector<V> const &values) {
+                                       std::vector<V> const &values) {
   ASSERT(keys.size() == values.size());
 
   std::unordered_map<K, V> result;

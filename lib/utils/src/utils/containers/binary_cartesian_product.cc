@@ -7,7 +7,6 @@ using A = ordered_value_type<0>;
 using B = ordered_value_type<1>;
 
 template std::set<std::pair<A, B>>
-    binary_cartesian_product(std::set<A> const &,
-                             std::set<B> const &);
+    binary_cartesian_product(std::set<A> const &, std::set<B> const &);
 
 } // namespace FlexFlow

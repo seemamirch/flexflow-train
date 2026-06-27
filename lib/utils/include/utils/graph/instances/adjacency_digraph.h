@@ -17,16 +17,14 @@ public:
   void remove_node_unsafe(Node const &) override;
   void add_edge(Edge const &) override;
   void remove_edge(Edge const &) override;
-  std::set<Edge>
-      query_edges(DirectedEdgeQuery const &) const override;
+  std::set<Edge> query_edges(DirectedEdgeQuery const &) const override;
   std::set<Node> query_nodes(NodeQuery const &) const override;
 
   AdjacencyDiGraph *clone() const override;
 
 private:
-  AdjacencyDiGraph(
-      NodeSource const &node_source,
-      std::map<Node, std::set<Node>> const &adjacency);
+  AdjacencyDiGraph(NodeSource const &node_source,
+                   std::map<Node, std::set<Node>> const &adjacency);
 
   NodeSource node_source;
   std::map<Node, std::set<Node>> adjacency;

@@ -87,7 +87,8 @@ std::multiset<Out> filtrans(std::multiset<In> const &s, F &&f) {
 template <typename F,
           typename In,
           typename Out = unwrap_optional_t<std::invoke_result_t<F, In>>>
-std::unordered_multiset<Out> filtrans(std::unordered_multiset<In> const &s, F &&f) {
+std::unordered_multiset<Out> filtrans(std::unordered_multiset<In> const &s,
+                                      F &&f) {
   std::unordered_multiset<Out> result;
 
   for (In const &i : s) {

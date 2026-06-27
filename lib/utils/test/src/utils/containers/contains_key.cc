@@ -2,7 +2,6 @@
 #include <doctest/doctest.h>
 #include <map>
 #include <string>
-#include <map>
 
 using namespace ::FlexFlow;
 

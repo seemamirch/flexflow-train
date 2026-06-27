@@ -31,8 +31,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         {n.at(5), {}},
     };
 
-    std::map<Node, std::set<Node>> result =
-        get_successors(g);
+    std::map<Node, std::set<Node>> result = get_successors(g);
 
     CHECK(result == correct);
   }

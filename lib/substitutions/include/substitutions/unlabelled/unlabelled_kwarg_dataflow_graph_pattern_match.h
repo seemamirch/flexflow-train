@@ -11,8 +11,7 @@
 namespace FlexFlow {
 
 UnlabelledKwargDataflowGraphPatternMatch empty_unlabelled_pattern_match();
-std::set<Node>
-    matched_nodes(UnlabelledKwargDataflowGraphPatternMatch const &);
+std::set<Node> matched_nodes(UnlabelledKwargDataflowGraphPatternMatch const &);
 std::optional<UnlabelledKwargDataflowGraphPatternMatch>
     merge_unlabelled_dataflow_graph_pattern_matches(
         UnlabelledKwargDataflowGraphPatternMatch const &subpattern_1,

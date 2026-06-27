@@ -10,13 +10,13 @@
 #include "utils/containers/filter.h"
 #include "utils/containers/get_all_permutations_with_repetition.h"
 #include "utils/containers/map_from_keys_and_values.h"
+#include "utils/containers/multiset_of.h"
 #include "utils/containers/product.h"
 #include "utils/containers/range.h"
 #include "utils/containers/repeat_element.h"
+#include "utils/containers/set_of.h"
 #include "utils/containers/sorted.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/multiset_of.h"
-#include "utils/containers/set_of.h"
 #include "utils/containers/zip.h"
 #include "utils/nonnegative_int/nonnegative_range.h"
 #include "utils/nonnegative_int/num_elements.h"
@@ -64,9 +64,9 @@ static std::set<MachineView>
                    positive_int{min_num_devices_with_full_stride_volume});
   };
 
-  auto get_candidate_strides = [&](std::vector<positive_int> const &tensor_dims,
-                                   positive_int total_devices)
-      -> std::multiset<MultiDimensionalStride> {
+  auto get_candidate_strides =
+      [&](std::vector<positive_int> const &tensor_dims,
+          positive_int total_devices) -> std::multiset<MultiDimensionalStride> {
     positive_int max_stride_upper_bound =
         get_max_stride_upper_bound(tensor_dims, total_devices);
 
@@ -76,10 +76,9 @@ static std::set<MachineView>
             max_stride_upper_bound.nonnegative_int_from_positive_int() + 1_n),
         [](nonnegative_int stride) { return stride_t{positive_int{stride}}; });
 
-    std::multiset<std::vector<stride_t>> raw_stride_vectors =
-        cartesian_product(
-            repeat_element(/*num_times=*/num_elements(tensor_dims),
-                           /*element=*/single_stride_range));
+    std::multiset<std::vector<stride_t>> raw_stride_vectors = cartesian_product(
+        repeat_element(/*num_times=*/num_elements(tensor_dims),
+                       /*element=*/single_stride_range));
 
     std::multiset<MultiDimensionalStride> strides =
         transform(raw_stride_vectors, [](auto const &stride_vec) {

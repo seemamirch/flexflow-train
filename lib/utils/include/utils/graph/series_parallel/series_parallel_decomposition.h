@@ -30,8 +30,7 @@ nonnegative_int num_nodes(SeriesParallelDecomposition const &sp);
 SeriesParallelDecomposition series_composition(
     std::vector<SeriesParallelDecomposition> const &sp_compositions);
 SeriesParallelDecomposition parallel_composition(
-    std::multiset<SeriesParallelDecomposition> const
-        &sp_compositions);
+    std::multiset<SeriesParallelDecomposition> const &sp_compositions);
 
 } // namespace FlexFlow
 

@@ -6,7 +6,7 @@ namespace FlexFlow {
 using L = ordered_value_type<0>;
 using R = ordered_value_type<1>;
 
-template
-  ManyToOne<L, R> require_binary_relation_is_right_unique(BinaryRelation<L, R> const &);
+template ManyToOne<L, R>
+    require_binary_relation_is_right_unique(BinaryRelation<L, R> const &);
 
 } // namespace FlexFlow

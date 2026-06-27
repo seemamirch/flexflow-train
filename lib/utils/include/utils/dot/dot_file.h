@@ -9,10 +9,9 @@
 #include <fstream>
 #include <map>
 #include <optional>
+#include <set>
 #include <sstream>
 #include <string>
-#include <map>
-#include <set>
 #include <vector>
 
 namespace FlexFlow {

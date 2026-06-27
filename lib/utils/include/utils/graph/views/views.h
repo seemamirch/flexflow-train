@@ -11,8 +11,7 @@ namespace FlexFlow {
 struct UndirectedSubgraphView : public IUndirectedGraphView {
 public:
   UndirectedSubgraphView() = delete;
-  UndirectedSubgraphView(UndirectedGraphView const &,
-                         std::set<Node> const &);
+  UndirectedSubgraphView(UndirectedGraphView const &, std::set<Node> const &);
 
   std::set<UndirectedEdge>
       query_edges(UndirectedEdgeQuery const &) const override;
@@ -30,8 +29,7 @@ public:
   DiSubgraphView() = delete;
   DiSubgraphView(DiGraphView const &, std::set<Node> const &);
 
-  std::set<DirectedEdge>
-      query_edges(DirectedEdgeQuery const &) const override;
+  std::set<DirectedEdge> query_edges(DirectedEdgeQuery const &) const override;
   std::set<Node> query_nodes(NodeQuery const &) const override;
 
   DiSubgraphView *clone() const override;
@@ -44,16 +42,13 @@ private:
 UndirectedGraphView view_subgraph(UndirectedGraphView const &,
                                   std::set<Node> const &);
 
-DiGraphView view_subgraph(DiGraphView const &,
-                          std::set<Node> const &);
+DiGraphView view_subgraph(DiGraphView const &, std::set<Node> const &);
 
 UndirectedEdge to_undirected_edge(DirectedEdge const &);
-std::set<UndirectedEdge>
-    to_undirected_edges(std::set<DirectedEdge> const &);
+std::set<UndirectedEdge> to_undirected_edges(std::set<DirectedEdge> const &);
 
 std::set<DirectedEdge> to_directed_edges(UndirectedEdge const &);
-std::set<DirectedEdge>
-    to_directed_edges(std::set<UndirectedEdge> const &);
+std::set<DirectedEdge> to_directed_edges(std::set<UndirectedEdge> const &);
 
 struct ViewDiGraphAsUndirectedGraph : public IUndirectedGraphView {
 public:
@@ -73,8 +68,7 @@ struct ViewUndirectedGraphAsDiGraph : public IDiGraphView {
 public:
   explicit ViewUndirectedGraphAsDiGraph(UndirectedGraphView const &);
 
-  std::set<DirectedEdge>
-      query_edges(DirectedEdgeQuery const &) const override;
+  std::set<DirectedEdge> query_edges(DirectedEdgeQuery const &) const override;
   std::set<Node> query_nodes(NodeQuery const &) const override;
 
   ViewUndirectedGraphAsDiGraph *clone() const override;

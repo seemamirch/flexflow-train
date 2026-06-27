@@ -38,8 +38,7 @@ ParallelTensorShape
 TensorShape get_piece_shape(ParallelTensorShape const &);
 num_bytes_t get_piece_size_in_bytes(ParallelTensorShape const &);
 
-std::set<ReplicaParallelDim>
-    replica_dims(ParallelTensorShape const &);
+std::set<ReplicaParallelDim> replica_dims(ParallelTensorShape const &);
 
 positive_int get_num_replica_dims(ParallelTensorShape const &);
 positive_int get_num_replicas(ParallelTensorShape const &);

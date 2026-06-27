@@ -11,8 +11,7 @@ std::set<DataflowEdge>
       q,
   };
 
-  std::set<OpenDataflowEdge> open_edges =
-      this->query_edges(open_query);
+  std::set<OpenDataflowEdge> open_edges = this->query_edges(open_query);
 
   return transform(open_edges, [](OpenDataflowEdge const &e) {
     return e.get<DataflowEdge>();

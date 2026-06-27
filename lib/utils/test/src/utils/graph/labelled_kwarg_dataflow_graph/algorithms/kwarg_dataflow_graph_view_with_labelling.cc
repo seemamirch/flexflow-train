@@ -80,13 +80,12 @@ TEST_SUITE(FF_TEST_SUITE) {
     std::string n3_1_label = "c";
     std::string n5_0_label = "d";
 
-    std::map<KwargDataflowOutput<int>, std::string> value_labelling =
-        {
-            {n1_0, n1_0_label},
-            {n2_3, n2_3_label},
-            {n3_1, n3_1_label},
-            {n5_0, n5_0_label},
-        };
+    std::map<KwargDataflowOutput<int>, std::string> value_labelling = {
+        {n1_0, n1_0_label},
+        {n2_3, n2_3_label},
+        {n3_1, n3_1_label},
+        {n5_0, n5_0_label},
+    };
 
     LabelledKwargDataflowGraphView<float, std::string, int> result =
         kwarg_dataflow_graph_view_with_labelling(

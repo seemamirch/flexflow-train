@@ -1,5 +1,5 @@
-#include "utils/containers/set_of.h"
 #include "test/utils/doctest/fmt/set.h"
+#include "utils/containers/set_of.h"
 #include <doctest/doctest.h>
 #include <vector>
 

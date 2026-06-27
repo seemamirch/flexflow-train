@@ -12,9 +12,8 @@ std::set<Node> ViewDataflowGraphAsOpenDataflowGraph::query_nodes(
   return this->g.query_nodes(q);
 }
 
-std::set<OpenDataflowEdge>
-    ViewDataflowGraphAsOpenDataflowGraph::query_edges(
-        OpenDataflowEdgeQuery const &q) const {
+std::set<OpenDataflowEdge> ViewDataflowGraphAsOpenDataflowGraph::query_edges(
+    OpenDataflowEdgeQuery const &q) const {
   std::set<DataflowEdge> closed_edges =
       this->g.query_edges(q.standard_edge_query);
 
@@ -22,9 +21,8 @@ std::set<OpenDataflowEdge>
                    [](DataflowEdge const &e) { return OpenDataflowEdge{e}; });
 }
 
-std::set<DataflowOutput>
-    ViewDataflowGraphAsOpenDataflowGraph::query_outputs(
-        DataflowOutputQuery const &q) const {
+std::set<DataflowOutput> ViewDataflowGraphAsOpenDataflowGraph::query_outputs(
+    DataflowOutputQuery const &q) const {
   return this->g.query_outputs(q);
 }
 

@@ -13,8 +13,7 @@ std::set<DirectedEdge>
       result, [](DirectedEdge const &e) { return flipped_directed_edge(e); });
 }
 
-std::set<Node>
-    FlippedView::query_nodes(NodeQuery const &query) const {
+std::set<Node> FlippedView::query_nodes(NodeQuery const &query) const {
   return this->g.query_nodes(query);
 }
 

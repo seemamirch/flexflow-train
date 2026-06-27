@@ -6,11 +6,10 @@
 namespace FlexFlow {
 
 std::set<MultiDiEdge> get_incoming_edges(MultiDiGraphView const &,
-                                                   Node const &);
+                                         Node const &);
 
 std::map<Node, std::set<MultiDiEdge>>
-    get_incoming_edges(MultiDiGraphView const &g,
-                       std::set<Node> const &nodes);
+    get_incoming_edges(MultiDiGraphView const &g, std::set<Node> const &nodes);
 
 } // namespace FlexFlow
 

@@ -21,8 +21,8 @@ LayerAddedResult add_layer(
     LayerAttrs const &attrs,
     std::map<TensorSlotName, tensor_guid_t> const &inputs,
     std::map<TensorSlotName, tensor_guid_t> const &weights,
-    std::optional<std::map<TensorSlotName, CreateGrad>> const
-        &outputs = std::nullopt);
+    std::optional<std::map<TensorSlotName, CreateGrad>> const &outputs =
+        std::nullopt);
 
 LayerAddedResult add_input_layer(ComputationGraph &computation_graph,
                                  TensorShape const &tensor_shape,
@@ -60,9 +60,8 @@ std::set<ComputationGraphEdge>
 std::set<ComputationGraphEdge>
     get_subgraph_outgoing_edges(ComputationGraph const &,
                                 std::set<layer_guid_t> const &);
-std::set<layer_guid_t>
-    get_subgraph_successors(ComputationGraph const &,
-                            std::set<layer_guid_t> const &);
+std::set<layer_guid_t> get_subgraph_successors(ComputationGraph const &,
+                                               std::set<layer_guid_t> const &);
 
 LayerAttrs get_layer_attrs(ComputationGraph const &cg, layer_guid_t const &n);
 

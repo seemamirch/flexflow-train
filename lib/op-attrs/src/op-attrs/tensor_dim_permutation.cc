@@ -16,8 +16,7 @@
 
 namespace FlexFlow {
 
-static void
-    check_are_contiguous_from_one(std::set<ff_dim_t> const &idxs) {
+static void check_are_contiguous_from_one(std::set<ff_dim_t> const &idxs) {
   if (idxs.empty()) {
     return;
   }

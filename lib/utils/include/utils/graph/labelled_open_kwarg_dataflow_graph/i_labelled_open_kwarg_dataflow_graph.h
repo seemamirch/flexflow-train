@@ -22,8 +22,7 @@ struct ILabelledOpenKwargDataflowGraph
                                                      SlotName> {
   virtual KwargNodeAddedResult<SlotName> add_node(
       NodeLabel const &node_label,
-      std::map<SlotName,
-                         OpenKwargDataflowValue<GraphInputName, SlotName>> const
+      std::map<SlotName, OpenKwargDataflowValue<GraphInputName, SlotName>> const
           &inputs,
       std::map<SlotName, ValueLabel> const &output_labels) = 0;
 

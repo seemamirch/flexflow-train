@@ -13,8 +13,7 @@ std::map<K, V> merge_disjoint_maps(C const &c) {
   std::map<K, V> empty = {};
   return foldl(c,
                /*init=*/empty,
-               [](std::map<K, V> const &lhs,
-                  std::map<K, V> const &rhs) {
+               [](std::map<K, V> const &lhs, std::map<K, V> const &rhs) {
                  return binary_merge_disjoint_maps(lhs, rhs);
                });
 }

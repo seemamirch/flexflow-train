@@ -11,7 +11,8 @@ template <typename K,
           typename VF,
           typename K2 = std::invoke_result_t<KF, K>,
           typename V2 = std::invoke_result_t<VF, V>>
-bidict<K2, V2> bidict_transform_keys_and_values(bidict<K, V> const &m, KF &&kf, VF &&vf) {
+bidict<K2, V2>
+    bidict_transform_keys_and_values(bidict<K, V> const &m, KF &&kf, VF &&vf) {
   bidict<K2, V2> result;
   for (auto const &kv : m) {
     result.equate_strict(kf(kv.first), vf(kv.second));

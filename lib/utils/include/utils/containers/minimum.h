@@ -9,9 +9,7 @@ namespace FlexFlow {
 template <typename C>
 typename C::value_type minimum(C const &c) {
   ASSERT(
-    c.size() > 0,
-    "minimum expected non-empty container but received {}", c
-  );
+      c.size() > 0, "minimum expected non-empty container but received {}", c);
 
   return *std::min_element(c.begin(), c.end());
 }

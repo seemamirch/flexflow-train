@@ -16,8 +16,7 @@ LabelledOpenDataflowGraphView<NodeLabel, ValueLabel>
     from_labelled_open_dataflow_graph_data(
         LabelledOpenDataflowGraphData<NodeLabel, ValueLabel> const &data) {
   std::set<OpenDataflowValue> values = keys(data.value_data);
-  std::set<DataflowOutput> outputs =
-      filtrans(values, try_get_dataflow_output);
+  std::set<DataflowOutput> outputs = filtrans(values, try_get_dataflow_output);
 
   OpenDataflowGraphData unlabelled_data = OpenDataflowGraphData{
       keys(data.node_data),

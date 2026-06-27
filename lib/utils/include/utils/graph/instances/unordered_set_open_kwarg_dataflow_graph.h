@@ -16,8 +16,7 @@ struct UnorderedSetOpenKwargDataflowGraph final
   UnorderedSetOpenKwargDataflowGraph() = default;
 
   KwargNodeAddedResult<SlotName> add_node(
-      std::map<SlotName,
-                         OpenKwargDataflowValue<GraphInputName, SlotName>> const
+      std::map<SlotName, OpenKwargDataflowValue<GraphInputName, SlotName>> const
           &inputs,
       std::set<SlotName> const &output_slots) override {
     Node new_node = this->node_source.new_node();
@@ -35,20 +34,18 @@ struct UnorderedSetOpenKwargDataflowGraph final
       this->edges.insert(in_edge);
     }
 
-    std::map<SlotName, KwargDataflowOutput<SlotName>> outputs =
-        generate_map(
-            output_slots,
-            [&](SlotName const &output_slot) -> KwargDataflowOutput<SlotName> {
-              KwargDataflowOutput<SlotName> output =
-                  KwargDataflowOutput<SlotName>{
-                      /*node=*/new_node,
-                      /*slot_name=*/output_slot,
-                  };
+    std::map<SlotName, KwargDataflowOutput<SlotName>> outputs = generate_map(
+        output_slots,
+        [&](SlotName const &output_slot) -> KwargDataflowOutput<SlotName> {
+          KwargDataflowOutput<SlotName> output = KwargDataflowOutput<SlotName>{
+              /*node=*/new_node,
+              /*slot_name=*/output_slot,
+          };
 
-              this->outputs.insert(output);
+          this->outputs.insert(output);
 
-              return output;
-            });
+          return output;
+        });
 
     return KwargNodeAddedResult<SlotName>{
         /*node=*/new_node,
@@ -107,11 +104,9 @@ struct UnorderedSetOpenKwargDataflowGraph final
 private:
   UnorderedSetOpenKwargDataflowGraph(
       NodeSource const &node_source,
-      std::set<KwargDataflowGraphInput<GraphInputName>> const
-          &graph_inputs,
+      std::set<KwargDataflowGraphInput<GraphInputName>> const &graph_inputs,
       std::set<Node> const &nodes,
-      std::set<OpenKwargDataflowEdge<GraphInputName, SlotName>> const
-          &edges,
+      std::set<OpenKwargDataflowEdge<GraphInputName, SlotName>> const &edges,
       std::set<KwargDataflowOutput<SlotName>> const &outputs)
       : node_source(node_source), graph_inputs(graph_inputs), nodes(nodes),
         edges(edges), outputs(outputs) {}

@@ -10,8 +10,8 @@ TEST_SUITE(FF_TEST_SUITE) {
         {2, "two"},
     };
 
-    bidict<int, std::string> result =
-        bidict_filter_values(dict, [](std::string const &v) { return v == "two"; });
+    bidict<int, std::string> result = bidict_filter_values(
+        dict, [](std::string const &v) { return v == "two"; });
     bidict<int, std::string> correct = {
         {2, "two"},
     };

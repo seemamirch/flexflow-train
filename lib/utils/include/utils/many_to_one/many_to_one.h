@@ -1,23 +1,23 @@
 #ifndef _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_MANY_TO_ONE_MANY_TO_ONE_H
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_MANY_TO_ONE_MANY_TO_ONE_H
 
+#include "utils/containers/keys.h"
 #include "utils/containers/require_same.h"
+#include "utils/containers/set_of.h"
 #include "utils/containers/try_at.h"
 #include "utils/containers/values.h"
 #include "utils/exception.h"
 #include "utils/fmt/map.h"
 #include "utils/fmt/set.h"
 #include "utils/hash-utils.h"
-#include "utils/hash/tuple.h"
 #include "utils/hash/map.h"
+#include "utils/hash/tuple.h"
 #include "utils/json/check_is_json_deserializable.h"
 #include "utils/json/check_is_json_serializable.h"
+#include "utils/nonempty_set/nonempty_set.h"
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
 #include <rapidcheck.h>
-#include "utils/containers/set_of.h"
-#include "utils/nonempty_set/nonempty_set.h"
-#include "utils/containers/keys.h"
 
 namespace FlexFlow {
 
@@ -65,12 +65,11 @@ public:
     } else if (found_r.value() == r) {
       return;
     } else {
-      PANIC(
-          "Existing mapping found for left value {}: tried to map to right "
-          "value {}, but is already bound to right value {}",
-          l,
-          r,
-          found_r.value());
+      PANIC("Existing mapping found for left value {}: tried to map to right "
+            "value {}, but is already bound to right value {}",
+            l,
+            r,
+            found_r.value());
     }
   }
 
@@ -128,8 +127,7 @@ private:
 };
 
 template <typename L, typename R>
-std::map<nonempty_set<L>, R>
-    format_as(ManyToOne<L, R> const &m) {
+std::map<nonempty_set<L>, R> format_as(ManyToOne<L, R> const &m) {
   std::map<nonempty_set<L>, R> result;
 
   for (R const &r : m.right_values()) {
@@ -179,7 +177,8 @@ struct adl_serializer<::FlexFlow::ManyToOne<L, R>> {
     CHECK_IS_JSON_SERIALIZABLE(L);
     CHECK_IS_JSON_SERIALIZABLE(R);
 
-    j = ::FlexFlow::set_of(::FlexFlow::unstructured_relation_from_many_to_one(m));
+    j = ::FlexFlow::set_of(
+        ::FlexFlow::unstructured_relation_from_many_to_one(m));
   }
 };
 

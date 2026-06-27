@@ -1,8 +1,8 @@
 #ifndef _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_MERGE_DISJOINT_UNORDERED_MAPS_H
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_MERGE_DISJOINT_UNORDERED_MAPS_H
 
-#include "utils/containers/foldl.h"
 #include "utils/containers/binary_merge_disjoint_unordered_maps.h"
+#include "utils/containers/foldl.h"
 
 namespace FlexFlow {
 

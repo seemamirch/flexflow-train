@@ -15,8 +15,7 @@ namespace FlexFlow {
 std::map<Node, std::optional<Node>>
     get_imm_dominators_map(DiGraphView const &g) {
 
-  std::map<Node, std::set<Node>> node_to_its_dominators =
-      get_dominators_map(g);
+  std::map<Node, std::set<Node>> node_to_its_dominators = get_dominators_map(g);
 
   auto get_imm_dominator = [&](Node const &n) {
     std::set<Node> n_dominators = node_to_its_dominators.at(n);
@@ -27,8 +26,8 @@ std::map<Node, std::optional<Node>>
         }));
     std::map<Node, positive_int> dominator_counts =
         get_element_counts(recursive_dominator_list);
-    std::set<Node> imm_dominators = keys(
-        filter_values(dominator_counts, [](positive_int count) { return count <= 1; }));
+    std::set<Node> imm_dominators = keys(filter_values(
+        dominator_counts, [](positive_int count) { return count <= 1; }));
     ASSERT(imm_dominators.size() <= 1);
 
     return maybe_get_only(imm_dominators);

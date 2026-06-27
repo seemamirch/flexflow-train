@@ -11,7 +11,7 @@
 namespace FlexFlow {
 
 std::set<MultiDiEdge> get_incoming_edges(MultiDiGraphView const &g,
-                                                   Node const &n) {
+                                         Node const &n) {
   MultiDiEdgeQuery query = MultiDiEdgeQuery{
       query_set<Node>::matchall(),
       query_set<Node>::match_single_value(n),
@@ -21,8 +21,7 @@ std::set<MultiDiEdge> get_incoming_edges(MultiDiGraphView const &g,
 }
 
 std::map<Node, std::set<MultiDiEdge>>
-    get_incoming_edges(MultiDiGraphView const &g,
-                       std::set<Node> const &ns) {
+    get_incoming_edges(MultiDiGraphView const &g, std::set<Node> const &ns) {
   MultiDiEdgeQuery query = MultiDiEdgeQuery{
       query_set<Node>::matchall(),
       query_set<Node>::match_values_in(set_of(ns)),
@@ -32,8 +31,7 @@ std::map<Node, std::set<MultiDiEdge>>
       group_by(g.query_edges(query),
                [&](MultiDiEdge const &e) { return g.get_multidiedge_dst(e); })
           .l_to_r(),
-      [](nonempty_set<MultiDiEdge> const &s)
-          -> std::set<MultiDiEdge> {
+      [](nonempty_set<MultiDiEdge> const &s) -> std::set<MultiDiEdge> {
         return s.unwrap_as_set();
       });
 

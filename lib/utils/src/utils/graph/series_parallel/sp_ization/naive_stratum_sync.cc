@@ -1,9 +1,10 @@
 #include "utils/graph/series_parallel/sp_ization/naive_stratum_sync.h"
 #include "utils/containers/group_by.h"
+#include "utils/containers/keys.h"
 #include "utils/containers/maximum.h"
+#include "utils/containers/multiset_of.h"
 #include "utils/containers/range.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/multiset_of.h"
 #include "utils/fmt/multiset.h"
 #include "utils/graph/digraph/algorithms/get_longest_path_lengths_from_root.h"
 #include "utils/graph/digraph/algorithms/is_acyclic.h"
@@ -12,7 +13,6 @@
 #include "utils/graph/series_parallel/series_parallel_decomposition.h"
 #include "utils/graph/series_parallel/sp_ization/dependencies_are_maintained.h"
 #include <libassert/assert.hpp>
-#include "utils/containers/keys.h"
 
 namespace FlexFlow {
 
@@ -27,24 +27,22 @@ std::vector<std::multiset<Node>>
 
   nonnegative_int num_strata = maximum(strata_to_nodes.left_values());
 
-  return transform(range(1, num_strata.unwrap_nonnegative() + 1),
-                   [&](int depth) {
-                     return multiset_of(
-                         strata_to_nodes.at_l(nonnegative_int{depth}));
-                   });
+  return transform(
+      range(1, num_strata.unwrap_nonnegative() + 1), [&](int depth) {
+        return multiset_of(strata_to_nodes.at_l(nonnegative_int{depth}));
+      });
 }
 
-static SeriesParallelDecomposition naive_stratum_merge(
-    std::vector<std::multiset<Node>> stratum_split) {
+static SeriesParallelDecomposition
+    naive_stratum_merge(std::vector<std::multiset<Node>> stratum_split) {
 
-  auto merge_one_stratum =
-      [&](std::multiset<Node> const &stratum_nodes) {
-        auto as_singleton_sp = [](Node const &node) {
-          return NonNormalSPDecomposition{node};
-        };
-        return non_normal_parallel_composition(
-            transform(stratum_nodes, as_singleton_sp));
-      };
+  auto merge_one_stratum = [&](std::multiset<Node> const &stratum_nodes) {
+    auto as_singleton_sp = [](Node const &node) {
+      return NonNormalSPDecomposition{node};
+    };
+    return non_normal_parallel_composition(
+        transform(stratum_nodes, as_singleton_sp));
+  };
 
   std::vector<NonNormalSPDecomposition> parallel_strata =
       transform(stratum_split, merge_one_stratum);

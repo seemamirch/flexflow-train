@@ -12,18 +12,17 @@ TEST_SUITE(FF_TEST_SUITE) {
       return l + r;
     };
 
-    RC_SUBCASE(
-        "with two inputs, matches binary_merge_maps_with",
-        [&](std::map<int, std::string> const &lhs,
-            std::map<int, std::string> const &rhs) {
-          std::map<int, std::string> from_merge_maps_with =
-              merge_maps_with(std::vector{lhs, rhs}, string_concat);
+    RC_SUBCASE("with two inputs, matches binary_merge_maps_with",
+               [&](std::map<int, std::string> const &lhs,
+                   std::map<int, std::string> const &rhs) {
+                 std::map<int, std::string> from_merge_maps_with =
+                     merge_maps_with(std::vector{lhs, rhs}, string_concat);
 
-          std::map<int, std::string> from_binary_merge_maps_with =
-              binary_merge_maps_with(lhs, rhs, string_concat);
+                 std::map<int, std::string> from_binary_merge_maps_with =
+                     binary_merge_maps_with(lhs, rhs, string_concat);
 
-          CHECK(from_merge_maps_with == from_binary_merge_maps_with);
-        });
+                 CHECK(from_merge_maps_with == from_binary_merge_maps_with);
+               });
 
     SUBCASE("maps overlap") {
       std::map<int, std::string> map1 = {
@@ -89,8 +88,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     SUBCASE("no maps are provided") {
       std::vector<std::map<int, std::string>> maps = {};
 
-      std::map<int, std::string> result =
-          merge_maps_with(maps, fail_if_called);
+      std::map<int, std::string> result = merge_maps_with(maps, fail_if_called);
 
       std::map<int, std::string> correct = {};
 

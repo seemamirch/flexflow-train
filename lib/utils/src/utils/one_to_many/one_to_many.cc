@@ -1,8 +1,8 @@
 #include "utils/one_to_many/one_to_many.h"
-#include "utils/archetypes/jsonable_value_type.h"
-#include "utils/archetypes/rapidcheckable_value_type.h"
-#include "utils/archetypes/ordered_value_type.h"
 #include "utils/archetypes/jsonable_ordered_value_type.h"
+#include "utils/archetypes/jsonable_value_type.h"
+#include "utils/archetypes/ordered_value_type.h"
+#include "utils/archetypes/rapidcheckable_value_type.h"
 
 using namespace ::FlexFlow;
 
@@ -13,8 +13,7 @@ using R = ordered_value_type<1>;
 
 template struct OneToMany<L, R>;
 
-template std::map<L, nonempty_set<R>>
-    format_as(OneToMany<L, R> const &);
+template std::map<L, nonempty_set<R>> format_as(OneToMany<L, R> const &);
 
 template std::ostream &operator<<(std::ostream &, OneToMany<L, R> const &);
 

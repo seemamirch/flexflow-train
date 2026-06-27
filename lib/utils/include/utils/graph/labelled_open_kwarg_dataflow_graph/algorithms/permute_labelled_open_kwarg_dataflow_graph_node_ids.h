@@ -60,8 +60,7 @@ LabelledOpenKwargDataflowGraphView<NodeLabel,
         return g.at(old_node_from_new(new_node));
       });
 
-  std::map<OpenKwargDataflowValue<GraphInputName, SlotName>,
-                     ValueLabel>
+  std::map<OpenKwargDataflowValue<GraphInputName, SlotName>, ValueLabel>
       value_labels = generate_map(
           get_all_open_kwarg_dataflow_values(permuted),
           [&](OpenKwargDataflowValue<GraphInputName, SlotName> const

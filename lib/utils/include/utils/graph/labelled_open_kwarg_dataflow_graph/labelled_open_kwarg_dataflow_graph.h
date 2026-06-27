@@ -29,8 +29,7 @@ public:
 
   KwargNodeAddedResult<SlotName> add_node(
       NodeLabel const &node_label,
-      std::map<SlotName,
-                         OpenKwargDataflowValue<GraphInputName, SlotName>> const
+      std::map<SlotName, OpenKwargDataflowValue<GraphInputName, SlotName>> const
           &inputs,
       std::map<SlotName, ValueLabel> const &output_labels) {
     return this->get_interface().add_node(node_label, inputs, output_labels);

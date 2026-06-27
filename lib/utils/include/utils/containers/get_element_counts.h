@@ -2,11 +2,11 @@
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_GET_ELEMENT_COUNTS_H
 
 #include "utils/containers/contains_key.h"
-#include <string>
-#include <map>
-#include <vector>
-#include <set>
 #include "utils/positive_int/positive_int.h"
+#include <map>
+#include <set>
+#include <string>
+#include <vector>
 
 namespace FlexFlow {
 

@@ -1,6 +1,7 @@
 #ifndef _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_ORTHOTOPE_MINIMAL_DIM_DOMAIN_MAPPING_H
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_ORTHOTOPE_MINIMAL_DIM_DOMAIN_MAPPING_H
 
+#include "utils/bidict/algorithms/bidict_transform_keys_and_values.h"
 #include "utils/bidict/algorithms/exhaustive_relational_join.h"
 #include "utils/bidict/algorithms/left_entries.h"
 #include "utils/bidict/algorithms/right_entries.h"
@@ -13,7 +14,6 @@
 #include "utils/orthotope/dim_ordering.dtg.h"
 #include "utils/orthotope/dim_projection.h"
 #include "utils/orthotope/minimal_dim_domain.dtg.h"
-#include "utils/bidict/algorithms/bidict_transform_keys_and_values.h"
 
 namespace FlexFlow {
 
@@ -92,24 +92,20 @@ template <typename L, typename R>
 MinimalDimDomainMapping<L, R>
     minimal_mapping_from_dim_domain_mapping(DimDomainMapping<L, R> const &m) {
 
-  std::set<L> l_nontrivial_dims =
-      get_nontrivial_domain_dims(m.l_domain);
+  std::set<L> l_nontrivial_dims = get_nontrivial_domain_dims(m.l_domain);
 
-  std::set<R> r_nontrivial_dims =
-      get_nontrivial_domain_dims(m.r_domain);
+  std::set<R> r_nontrivial_dims = get_nontrivial_domain_dims(m.r_domain);
 
   return MinimalDimDomainMapping{
       /*coord_mapping=*/
       bidict_transform_keys_and_values(
-        m.coord_mapping, 
-        [&](DimCoord<L> const &l_coord) {
-          return restrict_coord_to_dims(l_coord,
-                                        l_nontrivial_dims);
-        },
-        [&](DimCoord<R> const &r_coord) {
-          return restrict_coord_to_dims(
-              r_coord, r_nontrivial_dims);
-        }),
+          m.coord_mapping,
+          [&](DimCoord<L> const &l_coord) {
+            return restrict_coord_to_dims(l_coord, l_nontrivial_dims);
+          },
+          [&](DimCoord<R> const &r_coord) {
+            return restrict_coord_to_dims(r_coord, r_nontrivial_dims);
+          }),
       /*l_domain=*/minimal_dim_domain_from_dim_domain(m.l_domain),
       /*r_domain=*/minimal_dim_domain_from_dim_domain(m.r_domain),
   };
@@ -132,14 +128,13 @@ DimDomainMapping<L, R> dim_domain_mapping_from_minimal_dim_domain(
   return DimDomainMapping{
       /*coord_mapping=*/
       bidict_transform_keys_and_values(
-        m.coord_mapping,
-        [&](DimCoord<L> const &l_coord) {
-          return lift_dim_coord(l_coord, all_l_dims);
-        },
-        [&](DimCoord<R> const &r_coord) {
-          return lift_dim_coord(r_coord,
-                                all_r_dims);
-        }),
+          m.coord_mapping,
+          [&](DimCoord<L> const &l_coord) {
+            return lift_dim_coord(l_coord, all_l_dims);
+          },
+          [&](DimCoord<R> const &r_coord) {
+            return lift_dim_coord(r_coord, all_r_dims);
+          }),
       /*l_domain=*/l_domain,
       /*r_domain=*/r_domain,
   };
@@ -207,14 +202,12 @@ DimDomainMapping<T1, T3> compose_dim_domain_mappings_through_minimal(
   MinimalDimDomainMapping<T1, T2> minimal_lhs =
       minimal_mapping_from_dim_domain_mapping(lhs);
 
-  std::set<T1> t1_trivial_dims =
-      get_trivial_domain_dims(lhs.l_domain);
+  std::set<T1> t1_trivial_dims = get_trivial_domain_dims(lhs.l_domain);
 
   MinimalDimDomainMapping<T2, T3> minimal_rhs =
       minimal_mapping_from_dim_domain_mapping(rhs);
 
-  std::set<T3> t3_trivial_dims =
-      get_trivial_domain_dims(rhs.r_domain);
+  std::set<T3> t3_trivial_dims = get_trivial_domain_dims(rhs.r_domain);
 
   return dim_domain_mapping_from_minimal_dim_domain(
       compose_minimal_dim_domain_mappings(minimal_lhs, minimal_rhs),

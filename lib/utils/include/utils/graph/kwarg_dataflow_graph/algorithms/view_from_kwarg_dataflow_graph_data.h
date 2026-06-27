@@ -21,9 +21,10 @@ struct ViewFromKwargDataflowGraphData final
 
   std::set<KwargDataflowEdge<SlotName>> query_edges(
       KwargDataflowEdgeQuery<SlotName> const &query) const override {
-    return filter(set_of(this->data.edges), [&](KwargDataflowEdge<SlotName> const &e) {
-      return kwarg_dataflow_edge_query_includes(query, e);
-    });
+    return filter(set_of(this->data.edges),
+                  [&](KwargDataflowEdge<SlotName> const &e) {
+                    return kwarg_dataflow_edge_query_includes(query, e);
+                  });
   }
 
   std::set<KwargDataflowOutput<SlotName>> query_outputs(

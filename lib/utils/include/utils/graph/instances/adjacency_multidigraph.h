@@ -16,8 +16,7 @@ public:
   void remove_node(Node const &) override;
   void remove_edge(MultiDiEdge const &) override;
   std::set<Node> query_nodes(NodeQuery const &) const override;
-  std::set<MultiDiEdge>
-      query_edges(MultiDiEdgeQuery const &) const override;
+  std::set<MultiDiEdge> query_edges(MultiDiEdgeQuery const &) const override;
   Node get_multidiedge_src(MultiDiEdge const &) const override;
   Node get_multidiedge_dst(MultiDiEdge const &) const override;
   void inplace_materialize_from(MultiDiGraphView const &) override;
@@ -28,17 +27,13 @@ private:
   AdjacencyMultiDiGraph(
       NodeSource const &,
       MultiDiEdgeSource const &,
-      std::map<
-          Node,
-          std::map<Node, std::set<MultiDiEdge>>> const &,
+      std::map<Node, std::map<Node, std::set<MultiDiEdge>>> const &,
       std::map<MultiDiEdge, std::pair<Node, Node>> const &);
 
 private:
   NodeSource node_source;
   MultiDiEdgeSource edge_source;
-  std::map<Node,
-                     std::map<Node, std::set<MultiDiEdge>>>
-      adjacency;
+  std::map<Node, std::map<Node, std::set<MultiDiEdge>>> adjacency;
   std::map<MultiDiEdge, std::pair<Node, Node>> edge_nodes;
 };
 

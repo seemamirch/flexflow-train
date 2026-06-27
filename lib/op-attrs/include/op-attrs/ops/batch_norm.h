@@ -36,8 +36,7 @@ tl::expected<ParallelTensorDimDegrees, std::string>
     get_beta_weights_parallel_dim_degrees(BatchNormAttrs const &,
                                           ParallelTensorDimDegrees const &);
 
-tl::expected<std::map<TensorSlotName, ParallelTensorDimDegrees>,
-             std::string>
+tl::expected<std::map<TensorSlotName, ParallelTensorDimDegrees>, std::string>
     get_weight_parallel_dim_degrees(
         BatchNormAttrs const &attrs,
         ParallelTensorDimDegrees const &input_degrees);
@@ -50,8 +49,7 @@ tl::expected<ParallelTensorShape, std::string>
 tl::expected<ParallelTensorShape, std::string>
     get_beta_weights_shape(BatchNormAttrs const &, ParallelTensorShape const &);
 
-tl::expected<std::map<TensorSlotName, ParallelTensorShape>,
-             std::string>
+tl::expected<std::map<TensorSlotName, ParallelTensorShape>, std::string>
     get_weight_shapes(BatchNormAttrs const &attrs,
                       ParallelTensorShape const &input_shape);
 

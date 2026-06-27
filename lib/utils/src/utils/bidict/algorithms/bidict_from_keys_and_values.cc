@@ -6,9 +6,7 @@ namespace FlexFlow {
 using L = ordered_value_type<0>;
 using R = ordered_value_type<1>;
 
-template
-  bidict<L, R> bidict_from_keys_and_values(
-    std::vector<L> const &,
-    std::vector<R> const &);
+template bidict<L, R> bidict_from_keys_and_values(std::vector<L> const &,
+                                                  std::vector<R> const &);
 
 } // namespace FlexFlow

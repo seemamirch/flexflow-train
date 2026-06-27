@@ -22,14 +22,12 @@ UpProjection<L, R> make_empty_up_projection() {
 }
 
 template <typename L, typename R>
-std::set<L>
-    input_dims_of_up_projection(UpProjection<L, R> const &projection) {
+std::set<L> input_dims_of_up_projection(UpProjection<L, R> const &projection) {
   return projection.dim_mapping.left_values();
 }
 
 template <typename L, typename R>
-std::set<R>
-    output_dims_of_up_projection(UpProjection<L, R> const &projection) {
+std::set<R> output_dims_of_up_projection(UpProjection<L, R> const &projection) {
   return projection.dim_mapping.right_values();
 }
 
@@ -50,12 +48,10 @@ DimCoord<R> compute_up_projection(UpProjection<L, R> const &projection,
 
   DimCoord<R> unlifted = DimCoord<R>{
       flatmap(coord.raw,
-              [&](L const &input_dim, nonnegative_int input_dim_val) 
-                -> std::map<R, nonnegative_int>
-              {
+              [&](L const &input_dim, nonnegative_int input_dim_val)
+                  -> std::map<R, nonnegative_int> {
                 std::set<R> dst_dims =
-                    projection.dim_mapping.at_l(input_dim)
-                        .unwrap_as_set();
+                    projection.dim_mapping.at_l(input_dim).unwrap_as_set();
 
                 DimDomain<R> dst_domain =
                     restrict_domain_to_dims(output_domain, dst_dims);

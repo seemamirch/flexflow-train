@@ -6,9 +6,8 @@
 namespace FlexFlow {
 
 template <typename A, typename B>
-std::set<std::pair<A, B>>
-    binary_cartesian_product(std::set<A> const &lhs,
-                             std::set<B> const &rhs) {
+std::set<std::pair<A, B>> binary_cartesian_product(std::set<A> const &lhs,
+                                                   std::set<B> const &rhs) {
   std::set<std::pair<A, B>> result;
 
   for (A const &a : lhs) {

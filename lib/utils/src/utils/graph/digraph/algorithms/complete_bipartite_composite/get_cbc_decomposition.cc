@@ -53,11 +53,10 @@ std::optional<CompleteBipartiteCompositeDecomposition>
       return std::nullopt;
     }
 
-    std::set<DirectedEdge> from_head_to_tail =
-        g.query_edges(DirectedEdgeQuery{
-            query_set<Node>::match_values_in(set_of(head)),
-            query_set<Node>::match_values_in(set_of(tail)),
-        });
+    std::set<DirectedEdge> from_head_to_tail = g.query_edges(DirectedEdgeQuery{
+        query_set<Node>::match_values_in(set_of(head)),
+        query_set<Node>::match_values_in(set_of(tail)),
+    });
 
     DiGraphView subgraph = get_subgraph(g, set_union(head, tail));
     if (!is_complete_bipartite_digraph(subgraph, head)) {

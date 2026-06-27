@@ -1,6 +1,6 @@
 #include "utils/graph/series_parallel/binary_sp_decomposition_tree/generic_binary_sp_decomposition_tree/get_leaves.h"
-#include "utils/archetypes/value_type.h"
 #include "utils/archetypes/ordered_value_type.h"
+#include "utils/archetypes/value_type.h"
 
 namespace FlexFlow {
 

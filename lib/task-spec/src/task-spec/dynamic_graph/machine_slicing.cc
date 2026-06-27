@@ -3,10 +3,9 @@
 
 namespace FlexFlow {
 
-std::set<DynamicNodeInvocation>
-    perform_machine_slicing_for_invocation(
-        DynamicNodeInvocation const &invocation,
-        global_device_id_t const &device_id) {
+std::set<DynamicNodeInvocation> perform_machine_slicing_for_invocation(
+    DynamicNodeInvocation const &invocation,
+    global_device_id_t const &device_id) {
 
   ASSERT(invocation.node_attrs.device_ids.has_value());
 

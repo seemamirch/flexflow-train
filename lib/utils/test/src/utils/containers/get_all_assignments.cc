@@ -10,8 +10,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     SUBCASE("empty input") {
       std::map<std::string, std::set<int>> input = {};
 
-      std::set<std::map<std::string, int>> result =
-          get_all_assignments(input);
+      std::set<std::map<std::string, int>> result = get_all_assignments(input);
       std::set<std::map<std::string, int>> correct = {{}};
 
       CHECK(result == correct);
@@ -23,8 +22,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           {"b", {2, 3}},
       };
 
-      std::set<std::map<std::string, int>> result =
-          get_all_assignments(input);
+      std::set<std::map<std::string, int>> result = get_all_assignments(input);
       std::set<std::map<std::string, int>> correct = {
           {{"a", 1}, {"b", 2}},
           {{"a", 1}, {"b", 3}},
@@ -43,8 +41,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           {"b", {2, 3}},
       };
 
-      std::set<std::map<std::string, int>> result =
-          get_all_assignments(input);
+      std::set<std::map<std::string, int>> result = get_all_assignments(input);
       std::set<std::map<std::string, int>> correct = {};
 
       CHECK(result == correct);

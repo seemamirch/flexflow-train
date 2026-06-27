@@ -26,8 +26,7 @@ std::set<Node> DiGraph::query_nodes(NodeQuery const &q) const {
   return this->get_ptr().query_nodes(q);
 }
 
-std::set<DirectedEdge>
-    DiGraph::query_edges(DirectedEdgeQuery const &q) const {
+std::set<DirectedEdge> DiGraph::query_edges(DirectedEdgeQuery const &q) const {
   return this->get_ptr().query_edges(q);
 }
 

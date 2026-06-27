@@ -11,10 +11,10 @@
 #include "pcg/parallel_computation_graph/parallel_computation_graph_edge.h"
 #include "pcg/parallel_computation_graph/parallel_layer_guid_t.dtg.h"
 #include "utils/bidict/bidict.h"
+#include "utils/containers/set_of.h"
 #include "utils/graph/instances/adjacency_digraph.h"
 #include <map>
 #include <set>
-#include "utils/containers/set_of.h"
 
 namespace FlexFlow {
 

@@ -1,8 +1,8 @@
 #include "compiler/machine_mapping/allowed_machine_views.h"
 #include "utils/containers/extend.h"
 #include "utils/containers/range.h"
-#include "utils/containers/transform.h"
 #include "utils/containers/set_of.h"
+#include "utils/containers/transform.h"
 #include "utils/containers/zip.h"
 #include "utils/fmt/set.h"
 #include <doctest/doctest.h>
@@ -63,8 +63,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           make_machine_view(0_n, 0_n, 2_p, intra),
       };
 
-      std::set<MachineView> result =
-          get_allowed_machine_views(ms, task);
+      std::set<MachineView> result = get_allowed_machine_views(ms, task);
 
       CHECK(correct == result);
     }
@@ -94,8 +93,7 @@ TEST_SUITE(FF_TEST_SUITE) {
               0_n, 0_n, /*stride_1=*/2_p, intra, /*stride_2=*/1_p, inter),
       };
 
-      std::set<MachineView> result =
-          get_allowed_machine_views(ms, task);
+      std::set<MachineView> result = get_allowed_machine_views(ms, task);
 
       CHECK(correct == result);
     }

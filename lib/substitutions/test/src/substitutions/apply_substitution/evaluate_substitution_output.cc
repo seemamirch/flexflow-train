@@ -320,8 +320,7 @@ TEST_SUITE(FF_TEST_SUITE) {
                   result_i_activation,
                   result_i_weights,
               },
-              std::map<open_parallel_tensor_guid_t,
-                                 ParallelTensorAttrs>{
+              std::map<open_parallel_tensor_guid_t, ParallelTensorAttrs>{
                   {
                       open_parallel_tensor_guid_from_input(result_i_activation),
                       correct_result_i_activation_attrs,

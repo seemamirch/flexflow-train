@@ -1,6 +1,6 @@
 #include "utils/containers/flatmap.h"
-#include "test/utils/doctest/fmt/pair.h"
 #include "test/utils/doctest/fmt/map.h"
+#include "test/utils/doctest/fmt/pair.h"
 #include "test/utils/doctest/fmt/set.h"
 #include "test/utils/doctest/fmt/vector.h"
 #include "utils/containers/map_keys.h"
@@ -57,8 +57,7 @@ TEST_SUITE(FF_TEST_SUITE) {
       std::set<std::string> input = {"hello", " ", "", "world", "!"};
 
       std::set<char> result = flatmap(input, get_chars);
-      std::set<char> correct = {
-          'h', 'e', 'l', 'o', ' ', 'w', 'r', 'd', '!'};
+      std::set<char> correct = {'h', 'e', 'l', 'o', ' ', 'w', 'r', 'd', '!'};
 
       CHECK(result == correct);
     }
@@ -106,8 +105,7 @@ TEST_SUITE(FF_TEST_SUITE) {
   }
 
   TEST_CASE("flatmap(std::map<K, V>, F)") {
-    auto de_nest_keys = [](int k1,
-                           std::map<int, std::string> const &v) {
+    auto de_nest_keys = [](int k1, std::map<int, std::string> const &v) {
       return map_keys(v, [&](int k2) { return std::pair{k1, k2}; });
     };
 

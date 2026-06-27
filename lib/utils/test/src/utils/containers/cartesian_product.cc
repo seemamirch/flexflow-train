@@ -12,40 +12,35 @@ TEST_SUITE(FF_TEST_SUITE) {
 
     SUBCASE("empty") {
       std::vector<std::vector<int>> containers = {};
-      std::multiset<std::vector<int>> result =
-          cartesian_product(containers);
+      std::multiset<std::vector<int>> result = cartesian_product(containers);
       std::multiset<std::vector<int>> correct = {{}};
       CHECK(result == correct);
     }
 
     SUBCASE("single container, one element") {
       std::vector<std::vector<int>> containers = {{1}};
-      std::multiset<std::vector<int>> result =
-          cartesian_product(containers);
+      std::multiset<std::vector<int>> result = cartesian_product(containers);
       std::multiset<std::vector<int>> correct = {{1}};
       CHECK(result == correct);
     }
 
     SUBCASE("single container, multiple elements") {
       std::vector<std::vector<int>> containers = {{1, 2, 3}};
-      std::multiset<std::vector<int>> result =
-          cartesian_product(containers);
+      std::multiset<std::vector<int>> result = cartesian_product(containers);
       std::multiset<std::vector<int>> correct = {{1}, {2}, {3}};
       CHECK(result == correct);
     }
 
     SUBCASE("multiple containers, one element each") {
       std::vector<std::vector<int>> containers = {{1}, {2}, {3}};
-      std::multiset<std::vector<int>> result =
-          cartesian_product(containers);
+      std::multiset<std::vector<int>> result = cartesian_product(containers);
       std::multiset<std::vector<int>> correct = {{1, 2, 3}};
       CHECK(result == correct);
     }
 
     SUBCASE("multiple containers, multiple elements") {
       std::vector<std::vector<int>> containers = {{1, 2}, {3, 4}};
-      std::multiset<std::vector<int>> result =
-          cartesian_product(containers);
+      std::multiset<std::vector<int>> result = cartesian_product(containers);
       std::multiset<std::vector<int>> correct = {
           {1, 3}, {1, 4}, {2, 3}, {2, 4}};
       CHECK(result == correct);
@@ -53,8 +48,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
     SUBCASE("multiple containers, duplicate elements") {
       std::vector<std::vector<int>> containers = {{1, 1}, {2, 3}};
-      std::multiset<std::vector<int>> result =
-          cartesian_product(containers);
+      std::multiset<std::vector<int>> result = cartesian_product(containers);
       std::multiset<std::vector<int>> correct = {
           {1, 2}, {1, 3}, {1, 3}, {1, 2}};
       CHECK(result == correct);
@@ -62,8 +56,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
     SUBCASE("1 empty container, 1 non-empty container") {
       std::vector<std::vector<int>> containers = {{}, {2, 3}};
-      std::multiset<std::vector<int>> result =
-          cartesian_product(containers);
+      std::multiset<std::vector<int>> result = cartesian_product(containers);
       std::multiset<std::vector<int>> correct = {};
       CHECK(result == correct);
     }

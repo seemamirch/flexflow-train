@@ -13,8 +13,7 @@ typename Container::const_iterator
 }
 
 template <typename V>
-typename std::set<V>::const_iterator
-    find(std::set<V> const &c, V const &e) {
+typename std::set<V>::const_iterator find(std::set<V> const &c, V const &e) {
   return c.find(e);
 }
 

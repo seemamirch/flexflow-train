@@ -3,9 +3,9 @@
 
 #include "task-spec/dynamic_graph/dynamic_node_attrs.dtg.h"
 #include "task-spec/dynamic_graph/dynamic_node_invocation.dtg.h"
+#include "task-spec/dynamic_graph/dynamic_node_invocation_sharding_info.dtg.h"
 #include "task-spec/dynamic_graph/dynamic_open_dataflow_graph.dtg.h"
 #include "task-spec/dynamic_graph/dynamic_value_attrs_sharding_info.dtg.h"
-#include "task-spec/dynamic_graph/dynamic_node_invocation_sharding_info.dtg.h"
 
 namespace FlexFlow {
 
@@ -16,29 +16,29 @@ void require_graph_is_fully_shard_expanded(DynamicOpenDataflowGraph const &);
 
 void require_node_is_ready_for_shard_expansion(DynamicNodeAttrs const &);
 void require_value_is_ready_for_shard_expansion(DynamicValueAttrs const &);
-void require_invocation_is_ready_for_shard_expansion(DynamicNodeInvocation const &);
-void require_graph_is_ready_for_shard_expansion(DynamicOpenDataflowGraph const &);
+void require_invocation_is_ready_for_shard_expansion(
+    DynamicNodeInvocation const &);
+void require_graph_is_ready_for_shard_expansion(
+    DynamicOpenDataflowGraph const &);
 
-[[nodiscard]] DynamicNodeAttrs apply_dynamic_node_attrs_sharding_info(
-  DynamicNodeAttrs const &,
-  MachineSpaceCoordinate const &);
+[[nodiscard]] DynamicNodeAttrs
+    apply_dynamic_node_attrs_sharding_info(DynamicNodeAttrs const &,
+                                           MachineSpaceCoordinate const &);
 
 [[nodiscard]] DynamicValueAttrs apply_dynamic_value_attrs_sharding_info(
-  DynamicValueAttrs const &,
-  DynamicValueAttrsShardingInfo const &);
+    DynamicValueAttrs const &, DynamicValueAttrsShardingInfo const &);
 
 [[nodiscard]] DynamicNodeInvocation apply_dynamic_node_invocation_sharding_info(
-  DynamicNodeInvocation const &,
-  DynamicNodeInvocationShardingInfo const &);
+    DynamicNodeInvocation const &, DynamicNodeInvocationShardingInfo const &);
 
 [[nodiscard]] std::set<DynamicNodeInvocationShardingInfo>
-  generate_shard_expansion_for_invocation(DynamicNodeInvocation const &);
+    generate_shard_expansion_for_invocation(DynamicNodeInvocation const &);
 
 [[nodiscard]] std::set<DynamicNodeInvocation>
-  perform_shard_expansion_for_invocation(DynamicNodeInvocation const &);
+    perform_shard_expansion_for_invocation(DynamicNodeInvocation const &);
 
 [[nodiscard]] DynamicOpenDataflowGraph
-  perform_shard_expansion(DynamicOpenDataflowGraph const &);
+    perform_shard_expansion(DynamicOpenDataflowGraph const &);
 
 } // namespace FlexFlow
 

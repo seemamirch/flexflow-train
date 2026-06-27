@@ -40,8 +40,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     SUBCASE("get_incoming_edges(MultiDiGraphView, std::set<Node>)") {
 
       std::set<Node> ns = {n.at(0), n.at(2)};
-      std::map<Node, std::set<MultiDiEdge>> result =
-          get_incoming_edges(g, ns);
+      std::map<Node, std::set<MultiDiEdge>> result = get_incoming_edges(g, ns);
 
       std::map<Node, std::set<MultiDiEdge>> correct = {
           {n.at(0), {edges.at(0), edges.at(3), edges.at(4)}}, {n.at(2), {}}};

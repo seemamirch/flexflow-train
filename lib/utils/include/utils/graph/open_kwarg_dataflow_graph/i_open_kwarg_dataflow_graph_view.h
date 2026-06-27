@@ -14,9 +14,8 @@ struct IOpenKwargDataflowGraphView
     : virtual public IKwargDataflowGraphView<SlotName> {
   virtual std::set<KwargDataflowGraphInput<GraphInputName>>
       get_inputs() const = 0;
-  virtual std::set<OpenKwargDataflowEdge<GraphInputName, SlotName>>
-      query_edges(OpenKwargDataflowEdgeQuery<GraphInputName, SlotName> const &)
-          const = 0;
+  virtual std::set<OpenKwargDataflowEdge<GraphInputName, SlotName>> query_edges(
+      OpenKwargDataflowEdgeQuery<GraphInputName, SlotName> const &) const = 0;
 
   std::set<KwargDataflowEdge<SlotName>> query_edges(
       KwargDataflowEdgeQuery<SlotName> const &query) const override final {
@@ -28,8 +27,8 @@ struct IOpenKwargDataflowGraphView
             /*standard_edge_query=*/query,
         };
 
-    std::set<OpenKwargDataflowEdge<GraphInputName, SlotName>>
-        open_edges = this->query_edges(open_query);
+    std::set<OpenKwargDataflowEdge<GraphInputName, SlotName>> open_edges =
+        this->query_edges(open_query);
 
     return transform(
         open_edges,

@@ -1,6 +1,6 @@
 #include "utils/containers/filtrans.h"
-#include "utils/archetypes/value_type.h"
 #include "utils/archetypes/ordered_value_type.h"
+#include "utils/archetypes/value_type.h"
 
 namespace FlexFlow {
 
@@ -10,7 +10,8 @@ using F = std::function<std::optional<Out>(In const &)>;
 
 template std::vector<Out> filtrans(std::vector<In> const &, F &&);
 template std::unordered_set<Out> filtrans(std::unordered_set<In> const &, F &&);
-template std::unordered_multiset<Out> filtrans(std::unordered_multiset<In> const &, F &&);
+template std::unordered_multiset<Out>
+    filtrans(std::unordered_multiset<In> const &, F &&);
 
 using O_In = ordered_value_type<0>;
 using O_Out = ordered_value_type<0>;

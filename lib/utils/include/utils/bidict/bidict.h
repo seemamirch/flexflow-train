@@ -1,22 +1,22 @@
 #ifndef _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_BIDICT_BIDICT_H
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_BIDICT_BIDICT_H
 
+#include "utils/check_fmtable.h"
+#include "utils/containers/contains_key.h"
+#include "utils/containers/keys.h"
 #include "utils/containers/map_from_keys_and_values.h"
+#include "utils/containers/require_same.h"
+#include "utils/containers/set_of.h"
+#include "utils/containers/unordered_map_from_map.h"
+#include "utils/containers/values.h"
+#include "utils/fmt/map.h"
+#include "utils/hash/map.h"
 #include "utils/json/check_is_json_deserializable.h"
 #include "utils/json/check_is_json_serializable.h"
 #include <cassert>
 #include <nlohmann/json.hpp>
 #include <optional>
 #include <rapidcheck.h>
-#include "utils/containers/require_same.h"
-#include "utils/containers/values.h"
-#include "utils/containers/contains_key.h"
-#include "utils/containers/unordered_map_from_map.h"
-#include "utils/check_fmtable.h"
-#include "utils/containers/keys.h"
-#include "utils/containers/set_of.h"
-#include "utils/hash/map.h"
-#include "utils/fmt/map.h"
 
 namespace FlexFlow {
 
@@ -95,17 +95,13 @@ struct bidict {
   }
 
   bool operator==(bidict<L, R> const &other) const {
-    return require_same(
-      (this->fwd_map == other.fwd_map),
-      (this->bwd_map == other.bwd_map)
-    );
+    return require_same((this->fwd_map == other.fwd_map),
+                        (this->bwd_map == other.bwd_map));
   }
 
   bool operator!=(bidict<L, R> const &other) const {
-    return require_same(
-      (this->fwd_map != other.fwd_map),
-      (this->bwd_map != other.bwd_map)
-    );
+    return require_same((this->fwd_map != other.fwd_map),
+                        (this->bwd_map != other.bwd_map));
   }
 
   R const &at_l(L const &l) const {
@@ -221,7 +217,7 @@ struct bidict {
     return this->fwd_map;
   }
 
-  operator std::unordered_map<L, R> () const {
+  operator std::unordered_map<L, R>() const {
     return unordered_map_from_map(this->fwd_map);
   }
 
@@ -241,8 +237,7 @@ struct bidict {
     return this->bwd_map;
   }
 
-  bidict(std::map<L, R> const &fwd_map,
-         std::map<R, L> const &bwd_map)
+  bidict(std::map<L, R> const &fwd_map, std::map<R, L> const &bwd_map)
       : fwd_map(fwd_map), bwd_map(bwd_map) {}
 
   bool operator<(bidict<L, R> const &other) const {
@@ -260,6 +255,7 @@ struct bidict {
   bool operator>=(bidict<L, R> const &other) const {
     return this->fwd_map >= other.fwd_map;
   }
+
 private:
   void check_invariants() const {
     std::set<L> fwd_l_vals = keys(this->fwd_map);

@@ -3,6 +3,7 @@
 
 #include "utils/containers/all_of.h"
 #include "utils/containers/contains_key.h"
+#include "utils/containers/generate_map.h"
 #include "utils/containers/get_all_assignments.h"
 #include "utils/containers/is_subseteq_of.h"
 #include "utils/containers/keys.h"
@@ -12,9 +13,9 @@
 #include "utils/containers/require_same.h"
 #include "utils/containers/restrict_keys.h"
 #include "utils/containers/scanr.h"
+#include "utils/containers/set_of.h"
 #include "utils/containers/sorted_by.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/set_of.h"
 #include "utils/containers/zip_with_strict.h"
 #include "utils/exception.h"
 #include "utils/nonnegative_int/nonnegative_range.h"
@@ -23,8 +24,6 @@
 #include "utils/orthotope/dim_domain.h"
 #include "utils/orthotope/minimal_dim_domain.h"
 #include "utils/orthotope/orthotope.h"
-#include "utils/containers/set_of.h"
-#include "utils/containers/generate_map.h"
 
 namespace FlexFlow {
 
@@ -78,23 +77,19 @@ DimCoord<T> lift_dim_coord(DimCoord<T> const &coord,
 }
 
 template <typename T>
-std::set<DimCoord<T>>
-    get_coords_in_dim_domain(DimDomain<T> const &dim_domain) {
-  std::map<T, std::set<nonnegative_int>>
-      component_possible_values = map_values(
-          dim_domain.dims,
-          [](positive_int component_size)
-              -> std::set<nonnegative_int> {
-            return set_of(nonnegative_range(component_size));
-          });
+std::set<DimCoord<T>> get_coords_in_dim_domain(DimDomain<T> const &dim_domain) {
+  std::map<T, std::set<nonnegative_int>> component_possible_values =
+      map_values(dim_domain.dims,
+                 [](positive_int component_size) -> std::set<nonnegative_int> {
+                   return set_of(nonnegative_range(component_size));
+                 });
 
-  return set_of(transform(
-      get_all_assignments(component_possible_values),
-      [](std::map<T, nonnegative_int> const &assignment) {
-        return DimCoord<T>{
-            assignment,
-        };
-      }));
+  return set_of(transform(get_all_assignments(component_possible_values),
+                          [](std::map<T, nonnegative_int> const &assignment) {
+                            return DimCoord<T>{
+                                assignment,
+                            };
+                          }));
 }
 
 template <typename T>

@@ -232,24 +232,24 @@ TEST_SUITE(FF_TEST_SUITE) {
     DynamicNodeInvocation invocation_1 = DynamicNodeInvocation{
         /*inputs=*/std::map<DynamicTensorSlot, DynamicValueAttrs>{
             {
-              DynamicTensorSlot{
-                /*slot_name=*/TensorSlotName::INPUT,
-                /*slot_tensor_role=*/std::nullopt,
-                /*task_shard=*/std::nullopt,
-              },
-              value_1,
+                DynamicTensorSlot{
+                    /*slot_name=*/TensorSlotName::INPUT,
+                    /*slot_tensor_role=*/std::nullopt,
+                    /*task_shard=*/std::nullopt,
+                },
+                value_1,
             },
         },
         /*node_attrs=*/node_attrs,
         /*outputs=*/
         std::map<DynamicTensorSlot, DynamicValueAttrs>{
             {
-              DynamicTensorSlot{
-                /*slot_name=*/TensorSlotName::OUTPUT,
-                /*slot_tensor_role=*/std::nullopt,
-                /*task_shard=*/std::nullopt,
-              },
-              value_2,
+                DynamicTensorSlot{
+                    /*slot_name=*/TensorSlotName::OUTPUT,
+                    /*slot_tensor_role=*/std::nullopt,
+                    /*task_shard=*/std::nullopt,
+                },
+                value_2,
             },
         },
     };
@@ -308,8 +308,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     };
 
     DynamicOpenDataflowGraph g =
-        dynamic_open_dataflow_graph_from_invocation_set(
-            invocation_set);
+        dynamic_open_dataflow_graph_from_invocation_set(invocation_set);
 
     dynamic_invocation_id_t invocation_1_id =
         dynamic_graph_get_id_for_invocation(g, invocation_1);
@@ -322,11 +321,10 @@ TEST_SUITE(FF_TEST_SUITE) {
 
     std::set<DynamicSlotSite> result = get_dynamic_slot_sites(g);
 
-    auto mk_internal_slot_site = [](dynamic_invocation_id_t const &invocation_id,
-                                    TensorDirection direction,
-                                    TensorSlotName slot_name)
-      -> DynamicSlotSite
-    {
+    auto mk_internal_slot_site =
+        [](dynamic_invocation_id_t const &invocation_id,
+           TensorDirection direction,
+           TensorSlotName slot_name) -> DynamicSlotSite {
       return DynamicSlotSite{
           InternalDynamicSlotSite{
               /*invocation_id=*/invocation_id,

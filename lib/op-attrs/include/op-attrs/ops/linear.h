@@ -49,8 +49,7 @@ tl::expected<ParallelTensorShape, std::string>
     get_output_shape(LinearAttrs const &attrs,
                      ParallelTensorShape const &input);
 
-tl::expected<std::map<TensorSlotName, ParallelTensorShape>,
-             std::string>
+tl::expected<std::map<TensorSlotName, ParallelTensorShape>, std::string>
     get_weight_shapes(LinearAttrs const &attrs,
                       ParallelTensorShape const &input_shape);
 

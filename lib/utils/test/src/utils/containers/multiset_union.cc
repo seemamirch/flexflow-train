@@ -1,6 +1,5 @@
 #include "utils/containers/multiset_union.h"
 #include "test/utils/doctest/fmt/multiset.h"
-#include "test/utils/doctest/fmt/multiset.h"
 #include <doctest/doctest.h>
 
 using namespace ::FlexFlow;

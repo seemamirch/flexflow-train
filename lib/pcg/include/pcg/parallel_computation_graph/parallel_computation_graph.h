@@ -9,10 +9,10 @@
 #include "pcg/parallel_computation_graph/parallel_computation_graph_edge.dtg.h"
 #include "pcg/parallel_computation_graph/parallel_layer_added_result.dtg.h"
 #include "pcg/parallel_computation_graph/parallel_layer_guid_t.dtg.h"
+#include "pcg/parallel_computation_graph/parallel_layer_invocation_info.dtg.h"
 #include "pcg/parallel_computation_graph/parallel_tensor_guid_t.dtg.h"
 #include "pcg/parallel_computation_graph/parallel_tensor_use_t.dtg.h"
 #include <set>
-#include "pcg/parallel_computation_graph/parallel_layer_invocation_info.dtg.h"
 
 namespace FlexFlow {
 
@@ -28,8 +28,8 @@ ParallelLayerAddedResult add_parallel_layer(
     ParallelLayerAttrs const &layer_attrs,
     std::map<TensorSlotName, parallel_tensor_guid_t> const &inputs,
     std::map<TensorSlotName, parallel_tensor_guid_t> const &weights,
-    std::optional<std::map<TensorSlotName, CreateGrad>> const
-        &outputs = std::nullopt);
+    std::optional<std::map<TensorSlotName, CreateGrad>> const &outputs =
+        std::nullopt);
 
 ParallelLayerAddedResult
     pcg_add_input_layer(ParallelComputationGraph &pcg,
@@ -40,11 +40,11 @@ OperatorTaskSpace get_operator_task_space(ParallelComputationGraph const &pcg,
                                           parallel_layer_guid_t const &layer);
 
 std::set<ParallelLayerInvocationInfo>
-  pcg_get_invocation_info_set(ParallelComputationGraph const &);
+    pcg_get_invocation_info_set(ParallelComputationGraph const &);
 
 ParallelLayerInvocationInfo
-  pcg_get_invocation_info_for_layer(ParallelComputationGraph const &,
-                                    parallel_layer_guid_t);
+    pcg_get_invocation_info_for_layer(ParallelComputationGraph const &,
+                                      parallel_layer_guid_t);
 
 std::set<ParallelComputationGraphEdge>
     get_pcg_edges_from_layer_to_layer(ParallelComputationGraph const &pcg,
@@ -99,9 +99,8 @@ std::map<TensorSlotName, ParallelTensorDimDegrees>
     get_incoming_input_degrees(ParallelComputationGraph const &,
                                parallel_layer_guid_t const &);
 
-std::set<parallel_layer_guid_t>
-    get_successors(ParallelComputationGraph const &,
-                   parallel_layer_guid_t const &);
+std::set<parallel_layer_guid_t> get_successors(ParallelComputationGraph const &,
+                                               parallel_layer_guid_t const &);
 
 std::set<parallel_layer_guid_t>
     get_subgraph_successors(ParallelComputationGraph const &,

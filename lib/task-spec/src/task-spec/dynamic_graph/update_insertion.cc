@@ -83,10 +83,9 @@ static DynamicNodeInvocation get_update_invocation_for_invocation(
   };
 }
 
-std::set<DynamicNodeInvocation>
-    perform_update_insertion_for_invocation(
-        DynamicNodeInvocation const &invocation,
-        OptimizerAttrs const &optimizer_attrs) {
+std::set<DynamicNodeInvocation> perform_update_insertion_for_invocation(
+    DynamicNodeInvocation const &invocation,
+    OptimizerAttrs const &optimizer_attrs) {
 
   if (invocation.node_attrs.task_type.value() == DynamicTaskType::FWD &&
       invocation.node_attrs.op_attrs.value().is_pcg_op() &&

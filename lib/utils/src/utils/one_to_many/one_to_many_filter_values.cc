@@ -8,6 +8,7 @@ using R = ordered_value_type<1>;
 
 using F = std::function<bool(R const &)>;
 
-template OneToMany<L, R> one_to_many_filter_values(OneToMany<L, R> const &, F &&);
+template OneToMany<L, R> one_to_many_filter_values(OneToMany<L, R> const &,
+                                                   F &&);
 
 } // namespace FlexFlow

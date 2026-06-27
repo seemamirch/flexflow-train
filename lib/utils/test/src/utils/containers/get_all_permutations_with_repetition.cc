@@ -60,14 +60,14 @@ TEST_SUITE(FF_TEST_SUITE) {
       std::multiset<std::vector<int>> result =
           get_all_permutations_with_repetition(input, 2_n);
       std::multiset<std::vector<int>> correct = {{1, 1},
-                                                           {1, 2},
-                                                           {1, 2},
-                                                           {2, 1},
-                                                           {2, 1},
-                                                           {2, 2},
-                                                           {2, 2},
-                                                           {2, 2},
-                                                           {2, 2}};
+                                                 {1, 2},
+                                                 {1, 2},
+                                                 {2, 1},
+                                                 {2, 1},
+                                                 {2, 2},
+                                                 {2, 2},
+                                                 {2, 2},
+                                                 {2, 2}};
 
       CHECK(result == correct);
     }

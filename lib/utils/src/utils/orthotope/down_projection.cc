@@ -19,9 +19,8 @@ template DimCoord<R> compute_down_projection(DownProjection<L, R> const &,
                                              DimDomain<L> const &,
                                              DimOrdering<L> const &);
 
-template void project_dims(DownProjection<L, R> &,
-                           std::set<L> const &,
-                           R const &);
+template void
+    project_dims(DownProjection<L, R> &, std::set<L> const &, R const &);
 
 template UpProjection<R, L>
     invert_down_projection(DownProjection<L, R> const &);

@@ -266,8 +266,8 @@ private:
       LayerAttrs const &layer,
       std::map<TensorSlotName, tensor_guid_t> const &inputs,
       std::map<TensorSlotName, InitializerAttrs> const &weights,
-      std::optional<std::map<TensorSlotName, CreateGrad>> const
-          &outputs = std::nullopt);
+      std::optional<std::map<TensorSlotName, CreateGrad>> const &outputs =
+          std::nullopt);
 
   tensor_guid_t
       broadcast(tensor_guid_t const &, TensorDims const &, std::string const &);

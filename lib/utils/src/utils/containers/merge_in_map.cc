@@ -6,7 +6,6 @@ namespace FlexFlow {
 using K = ordered_value_type<0>;
 using V = ordered_value_type<1>;
 
-template void merge_in_map(std::map<K, V> const &,
-                           std::map<K, V> &);
+template void merge_in_map(std::map<K, V> const &, std::map<K, V> &);
 
 } // namespace FlexFlow

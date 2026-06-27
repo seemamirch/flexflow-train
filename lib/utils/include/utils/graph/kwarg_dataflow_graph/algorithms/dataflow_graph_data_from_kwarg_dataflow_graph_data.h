@@ -15,46 +15,43 @@ namespace FlexFlow {
 template <typename SlotName>
 DataflowGraphData dataflow_graph_data_from_kwarg_dataflow_graph_data(
     KwargDataflowGraphData<SlotName> const &kwarg_data,
-    std::function<std::vector<SlotName>(
-        std::set<SlotName> const &)> const &order_slots) {
+    std::function<std::vector<SlotName>(std::set<SlotName> const &)> const
+        &order_slots) {
   std::set<KwargDataflowInput<SlotName>> all_inputs = transform(
       kwarg_data.edges,
       [](KwargDataflowEdge<SlotName> const &e) -> KwargDataflowInput<SlotName> {
         return e.dst;
       });
 
-  std::set<KwargDataflowOutput<SlotName>> all_outputs =
-      kwarg_data.outputs;
+  std::set<KwargDataflowOutput<SlotName>> all_outputs = kwarg_data.outputs;
 
-  std::map<Node, std::set<SlotName>>
-      incoming_slots_by_node = map_values(
-          group_by(all_inputs,
-                   [](KwargDataflowInput<SlotName> const &i) -> Node {
-                     return i.node;
-                   })
-              .l_to_r(),
-          [](nonempty_set<KwargDataflowInput<SlotName>> const &is)
-              -> std::set<SlotName> {
-            return transform(is.unwrap_as_set(),
-                             [](KwargDataflowInput<SlotName> const &i) {
-                               return i.slot_name;
-                             });
-          });
+  std::map<Node, std::set<SlotName>> incoming_slots_by_node =
+      map_values(group_by(all_inputs,
+                          [](KwargDataflowInput<SlotName> const &i) -> Node {
+                            return i.node;
+                          })
+                     .l_to_r(),
+                 [](nonempty_set<KwargDataflowInput<SlotName>> const &is)
+                     -> std::set<SlotName> {
+                   return transform(is.unwrap_as_set(),
+                                    [](KwargDataflowInput<SlotName> const &i) {
+                                      return i.slot_name;
+                                    });
+                 });
 
-  std::map<Node, std::set<SlotName>>
-      outgoing_slots_by_node = map_values(
-          group_by(all_outputs,
-                   [](KwargDataflowOutput<SlotName> const &o) -> Node {
-                     return o.node;
-                   })
-              .l_to_r(),
-          [](nonempty_set<KwargDataflowOutput<SlotName>> const &os)
-              -> std::set<SlotName> {
-            return transform(os.unwrap_as_set(),
-                             [](KwargDataflowOutput<SlotName> const &o) {
-                               return o.slot_name;
-                             });
-          });
+  std::map<Node, std::set<SlotName>> outgoing_slots_by_node =
+      map_values(group_by(all_outputs,
+                          [](KwargDataflowOutput<SlotName> const &o) -> Node {
+                            return o.node;
+                          })
+                     .l_to_r(),
+                 [](nonempty_set<KwargDataflowOutput<SlotName>> const &os)
+                     -> std::set<SlotName> {
+                   return transform(os.unwrap_as_set(),
+                                    [](KwargDataflowOutput<SlotName> const &o) {
+                                      return o.slot_name;
+                                    });
+                 });
 
   auto dataflow_input_from_kwarg_input =
       [&](KwargDataflowInput<SlotName> const &i) -> DataflowInput {

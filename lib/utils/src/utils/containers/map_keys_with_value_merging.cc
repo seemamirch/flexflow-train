@@ -19,7 +19,7 @@ using O_K2 = ordered_value_type<2>;
 
 using O_F = std::function<O_K2(O_K const &)>;
 
-template std::map<O_K2, V> map_keys_with_value_merging(
-    std::map<O_K, V> const &, O_F &&, MergeF &&);
+template std::map<O_K2, V>
+    map_keys_with_value_merging(std::map<O_K, V> const &, O_F &&, MergeF &&);
 
 } // namespace FlexFlow

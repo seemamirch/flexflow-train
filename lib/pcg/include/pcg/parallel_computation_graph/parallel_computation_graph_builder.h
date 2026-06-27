@@ -141,8 +141,7 @@ private:
   std::map<TensorSlotName, parallel_tensor_guid_t> add_layer(
       ParallelLayerAttrs const &layer,
       std::map<TensorSlotName, parallel_tensor_guid_t> const &inputs,
-      std::map<TensorSlotName, InitializerAttrs> const
-          &weight_initializers);
+      std::map<TensorSlotName, InitializerAttrs> const &weight_initializers);
 
   parallel_tensor_guid_t
       add_weight(ParallelTensorShape const &weight_tensor_shape,

@@ -104,8 +104,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           {7, 2_p},
       }};
 
-      std::set<DimCoord<int>> result =
-          get_coords_in_dim_domain(dim_domain);
+      std::set<DimCoord<int>> result = get_coords_in_dim_domain(dim_domain);
 
       std::set<DimCoord<int>> correct = {
           DimCoord<int>{{
@@ -125,8 +124,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           {2, 3_p},
       }};
 
-      std::set<DimCoord<int>> result =
-          get_coords_in_dim_domain(dim_domain);
+      std::set<DimCoord<int>> result = get_coords_in_dim_domain(dim_domain);
 
       auto mk_dim_coord = [](nonnegative_int dim7, nonnegative_int dim2) {
         return DimCoord<int>{{
@@ -153,8 +151,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           {2, 3_p},
       }};
 
-      std::set<DimCoord<int>> result =
-          get_coords_in_dim_domain(dim_domain);
+      std::set<DimCoord<int>> result = get_coords_in_dim_domain(dim_domain);
 
       auto mk_dim_coord = [](nonnegative_int dim7, nonnegative_int dim2) {
         return DimCoord<int>{{
@@ -175,8 +172,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     SUBCASE("zero-dimensional dim domain") {
       DimDomain<int> dim_domain = DimDomain<int>{{}};
 
-      std::set<DimCoord<int>> result =
-          get_coords_in_dim_domain(dim_domain);
+      std::set<DimCoord<int>> result = get_coords_in_dim_domain(dim_domain);
 
       std::set<DimCoord<int>> correct = {
           DimCoord<int>{{}},

@@ -8,14 +8,12 @@
 #include <map>
 namespace FlexFlow {
 
-DiGraph add_dummy_nodes(DiGraph g,
-                        std::map<Node, NodeRole> &node_roles);
+DiGraph add_dummy_nodes(DiGraph g, std::map<Node, NodeRole> &node_roles);
 
-std::set<Node>
-    get_component(DiGraph const &g,
-                  Node const &node,
-                  std::map<Node, nonnegative_int> const &depth_map,
-                  std::map<Node, NodeRole> const &node_roles);
+std::set<Node> get_component(DiGraph const &g,
+                             Node const &node,
+                             std::map<Node, nonnegative_int> const &depth_map,
+                             std::map<Node, NodeRole> const &node_roles);
 
 /**
  * \brief See \ref spization-escribano.

@@ -4,7 +4,6 @@
 #include "utils/containers/contains.h"
 #include <queue>
 #include <set>
-#include <set>
 #include <vector>
 
 namespace FlexFlow {

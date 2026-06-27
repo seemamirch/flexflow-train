@@ -13,8 +13,7 @@ std::set<Node> get_dominators(DiGraphView const &g, Node const &n) {
   return get_dominators_map(g).at(n);
 }
 
-std::set<Node> get_dominators(DiGraphView const &g,
-                                        std::set<Node> const &n) {
+std::set<Node> get_dominators(DiGraphView const &g, std::set<Node> const &n) {
   ASSERT(n.size() > 0, "Cannot find dominators of no nodes");
 
   std::optional<std::set<Node>> result =

@@ -1,6 +1,6 @@
 #include "utils/graph/views/views.h"
-#include "utils/containers/set_union.h"
 #include "utils/containers/set_of.h"
+#include "utils/containers/set_union.h"
 #include "utils/fmt/map.h"
 #include "utils/fmt/set.h"
 #include "utils/graph/algorithms.h"
@@ -138,14 +138,13 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     SUBCASE("get_edges") {
-      std::set<DirectedEdge> expected = {
-          DirectedEdge{n.at(0), n.at(0)},
-          DirectedEdge{n.at(0), n.at(1)},
-          DirectedEdge{n.at(1), n.at(0)},
-          DirectedEdge{n.at(1), n.at(2)},
-          DirectedEdge{n.at(2), n.at(1)},
-          DirectedEdge{n.at(2), n.at(0)},
-          DirectedEdge{n.at(0), n.at(2)}};
+      std::set<DirectedEdge> expected = {DirectedEdge{n.at(0), n.at(0)},
+                                         DirectedEdge{n.at(0), n.at(1)},
+                                         DirectedEdge{n.at(1), n.at(0)},
+                                         DirectedEdge{n.at(1), n.at(2)},
+                                         DirectedEdge{n.at(2), n.at(1)},
+                                         DirectedEdge{n.at(2), n.at(0)},
+                                         DirectedEdge{n.at(0), n.at(2)}};
 
       std::set<DirectedEdge> result = get_edges(view);
 

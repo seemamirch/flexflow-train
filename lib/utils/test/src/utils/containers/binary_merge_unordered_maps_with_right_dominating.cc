@@ -1,5 +1,5 @@
-#include "utils/containers/binary_merge_maps_with_right_dominating.h"
 #include "test/utils/doctest/fmt/map.h"
+#include "utils/containers/binary_merge_maps_with_right_dominating.h"
 #include <doctest/doctest.h>
 #include <string>
 

@@ -3,7 +3,6 @@
 #include "utils/archetypes/value_type.h"
 #include <functional>
 #include <set>
-#include <set>
 #include <vector>
 
 namespace FlexFlow {

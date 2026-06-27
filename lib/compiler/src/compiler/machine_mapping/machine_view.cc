@@ -200,11 +200,11 @@ static OperatorAtomicTaskShardBinding
       mv_task_space_coord_for_machine_space_coord(
           machine_view, op_task_space, machine_space_coord);
 
-  std::map<TensorSlotName, OperatorSpaceToParallelTensorSpaceMapping>
-      mappings = get_operator_to_ptensor_mappings(op_attrs, inputs_dim_degrees);
+  std::map<TensorSlotName, OperatorSpaceToParallelTensorSpaceMapping> mappings =
+      get_operator_to_ptensor_mappings(op_attrs, inputs_dim_degrees);
 
-  std::map<TensorSlotName, ParallelTensorSpaceCoordinate>
-      ptensor_coords = generate_map(
+  std::map<TensorSlotName, ParallelTensorSpaceCoordinate> ptensor_coords =
+      generate_map(
           keys(inputs_dim_degrees),
           [&](TensorSlotName const &slot_name)
               -> ParallelTensorSpaceCoordinate {

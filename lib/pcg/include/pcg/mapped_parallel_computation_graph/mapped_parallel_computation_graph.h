@@ -2,8 +2,8 @@
 #define _FLEXFLOW_LIB_PCG_INCLUDE_PCG_MAPPED_PARALLEL_COMPUTATION_GRAPH_MAPPED_PARALLEL_COMPUTATION_GRAPH_H
 
 #include "pcg/mapped_parallel_computation_graph/mapped_parallel_computation_graph.dtg.h"
-#include "pcg/parallel_computation_graph/parallel_computation_graph.h"
 #include "pcg/mapped_parallel_computation_graph/mapped_parallel_layer_invocation_info.dtg.h"
+#include "pcg/parallel_computation_graph/parallel_computation_graph.h"
 
 namespace FlexFlow {
 

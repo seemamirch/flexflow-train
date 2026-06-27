@@ -52,8 +52,8 @@ TEST_SUITE(FF_TEST_SUITE) {
     KwargDataflowGraphView<int> g = view_from_kwarg_dataflow_graph_data(g_data);
 
     SUBCASE("node set is contains all graph nodes") {
-      KwargDataflowGraphView<int> result = get_kwarg_dataflow_graph_subgraph(
-          g, std::set{n1, n2, n3, n4, n5});
+      KwargDataflowGraphView<int> result =
+          get_kwarg_dataflow_graph_subgraph(g, std::set{n1, n2, n3, n4, n5});
       KwargDataflowGraphData<int> result_data =
           get_kwarg_dataflow_graph_data(result);
 

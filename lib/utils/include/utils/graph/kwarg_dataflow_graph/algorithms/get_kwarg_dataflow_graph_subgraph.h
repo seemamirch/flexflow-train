@@ -9,13 +9,12 @@
 namespace FlexFlow {
 
 template <typename SlotName>
-KwargDataflowGraphView<SlotName> get_kwarg_dataflow_graph_subgraph(
-    KwargDataflowGraphView<SlotName> const &g,
-    std::set<Node> const &subgraph_nodes) {
+KwargDataflowGraphView<SlotName>
+    get_kwarg_dataflow_graph_subgraph(KwargDataflowGraphView<SlotName> const &g,
+                                      std::set<Node> const &subgraph_nodes) {
   KwargDataflowGraphData<SlotName> g_data = get_kwarg_dataflow_graph_data(g);
 
-  std::set<Node> nodes =
-      set_intersection(g_data.nodes, set_of(subgraph_nodes));
+  std::set<Node> nodes = set_intersection(g_data.nodes, set_of(subgraph_nodes));
 
   std::set<KwargDataflowEdge<SlotName>> edges =
       filter(g_data.edges, [&](KwargDataflowEdge<SlotName> const &e) -> bool {

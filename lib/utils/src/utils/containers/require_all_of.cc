@@ -2,7 +2,6 @@
 #include "utils/archetypes/ordered_value_type.h"
 #include "utils/archetypes/value_type.h"
 #include <set>
-#include <set>
 
 namespace FlexFlow {
 

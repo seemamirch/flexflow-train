@@ -12,8 +12,8 @@ RuntimeOnlyCostEstimator make_fake_runtime_only_cost_estimator(
         &get_communication_cost);
 
 RuntimeOnlyCostEstimator make_fake_runtime_only_cost_estimator(
-    std::map<RuntimeOnlyOpCostEstimateKey,
-                       RuntimeOnlyOpCostMetrics> const &op_cost_map,
+    std::map<RuntimeOnlyOpCostEstimateKey, RuntimeOnlyOpCostMetrics> const
+        &op_cost_map,
     std::map<TensorSetMovement, milliseconds_t> const &comm_cost_map);
 
 RuntimeOnlyCostEstimator make_fake_constant_runtime_only_cost_estimator(

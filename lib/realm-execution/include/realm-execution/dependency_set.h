@@ -29,8 +29,7 @@ private:
 
 private:
   Realm::Event precondition;
-  std::map<DynamicValueAttrs, AtomicDependencySet>
-      atomic_dependencies;
+  std::map<DynamicValueAttrs, AtomicDependencySet> atomic_dependencies;
 };
 
 } // namespace FlexFlow

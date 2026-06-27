@@ -15,8 +15,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
     NodeAddedResult n0_added = g.add_node({}, 1_n);
 
-    std::set<DataflowGraphInput> result =
-        get_open_dataflow_graph_inputs(g);
+    std::set<DataflowGraphInput> result = get_open_dataflow_graph_inputs(g);
     std::set<DataflowGraphInput> correct = {i0, i1};
 
     CHECK(result == correct);

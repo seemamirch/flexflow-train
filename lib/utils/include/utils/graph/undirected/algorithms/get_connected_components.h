@@ -5,8 +5,7 @@
 
 namespace FlexFlow {
 
-std::set<std::set<Node>>
-    get_connected_components(UndirectedGraphView const &);
+std::set<std::set<Node>> get_connected_components(UndirectedGraphView const &);
 
 } // namespace FlexFlow
 

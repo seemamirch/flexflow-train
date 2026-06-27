@@ -121,8 +121,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           FFOrdered{3_p, 1_p, 2_p},
       };
 
-      std::set<TensorDimsCoord> result =
-          get_tensor_dims_coord_set(input);
+      std::set<TensorDimsCoord> result = get_tensor_dims_coord_set(input);
       std::set<TensorDimsCoord> correct = {
           TensorDimsCoord{FFOrdered{0_n, 0_n, 0_n}},
           TensorDimsCoord{FFOrdered{0_n, 0_n, 1_n}},
@@ -138,8 +137,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     SUBCASE("TensorDims is zero-dimensional") {
       TensorDims input = TensorDims{FFOrdered<positive_int>{}};
 
-      std::set<TensorDimsCoord> result =
-          get_tensor_dims_coord_set(input);
+      std::set<TensorDimsCoord> result = get_tensor_dims_coord_set(input);
       std::set<TensorDimsCoord> correct = {
           TensorDimsCoord{FFOrdered<nonnegative_int>{}},
       };

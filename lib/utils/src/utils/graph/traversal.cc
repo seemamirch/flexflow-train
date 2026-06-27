@@ -129,8 +129,7 @@ bfs_iterator &bfs_iterator::operator++() {
   this->seen.value().insert(current);
   this->q.pop();
 
-  std::set<DirectedEdge> outgoing =
-      get_outgoing_edges(graph, {current});
+  std::set<DirectedEdge> outgoing = get_outgoing_edges(graph, {current});
   for (DirectedEdge const &e : outgoing) {
     if (!contains(this->seen.value(), e.dst)) {
       this->q.push(e.dst);
@@ -189,8 +188,8 @@ CheckedDFSView dfs(DiGraphView const &g,
   return CheckedDFSView(g, starting_points);
 }
 
-UncheckedDFSView::UncheckedDFSView(
-    DiGraphView const &g, std::set<Node> const &starting_points)
+UncheckedDFSView::UncheckedDFSView(DiGraphView const &g,
+                                   std::set<Node> const &starting_points)
     : graph(g), starting_points(starting_points) {}
 
 unchecked_dfs_iterator UncheckedDFSView::cbegin() const {
@@ -209,14 +208,12 @@ unchecked_dfs_iterator UncheckedDFSView::end() const {
   return this->cend();
 }
 
-UncheckedDFSView
-    unchecked_dfs(DiGraphView const &g,
-                  std::set<Node> const &starting_points) {
+UncheckedDFSView unchecked_dfs(DiGraphView const &g,
+                               std::set<Node> const &starting_points) {
   return UncheckedDFSView(g, starting_points);
 }
 
-BFSView::BFSView(DiGraphView const &g,
-                 std::set<Node> const &starting_points)
+BFSView::BFSView(DiGraphView const &g, std::set<Node> const &starting_points)
     : graph(g), starting_points(starting_points) {}
 
 bfs_iterator BFSView::cbegin() const {
@@ -235,8 +232,7 @@ bfs_iterator BFSView::end() const {
   return this->cend();
 }
 
-BFSView bfs(DiGraphView const &g,
-            std::set<Node> const &starting_points) {
+BFSView bfs(DiGraphView const &g, std::set<Node> const &starting_points) {
   return BFSView(g, starting_points);
 }
 

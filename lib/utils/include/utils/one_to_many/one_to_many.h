@@ -5,6 +5,7 @@
 #include "utils/containers/items.h"
 #include "utils/containers/keys.h"
 #include "utils/containers/require_same.h"
+#include "utils/containers/set_of.h"
 #include "utils/containers/transform.h"
 #include "utils/containers/try_at.h"
 #include "utils/containers/values.h"
@@ -12,18 +13,17 @@
 #include "utils/fmt/map.h"
 #include "utils/fmt/set.h"
 #include "utils/hash-utils.h"
-#include "utils/hash/tuple.h"
 #include "utils/hash/map.h"
 #include "utils/hash/set.h"
+#include "utils/hash/tuple.h"
 #include "utils/json/check_is_json_deserializable.h"
 #include "utils/json/check_is_json_serializable.h"
 #include "utils/nonempty_set/nonempty_set.h"
 #include <fmt/format.h>
+#include <map>
 #include <nlohmann/json.hpp>
 #include <rapidcheck.h>
-#include <map>
 #include <set>
-#include "utils/containers/set_of.h"
 
 namespace FlexFlow {
 
@@ -87,12 +87,11 @@ public:
     } else if (found_l.value() == l) {
       return;
     } else {
-      PANIC(
-          "Existing mapping found for right value {}: tried to map "
-          "to left value {}, but is already bound to left value {}",
-          r,
-          l,
-          found_l.value());
+      PANIC("Existing mapping found for right value {}: tried to map "
+            "to left value {}, but is already bound to left value {}",
+            r,
+            l,
+            found_l.value());
     }
   }
 
@@ -149,8 +148,7 @@ private:
 };
 
 template <typename L, typename R>
-std::map<L, nonempty_set<R>>
-    format_as(OneToMany<L, R> const &m) {
+std::map<L, nonempty_set<R>> format_as(OneToMany<L, R> const &m) {
   return generate_map(m.left_values(), [&](L const &l) { return m.at_l(l); });
 }
 
@@ -197,7 +195,8 @@ struct adl_serializer<::FlexFlow::OneToMany<L, R>> {
     CHECK_IS_JSON_SERIALIZABLE(L);
     CHECK_IS_JSON_SERIALIZABLE(R);
 
-    j = ::FlexFlow::set_of(::FlexFlow::unstructured_relation_from_one_to_many(m));
+    j = ::FlexFlow::set_of(
+        ::FlexFlow::unstructured_relation_from_one_to_many(m));
   }
 };
 

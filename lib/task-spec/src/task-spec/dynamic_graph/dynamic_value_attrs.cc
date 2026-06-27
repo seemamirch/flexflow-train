@@ -13,10 +13,9 @@ DynamicValueAttrs
   return result;
 }
 
-DynamicValueAttrs decide_dynamic_value_attrs_mapping(
-    DynamicValueAttrs const &attrs,
-    ParallelTensorMapping const &mapping)
-{
+DynamicValueAttrs
+    decide_dynamic_value_attrs_mapping(DynamicValueAttrs const &attrs,
+                                       ParallelTensorMapping const &mapping) {
   ASSERT(!attrs.mapping.has_value());
 
   DynamicValueAttrs result = attrs;

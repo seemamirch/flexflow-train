@@ -10,6 +10,7 @@ using V2 = ordered_value_type<3>;
 using KF = std::function<K2(K const &)>;
 using VF = std::function<V2(V const &)>;
 
-template bidict<K2, V2> bidict_transform_keys_and_values(bidict<K, V> const &, KF &&, VF &&);
+template bidict<K2, V2>
+    bidict_transform_keys_and_values(bidict<K, V> const &, KF &&, VF &&);
 
 } // namespace FlexFlow

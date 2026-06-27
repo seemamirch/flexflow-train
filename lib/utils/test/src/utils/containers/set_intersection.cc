@@ -1,7 +1,6 @@
 #include "utils/containers/set_intersection.h"
 #include "test/utils/doctest/fmt/optional.h"
 #include "test/utils/doctest/fmt/set.h"
-#include "test/utils/doctest/fmt/set.h"
 #include <doctest/doctest.h>
 
 using namespace ::FlexFlow;

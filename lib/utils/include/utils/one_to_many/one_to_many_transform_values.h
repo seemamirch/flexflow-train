@@ -4,7 +4,6 @@
 #include "utils/containers/transform.h"
 #include "utils/one_to_many/one_to_many.h"
 
-
 namespace FlexFlow {
 
 template <typename L,
@@ -13,11 +12,11 @@ template <typename L,
           typename R2 = std::invoke_result_t<F, R1>>
 OneToMany<L, R2> one_to_many_transform_values(OneToMany<L, R1> const &input,
                                               F f) {
-  return one_to_many_from_unstructured_relation(transform(
-      set_of(input.relation()),
-      [&](std::pair<L, R1> const &p) -> std::pair<L, R2> {
-        return {p.first, f(p.second)};
-      }));
+  return one_to_many_from_unstructured_relation(
+      transform(set_of(input.relation()),
+                [&](std::pair<L, R1> const &p) -> std::pair<L, R2> {
+                  return {p.first, f(p.second)};
+                }));
 }
 
 } // namespace FlexFlow

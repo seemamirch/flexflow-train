@@ -83,8 +83,7 @@ PCGInstance create_pcg_instance(
     MappedParallelComputationGraph const &mpcg,
     OptimizerAttrs const &optimizer_attrs,
     std::optional<ParallelLossConfig> const &loss,
-    std::map<DynamicValueAttrs, DynamicTensorAccessor> const
-        &input_tensors,
+    std::map<DynamicValueAttrs, DynamicTensorAccessor> const &input_tensors,
     ProfilingSettings const &profiling_settings,
     DistributedFfHandle const &device_handle,
     DeviceType device_type) {
@@ -93,8 +92,7 @@ PCGInstance create_pcg_instance(
       make_dynamic_open_dataflow_graph_from_mapped_pcg(mpcg, device_type);
   dg = perform_pass_expansion(dg);
 
-  std::map<DynamicValueAttrs, DynamicTensorAccessor> inputs =
-      input_tensors;
+  std::map<DynamicValueAttrs, DynamicTensorAccessor> inputs = input_tensors;
   std::optional<DynamicValueAttrs> logit_grad_value;
   if (loss.has_value()) {
     ParallelLossConfig loss_config = assert_unwrap(loss);
@@ -245,12 +243,11 @@ static Realm::Event spawn_dynamic_node_invocation(
     Realm::Event result = precondition;
     for (auto const &[p, d] : assert_unwrap(output_grad.mapping).raw) {
       DynamicValueAttrs replica_key = output_grad;
-      replica_key.mapping =
-          ParallelTensorMapping{
-            bidict<ParallelTensorSpaceCoordinate, global_device_id_t>{
+      replica_key.mapping = ParallelTensorMapping{
+          bidict<ParallelTensorSpaceCoordinate, global_device_id_t>{
               {p, d},
-            },
-          };
+          },
+      };
       replica_key.shard_coord = p;
 
       Realm::RegionInstance src_inst =

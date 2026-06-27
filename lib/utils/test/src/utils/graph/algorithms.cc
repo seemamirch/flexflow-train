@@ -75,8 +75,8 @@ TEST_SUITE(FF_TEST_SUITE) {
                  DirectedEdge{n.at(1), n.at(2)},
                  DirectedEdge{n.at(2), n.at(0)},
                  DirectedEdge{n.at(2), n.at(1)}});
-      std::set<std::vector<Node>> corrects = {
-          {n.at(0), n.at(1), n.at(2)}, {n.at(0), n.at(2), n.at(1)}};
+      std::set<std::vector<Node>> corrects = {{n.at(0), n.at(1), n.at(2)},
+                                              {n.at(0), n.at(2), n.at(1)}};
       std::vector<Node> result = get_bfs_ordering(g, {n.at(0)});
       CHECK(contains(corrects, result));
     }

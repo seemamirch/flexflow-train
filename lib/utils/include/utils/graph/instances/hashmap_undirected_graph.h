@@ -14,8 +14,7 @@ public:
   void remove_node_unsafe(Node const &) override;
   void add_edge(Edge const &) override;
   void remove_edge(Edge const &) override;
-  std::set<Edge>
-      query_edges(UndirectedEdgeQuery const &) const override;
+  std::set<Edge> query_edges(UndirectedEdgeQuery const &) const override;
   std::set<Node> query_nodes(NodeQuery const &) const override;
 
   friend bool operator==(HashmapUndirectedGraph const &,

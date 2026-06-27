@@ -52,8 +52,7 @@ std::set<DirectedEdge>
   return result;
 }
 
-std::set<Node>
-    AdjacencyDiGraph::query_nodes(NodeQuery const &query) const {
+std::set<Node> AdjacencyDiGraph::query_nodes(NodeQuery const &query) const {
   return apply_query(query.nodes, keys(this->adjacency));
 }
 

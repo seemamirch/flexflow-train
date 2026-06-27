@@ -344,7 +344,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         RuntimeOnlyCostEstimator runtime_only_cost_estimator =
             make_fake_runtime_only_cost_estimator(
                 std::map<RuntimeOnlyOpCostEstimateKey,
-                                   RuntimeOnlyOpCostMetrics>{{
+                         RuntimeOnlyOpCostMetrics>{{
                     mk_cost_entry(k1, mv_stride_1, 1),
                     mk_cost_entry(k1, mv_stride_2, 3),
                     mk_cost_entry(k2, mv_stride_1, 4),
@@ -401,7 +401,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         RuntimeOnlyCostEstimator runtime_only_cost_estimator =
             make_fake_runtime_only_cost_estimator(
                 std::map<RuntimeOnlyOpCostEstimateKey,
-                                   RuntimeOnlyOpCostMetrics>{{
+                         RuntimeOnlyOpCostMetrics>{{
                     mk_cost_entry(k1, mv_stride_1, 1),
                     mk_cost_entry(k1, mv_stride_2, 3),
                     mk_cost_entry(k2, mv_stride_1, 4),
@@ -481,7 +481,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         RuntimeOnlyCostEstimator runtime_only_cost_estimator =
             make_fake_runtime_only_cost_estimator(
                 std::map<RuntimeOnlyOpCostEstimateKey,
-                                   RuntimeOnlyOpCostMetrics>{{
+                         RuntimeOnlyOpCostMetrics>{{
                     mk_cost_entry(k1, mv_stride_1, 1),
                     mk_cost_entry(k1, mv_stride_2, 3),
                     mk_cost_entry(k2, mv_stride_1, 4),
@@ -530,7 +530,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         RuntimeOnlyCostEstimator runtime_only_cost_estimator =
             make_fake_runtime_only_cost_estimator(
                 std::map<RuntimeOnlyOpCostEstimateKey,
-                                   RuntimeOnlyOpCostMetrics>{{
+                         RuntimeOnlyOpCostMetrics>{{
                     mk_cost_entry(k1, mv_stride_1, 1),
                     mk_cost_entry(k1, mv_stride_2, 3),
                     mk_cost_entry(k2, mv_stride_1, 3),
@@ -593,7 +593,7 @@ TEST_SUITE(FF_TEST_SUITE) {
         RuntimeOnlyCostEstimator runtime_only_cost_estimator =
             make_fake_runtime_only_cost_estimator(
                 std::map<RuntimeOnlyOpCostEstimateKey,
-                                   RuntimeOnlyOpCostMetrics>{{
+                         RuntimeOnlyOpCostMetrics>{{
                     mk_cost_entry(k1, mv_stride_1, 3),
                     mk_cost_entry(k1, mv_stride_2, 1),
                     mk_cost_entry(k2, mv_stride_1, 4),

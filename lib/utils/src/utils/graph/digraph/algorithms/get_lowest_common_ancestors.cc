@@ -22,12 +22,10 @@ std::optional<std::set<Node>>
   if (num_nodes(g) == 0 || nodes.size() == 0) {
     return std::nullopt;
   }
-  std::set<std::set<Node>> ancestors =
-      transform(nodes, [&](Node const &n) {
-        return set_union(get_ancestors(g, n), {n});
-      });
-  std::set<Node> common_ancestors =
-      set_intersection(ancestors).value();
+  std::set<std::set<Node>> ancestors = transform(nodes, [&](Node const &n) {
+    return set_union(get_ancestors(g, n), {n});
+  });
+  std::set<Node> common_ancestors = set_intersection(ancestors).value();
 
   if (common_ancestors.empty()) {
     return std::set<Node>{};

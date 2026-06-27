@@ -6,7 +6,6 @@ namespace FlexFlow {
 using O_K = ordered_value_type<0>;
 using O_V = ordered_value_type<1>;
 
-template std::map<O_V, std::set<O_K>>
-    invert_map(std::map<O_K, O_V> const &);
+template std::map<O_V, std::set<O_K>> invert_map(std::map<O_K, O_V> const &);
 
 } // namespace FlexFlow

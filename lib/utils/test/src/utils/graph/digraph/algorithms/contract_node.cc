@@ -29,8 +29,7 @@ TEST_SUITE(FF_TEST_SUITE) {
 
       SUBCASE("nodes") {
         std::set<Node> result_nodes = get_nodes(result);
-        std::set<Node> correct_nodes = {
-            n.at(1), n.at(2), n.at(3), n.at(4)};
+        std::set<Node> correct_nodes = {n.at(1), n.at(2), n.at(3), n.at(4)};
         CHECK(result_nodes == correct_nodes);
       }
 

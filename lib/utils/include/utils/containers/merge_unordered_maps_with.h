@@ -9,9 +9,8 @@
 namespace FlexFlow {
 
 template <typename K, typename V, typename F>
-std::unordered_map<K, V>
-    merge_unordered_maps_with(std::vector<std::unordered_map<K, V>> const &to_merge,
-                    F &&f) {
+std::unordered_map<K, V> merge_unordered_maps_with(
+    std::vector<std::unordered_map<K, V>> const &to_merge, F &&f) {
   return foldl(to_merge,
                std::unordered_map<K, V>{},
                [&](std::unordered_map<K, V> const &accum,

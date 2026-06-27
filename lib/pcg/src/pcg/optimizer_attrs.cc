@@ -26,8 +26,7 @@ OptimizerAttrs
 std::set<OptimizerSlotName>
     get_slot_names_for_optimizer(OptimizerAttrs const &attrs) {
   return attrs.visit<std::set<OptimizerSlotName>>(overload{
-      [](SGDOptimizerAttrs const &sgd_attrs)
-          -> std::set<OptimizerSlotName> {
+      [](SGDOptimizerAttrs const &sgd_attrs) -> std::set<OptimizerSlotName> {
         if (sgd_attrs.momentum > 0.0f) {
           return {OptimizerSlotName::SGD_V};
         } else {

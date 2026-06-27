@@ -8,8 +8,7 @@
 namespace FlexFlow {
 
 template <typename T>
-std::set<T> set_difference(std::set<T> const &l,
-                                     std::set<T> const &r) {
+std::set<T> set_difference(std::set<T> const &l, std::set<T> const &r) {
   return filter(l, [&](T const &element) { return !contains(r, element); });
 }
 

@@ -1,13 +1,13 @@
 #ifndef _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_FLATMAP_H
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_FLATMAP_H
 
-#include "utils/containers/extend.h"
-#include "utils/containers/get_element_type.h"
-#include <string>
-#include <type_traits>
-#include <map>
 #include "utils/containers/binary_merge_disjoint_maps.h"
 #include "utils/containers/binary_merge_disjoint_unordered_maps.h"
+#include "utils/containers/extend.h"
+#include "utils/containers/get_element_type.h"
+#include <map>
+#include <string>
+#include <type_traits>
 
 namespace FlexFlow {
 
@@ -90,8 +90,7 @@ template <
     typename F,
     typename OutK = typename std::invoke_result_t<F, InK, InV>::key_type,
     typename OutV = typename std::invoke_result_t<F, InK, InV>::mapped_type>
-std::map<OutK, OutV> flatmap(std::map<InK, InV> const &m,
-                                       F &&f) {
+std::map<OutK, OutV> flatmap(std::map<InK, InV> const &m, F &&f) {
   std::map<OutK, OutV> result;
 
   for (auto const &[k, v] : m) {

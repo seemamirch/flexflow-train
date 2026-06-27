@@ -1,8 +1,8 @@
-#include <doctest/doctest.h>
 #include "utils/binary_relation/binary_relation.h"
-#include "test/utils/doctest/fmt/set.h"
-#include "test/utils/doctest/fmt/pair.h"
 #include "test/utils/doctest/fmt/multiset.h"
+#include "test/utils/doctest/fmt/pair.h"
+#include "test/utils/doctest/fmt/set.h"
+#include <doctest/doctest.h>
 
 using namespace ::FlexFlow;
 
@@ -22,22 +22,22 @@ TEST_SUITE(FF_TEST_SUITE) {
 
     SUBCASE("initializer_list constuctor") {
       BinaryRelation<int, std::string> b = BinaryRelation<int, std::string>{
-        {
-          2,
-          "even",
-        },
-        {
-          2,
-          "EVEN",
-        },
-        {
-          3,
-          "odd",
-        },
-        {
-          1,
-          "odd",
-        },
+          {
+              2,
+              "even",
+          },
+          {
+              2,
+              "EVEN",
+          },
+          {
+              3,
+              "odd",
+          },
+          {
+              1,
+              "odd",
+          },
       };
 
       CHECK(b.size() == 4);
@@ -45,10 +45,10 @@ TEST_SUITE(FF_TEST_SUITE) {
 
       std::set<std::pair<int, std::string>> raw = b.unwrap_as_set();
       std::set<std::pair<int, std::string>> correct_raw = {
-        {2, "even"},
-        {2, "EVEN"},
-        {3, "odd"},
-        {1, "odd"},
+          {2, "even"},
+          {2, "EVEN"},
+          {3, "odd"},
+          {1, "odd"},
       };
 
       CHECK(raw == correct_raw);
@@ -57,22 +57,22 @@ TEST_SUITE(FF_TEST_SUITE) {
     BinaryRelation<int, std::string> empty_rel;
 
     BinaryRelation<int, std::string> b = BinaryRelation<int, std::string>{
-      {
-        2,
-        "even",
-      },
-      {
-        2,
-        "EVEN",
-      },
-      {
-        3,
-        "odd",
-      },
-      {
-        1,
-        "odd",
-      },
+        {
+            2,
+            "even",
+        },
+        {
+            2,
+            "EVEN",
+        },
+        {
+            3,
+            "odd",
+        },
+        {
+            1,
+            "odd",
+        },
     };
 
     SUBCASE("left_values") {
@@ -99,10 +99,10 @@ TEST_SUITE(FF_TEST_SUITE) {
     SUBCASE("right_value_occurences") {
       std::multiset<std::string> result = b.right_value_occurences();
       std::multiset<std::string> correct = {
-        "odd",
-        "odd",
-        "even",
-        "EVEN",
+          "odd",
+          "odd",
+          "even",
+          "EVEN",
       };
 
       CHECK(result == correct);

@@ -18,8 +18,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     {
-      std::set<DataflowEdge> result =
-          g.query_edges(dataflow_edge_query_all());
+      std::set<DataflowEdge> result = g.query_edges(dataflow_edge_query_all());
       std::set<DataflowEdge> correct = {};
       REQUIRE(result == correct);
     }
@@ -40,8 +39,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     {
-      std::set<DataflowEdge> result =
-          g.query_edges(dataflow_edge_query_all());
+      std::set<DataflowEdge> result = g.query_edges(dataflow_edge_query_all());
       std::set<DataflowEdge> correct = {};
       REQUIRE(result == correct);
     }
@@ -49,8 +47,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     {
       std::set<DataflowOutput> result =
           g.query_outputs(dataflow_output_query_all());
-      std::set<DataflowOutput> correct =
-          set_of(added.outputs);
+      std::set<DataflowOutput> correct = set_of(added.outputs);
       REQUIRE(result == correct);
     }
 
@@ -63,8 +60,7 @@ TEST_SUITE(FF_TEST_SUITE) {
     }
 
     {
-      std::set<DataflowEdge> result =
-          g.query_edges(dataflow_edge_query_all());
+      std::set<DataflowEdge> result = g.query_edges(dataflow_edge_query_all());
       std::set<DataflowEdge> correct = {
           DataflowEdge{added.outputs.at(0), DataflowInput{added2.node, 0_n}},
           DataflowEdge{added.outputs.at(1), DataflowInput{added2.node, 1_n}},
@@ -75,8 +71,8 @@ TEST_SUITE(FF_TEST_SUITE) {
     {
       std::set<DataflowOutput> result =
           g.query_outputs(dataflow_output_query_all());
-      std::set<DataflowOutput> correct = set_union(
-          set_of(added.outputs), set_of(added2.outputs));
+      std::set<DataflowOutput> correct =
+          set_union(set_of(added.outputs), set_of(added2.outputs));
       REQUIRE(result == correct);
     }
   }

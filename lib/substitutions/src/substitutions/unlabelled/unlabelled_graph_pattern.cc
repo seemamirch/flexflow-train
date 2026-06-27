@@ -23,27 +23,23 @@ bool is_singleton_pattern(UnlabelledGraphPattern const &pattern) {
   return num_nodes(pattern) == 1;
 }
 
-std::set<PatternNode>
-    get_pattern_nodes(UnlabelledGraphPattern const &p) {
+std::set<PatternNode> get_pattern_nodes(UnlabelledGraphPattern const &p) {
   return transform(get_nodes(p.raw_graph),
                    [](Node const &n) { return PatternNode{n}; });
 }
 
-std::set<PatternValue>
-    get_pattern_values(UnlabelledGraphPattern const &p) {
+std::set<PatternValue> get_pattern_values(UnlabelledGraphPattern const &p) {
   return transform(get_all_open_kwarg_dataflow_values(p.raw_graph),
                    pattern_value_from_raw_open_kwarg_dataflow_value);
 }
 
-std::set<PatternInput>
-    get_pattern_inputs(UnlabelledGraphPattern const &p) {
+std::set<PatternInput> get_pattern_inputs(UnlabelledGraphPattern const &p) {
   return transform(
       get_all_kwarg_dataflow_graph_inputs(p.raw_graph),
       [](KwargDataflowGraphInput<int> const &i) { return PatternInput{i}; });
 }
 
-std::set<PatternEdge>
-    get_pattern_edges(UnlabelledGraphPattern const &p) {
+std::set<PatternEdge> get_pattern_edges(UnlabelledGraphPattern const &p) {
   return transform(get_all_open_kwarg_dataflow_edges(p.raw_graph),
                    pattern_edge_from_raw_open_dataflow_edge);
 }

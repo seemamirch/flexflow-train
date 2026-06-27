@@ -45,8 +45,7 @@ struct LocalTaskArgumentAccessor : public ITaskArgumentAccessor {
 
 private:
   Allocator allocator;
-  std::map<TaskTensorParameter, DynamicTensorAccessor>
-      tensor_slots_backing;
+  std::map<TaskTensorParameter, DynamicTensorAccessor> tensor_slots_backing;
 
   ProfilingSettings profiling_settings;
   device_handle_t ff_handle;

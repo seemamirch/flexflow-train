@@ -1,27 +1,26 @@
 #include "task-spec/dynamic_graph/dynamic_node_mapping.h"
+#include "utils/bidict/algorithms/bidict_transform_keys.h"
 #include "utils/bidict/algorithms/bidict_transform_values.h"
 #include "utils/containers/transform.h"
-#include "utils/bidict/algorithms/bidict_transform_keys.h"
 
 namespace FlexFlow {
 
 bidict<global_device_id_t, OperatorAtomicTaskShardBinding>
-    dynamic_node_mapping_get_shard_bindings(DynamicNodeMapping const &m)
-{
+    dynamic_node_mapping_get_shard_bindings(DynamicNodeMapping const &m) {
   return bidict_transform_keys(
-    m.op_task_group.get_shard_bindings(),
-    [&](MachineSpaceCoordinate const &mc) -> global_device_id_t {
-      return global_device_id_t{
-        /*coord=*/mc,
-        /*device_type=*/m.device_type,
-      };
-    });
+      m.op_task_group.get_shard_bindings(),
+      [&](MachineSpaceCoordinate const &mc) -> global_device_id_t {
+        return global_device_id_t{
+            /*coord=*/mc,
+            /*device_type=*/m.device_type,
+        };
+      });
 }
 
 OperatorAtomicTaskShardBinding
-    dynamic_node_mapping_get_shard_binding_for_device(DynamicNodeMapping const &mapping,
-                                                      global_device_id_t const &device_id)
-{
+    dynamic_node_mapping_get_shard_binding_for_device(
+        DynamicNodeMapping const &mapping,
+        global_device_id_t const &device_id) {
   ASSERT(device_id.device_type == mapping.device_type);
 
   return mapping.op_task_group.get_shard_bindings().at_l(device_id.coord);

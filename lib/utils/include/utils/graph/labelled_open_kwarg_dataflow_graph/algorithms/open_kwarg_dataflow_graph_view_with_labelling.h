@@ -22,7 +22,7 @@ public:
       OpenKwargDataflowGraphView<GraphInputName, SlotName> const &unlabelled,
       std::map<Node, NodeLabel> const &node_labels,
       std::map<OpenKwargDataflowValue<GraphInputName, SlotName>,
-                         ValueLabel> const &value_labels)
+               ValueLabel> const &value_labels)
       : unlabelled(unlabelled), node_labels(node_labels),
         value_labels(value_labels) {}
 
@@ -66,8 +66,7 @@ public:
 private:
   OpenKwargDataflowGraphView<GraphInputName, SlotName> unlabelled;
   std::map<Node, NodeLabel> node_labels;
-  std::map<OpenKwargDataflowValue<GraphInputName, SlotName>,
-                     ValueLabel>
+  std::map<OpenKwargDataflowValue<GraphInputName, SlotName>, ValueLabel>
       value_labels;
 };
 
@@ -83,7 +82,7 @@ LabelledOpenKwargDataflowGraphView<NodeLabel,
         OpenKwargDataflowGraphView<GraphInputName, SlotName> const &g,
         std::map<Node, NodeLabel> const &node_labels,
         std::map<OpenKwargDataflowValue<GraphInputName, SlotName>,
-                           ValueLabel> const &value_labels) {
+                 ValueLabel> const &value_labels) {
   return LabelledOpenKwargDataflowGraphView<NodeLabel,
                                             ValueLabel,
                                             GraphInputName,

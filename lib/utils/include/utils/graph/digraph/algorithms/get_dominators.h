@@ -21,8 +21,7 @@ std::set<Node> get_dominators(DiGraphView const &, Node const &);
  * that all edges belonging to the set of nodes now pass through a single
  * unified node).
  */
-std::set<Node> get_dominators(DiGraphView const &,
-                                        std::set<Node> const &);
+std::set<Node> get_dominators(DiGraphView const &, std::set<Node> const &);
 
 } // namespace FlexFlow
 

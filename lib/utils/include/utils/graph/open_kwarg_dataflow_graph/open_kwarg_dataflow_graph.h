@@ -13,8 +13,7 @@ struct OpenKwargDataflowGraph
     : virtual public OpenKwargDataflowGraphView<GraphInputName, SlotName> {
 public:
   KwargNodeAddedResult<SlotName> add_node(
-      std::map<SlotName,
-                         OpenKwargDataflowValue<GraphInputName, SlotName>> const
+      std::map<SlotName, OpenKwargDataflowValue<GraphInputName, SlotName>> const
           &inputs,
       std::set<SlotName> const &outputs) {
     return this->get_interface().add_node(inputs, outputs);

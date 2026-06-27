@@ -5,13 +5,11 @@
 
 namespace FlexFlow {
 
-std::set<DataflowInputEdge>
-    get_incoming_edges(OpenDataflowGraphView const &);
+std::set<DataflowInputEdge> get_incoming_edges(OpenDataflowGraphView const &);
 std::vector<OpenDataflowEdge> get_incoming_edges(OpenDataflowGraphView const &,
                                                  Node const &);
 std::map<Node, std::vector<OpenDataflowEdge>>
-    get_incoming_edges(OpenDataflowGraphView const &,
-                       std::set<Node> const &);
+    get_incoming_edges(OpenDataflowGraphView const &, std::set<Node> const &);
 
 } // namespace FlexFlow
 

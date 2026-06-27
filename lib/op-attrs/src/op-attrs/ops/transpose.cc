@@ -52,7 +52,8 @@ static ParallelTensorSpaceToParallelTensorSpaceMapping
   EqProjection<parallel_tensor_dim_idx_t, parallel_tensor_dim_idx_t>
       inp_to_out = EqProjection{
           bidict_transform_keys(
-              bidict_transform_values(attrs.permutation.as_bidict(), ff_dim_to_pt_dim),
+              bidict_transform_values(attrs.permutation.as_bidict(),
+                                      ff_dim_to_pt_dim),
               ff_dim_to_pt_dim),
       };
 

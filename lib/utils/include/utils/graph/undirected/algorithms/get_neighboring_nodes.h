@@ -5,8 +5,7 @@
 
 namespace FlexFlow {
 
-std::set<Node> get_neighboring_nodes(UndirectedGraphView const &,
-                                               Node const &);
+std::set<Node> get_neighboring_nodes(UndirectedGraphView const &, Node const &);
 
 } // namespace FlexFlow
 

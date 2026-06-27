@@ -38,9 +38,9 @@
 
 namespace FlexFlow {
 
-static std::set<Node> filter_out_sync_nodes(
-    std::set<Node> const &nodes,
-    std::map<Node, NodeRole> const &node_roles) {
+static std::set<Node>
+    filter_out_sync_nodes(std::set<Node> const &nodes,
+                          std::map<Node, NodeRole> const &node_roles) {
   return filter(
       nodes, [&](Node const &n) { return node_roles.at(n) != NodeRole::SYNC; });
 }
@@ -52,8 +52,7 @@ static nonnegative_int
       depth_map, [&](Node const &n) { return contains(get_nodes(sp), n); })));
 }
 
-DiGraph add_dummy_nodes(DiGraph g,
-                        std::map<Node, NodeRole> &node_roles) {
+DiGraph add_dummy_nodes(DiGraph g, std::map<Node, NodeRole> &node_roles) {
   std::map<Node, nonnegative_int> depth_map =
       get_longest_path_lengths_from_root(g);
 
@@ -87,11 +86,10 @@ DiGraph add_dummy_nodes(DiGraph g,
   return g;
 }
 
-std::set<Node>
-    get_component(DiGraph const &g,
-                  Node const &node,
-                  std::map<Node, nonnegative_int> const &depth_map,
-                  std::map<Node, NodeRole> const &node_roles) {
+std::set<Node> get_component(DiGraph const &g,
+                             Node const &node,
+                             std::map<Node, nonnegative_int> const &depth_map,
+                             std::map<Node, NodeRole> const &node_roles) {
 
   nonnegative_int max_depth = get_max_depth(g, depth_map);
   auto is_in_last_2_strata = [&](Node const &n) {
@@ -140,18 +138,16 @@ static std::set<Node>
         return set_intersection(subtree, component).size() > 0;
       });
 
-  std::set<Node> forest =
-      set_union(subtrees_overlapping_with_component);
+  std::set<Node> forest = set_union(subtrees_overlapping_with_component);
   forest.insert(handle);
 
   return filter_out_sync_nodes(forest, node_roles);
 }
 
 static std::pair<nonempty_set<Node>, nonempty_set<Node>>
-    get_up_and_down_sets(
-        DiGraph const &g,
-        std::set<Node> const &forest,
-        std::map<Node, nonnegative_int> const &depth_map) {
+    get_up_and_down_sets(DiGraph const &g,
+                         std::set<Node> const &forest,
+                         std::map<Node, nonnegative_int> const &depth_map) {
 
   nonnegative_int max_depth = get_max_depth(g, depth_map);
 
@@ -163,10 +159,9 @@ static std::pair<nonempty_set<Node>, nonempty_set<Node>>
                         grouped_by_depth.at_l(max_depth));
 }
 
-static std::set<DirectedEdge>
-    edges_to_remove(DiGraph const &g,
-                    std::set<Node> const &up,
-                    std::set<Node> const &down) {
+static std::set<DirectedEdge> edges_to_remove(DiGraph const &g,
+                                              std::set<Node> const &up,
+                                              std::set<Node> const &down) {
   std::set<DirectedEdge> to_remove;
 
   for (Node const &u : up) {
@@ -179,10 +174,9 @@ static std::set<DirectedEdge>
   return to_remove;
 }
 
-static std::set<DirectedEdge>
-    edges_to_add_escribano(std::set<Node> const &up,
-                           std::set<Node> const &down,
-                           Node const &sync_node) {
+static std::set<DirectedEdge> edges_to_add_escribano(std::set<Node> const &up,
+                                                     std::set<Node> const &down,
+                                                     Node const &sync_node) {
   return set_union(transform(up,
                              [&](Node const &u) {
                                return DirectedEdge{u, sync_node};
@@ -192,8 +186,7 @@ static std::set<DirectedEdge>
                    }));
 }
 
-static Node add_sync_node(DiGraph &sp,
-                          std::map<Node, NodeRole> &node_roles) {
+static Node add_sync_node(DiGraph &sp, std::map<Node, NodeRole> &node_roles) {
   Node sync_node = sp.add_node();
   node_roles[sync_node] = NodeRole::SYNC;
   return sync_node;
@@ -223,18 +216,16 @@ SeriesParallelDecomposition escribano_sp_ization(DiGraph g) {
     sp.add_node_unsafe(node);
     add_edges(sp, get_incoming_edges(g, node));
 
-    std::set<Node> component =
-        get_component(sp, node, depth_map, node_roles);
+    std::set<Node> component = get_component(sp, node, depth_map, node_roles);
     Node handle = get_only(get_lowest_common_ancestors(sp, component).value());
     std::set<Node> forest =
         get_forest_escribano(sp, handle, component, node_roles);
 
-    std::pair<nonempty_set<Node>, nonempty_set<Node>>
-        up_down_sets = get_up_and_down_sets(sp, forest, depth_map);
+    std::pair<nonempty_set<Node>, nonempty_set<Node>> up_down_sets =
+        get_up_and_down_sets(sp, forest, depth_map);
 
     std::set<Node> up = up_down_sets.first.unwrap_as_set();
-    std::set<Node> down =
-        up_down_sets.second.unwrap_as_set();
+    std::set<Node> down = up_down_sets.second.unwrap_as_set();
 
     remove_edges(sp, edges_to_remove(sp, up, down));
 

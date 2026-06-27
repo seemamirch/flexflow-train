@@ -4,8 +4,7 @@
 
 namespace FlexFlow {
 
-std::map<Node, std::set<Node>>
-    get_strict_dominators_map(DiGraphView const &g) {
+std::map<Node, std::set<Node>> get_strict_dominators_map(DiGraphView const &g) {
   return transform(get_dominators_map(g),
                    [](Node const &n, std::set<Node> const &doms) {
                      std::set<Node> result = doms;

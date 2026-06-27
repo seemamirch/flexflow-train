@@ -139,8 +139,8 @@ bool pattern_matches_subgraph_under(
     }
   }
 
-  std::set<OpenKwargDataflowEdge<int, TensorSlotName>>
-      concrete_edges = get_all_open_kwarg_dataflow_edges(subgraph);
+  std::set<OpenKwargDataflowEdge<int, TensorSlotName>> concrete_edges =
+      get_all_open_kwarg_dataflow_edges(subgraph);
   std::set<OpenKwargDataflowEdge<int, TensorSlotName>>
       concrete_edge_from_match =
           transform(get_pattern_edges(pattern),
@@ -153,8 +153,8 @@ bool pattern_matches_subgraph_under(
     return false;
   }
 
-  std::set<OpenKwargDataflowValue<int, TensorSlotName>>
-      concrete_values = get_all_open_kwarg_dataflow_values(subgraph);
+  std::set<OpenKwargDataflowValue<int, TensorSlotName>> concrete_values =
+      get_all_open_kwarg_dataflow_values(subgraph);
   std::set<OpenKwargDataflowValue<int, TensorSlotName>>
       concrete_values_from_match =
           transform(get_pattern_values(pattern),
@@ -184,8 +184,7 @@ bool unlabelled_pattern_does_match(
     MatchAdditionalCriterion const &additional_criterion) {
 
   std::set<OpenKwargDataflowValue<int, TensorSlotName>>
-      matched_by_pattern_inputs =
-          set_of(values(match.input_assignment));
+      matched_by_pattern_inputs = set_of(values(match.input_assignment));
 
   ASSERT(left_entries(match.node_assignment) == get_pattern_nodes(pattern));
   ASSERT(

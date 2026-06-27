@@ -15,8 +15,7 @@
 
 namespace FlexFlow {
 
-std::map<Node, std::set<Node>>
-    get_dominators_map(DiGraphView const &g) {
+std::map<Node, std::set<Node>> get_dominators_map(DiGraphView const &g) {
   std::set<Node> initial_nodes = get_initial_nodes(g);
 
   std::queue<Node> queue;

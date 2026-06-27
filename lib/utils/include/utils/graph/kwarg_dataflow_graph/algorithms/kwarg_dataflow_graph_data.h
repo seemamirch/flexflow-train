@@ -14,8 +14,7 @@ void require_kwarg_dataflow_graph_data_is_valid(
     KwargDataflowGraphData<SlotName> const &data) {
 
   std::set<Node> nodes_from_edges = flatmap(
-      data.edges,
-      [](KwargDataflowEdge<SlotName> const &e) -> std::set<Node> {
+      data.edges, [](KwargDataflowEdge<SlotName> const &e) -> std::set<Node> {
         return std::set{
             e.src.node,
             e.dst.node,

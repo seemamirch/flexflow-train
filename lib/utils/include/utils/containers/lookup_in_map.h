@@ -1,12 +1,12 @@
 #ifndef _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_LOOKUP_IN_MAP_H
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_LOOKUP_IN_MAP_H
 
-#include "utils/fmt/map.h"
 #include "utils/containers/contains_key.h"
+#include "utils/fmt/map.h"
 #include <functional>
-#include <string>
-#include <map>
 #include <libassert/assert.hpp>
+#include <map>
+#include <string>
 
 namespace FlexFlow {
 

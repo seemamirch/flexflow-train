@@ -11,8 +11,7 @@
 namespace FlexFlow {
 
 UndirectedSubgraphView::UndirectedSubgraphView(
-    UndirectedGraphView const &g,
-    std::set<Node> const &subgraph_nodes)
+    UndirectedGraphView const &g, std::set<Node> const &subgraph_nodes)
     : g(g), subgraph_nodes(subgraph_nodes) {}
 
 UndirectedSubgraphView *UndirectedSubgraphView::clone() const {
@@ -49,8 +48,7 @@ std::set<DirectedEdge>
   return this->g.query_edges(query_intersection(query, subgraph_query));
 }
 
-std::set<Node>
-    DiSubgraphView::query_nodes(NodeQuery const &query) const {
+std::set<Node> DiSubgraphView::query_nodes(NodeQuery const &query) const {
   NodeQuery subgraph_query = NodeQuery{
       query_set<Node>::match_values_in(set_of(this->subgraph_nodes)),
   };
@@ -62,9 +60,8 @@ DiSubgraphView *DiSubgraphView::clone() const {
   return new DiSubgraphView(g, subgraph_nodes);
 }
 
-UndirectedGraphView
-    view_subgraph(UndirectedGraphView const &g,
-                  std::set<Node> const &subgraph_nodes) {
+UndirectedGraphView view_subgraph(UndirectedGraphView const &g,
+                                  std::set<Node> const &subgraph_nodes) {
   return UndirectedGraphView::create<UndirectedSubgraphView>(g, subgraph_nodes);
 }
 
@@ -77,8 +74,8 @@ UndirectedEdge to_undirected_edge(DirectedEdge const &e) {
   return make_undirected_edge(e.src, e.dst);
 }
 
-std::set<UndirectedEdge> to_undirected_edges(
-    std::set<DirectedEdge> const &directed_edges) {
+std::set<UndirectedEdge>
+    to_undirected_edges(std::set<DirectedEdge> const &directed_edges) {
   return transform(directed_edges,
                    [](DirectedEdge const &e) { return to_undirected_edge(e); });
 }
@@ -89,8 +86,8 @@ std::set<DirectedEdge> to_directed_edges(UndirectedEdge const &e) {
       DirectedEdge{e.endpoints.max(), e.endpoints.min()}};
 }
 
-std::set<DirectedEdge> to_directed_edges(
-    std::set<UndirectedEdge> const &undirected_edges) {
+std::set<DirectedEdge>
+    to_directed_edges(std::set<UndirectedEdge> const &undirected_edges) {
   return flatmap(undirected_edges,
                  [](UndirectedEdge const &e) { return to_directed_edges(e); });
 }

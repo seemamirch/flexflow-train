@@ -100,9 +100,9 @@ std::set<PatternInput> get_inputs(PCGPattern const &p) {
 std::map<TensorSlotName, PatternNodeOutput>
     get_pattern_node_outputs(PCGPattern const &pattern,
                              PatternNode const &node) {
-  std::map<TensorSlotName, KwargDataflowOutput<TensorSlotName>>
-      raw_outputs = get_outgoing_kwarg_dataflow_outputs_for_node(
-          pattern.raw_graph, node.raw_node);
+  std::map<TensorSlotName, KwargDataflowOutput<TensorSlotName>> raw_outputs =
+      get_outgoing_kwarg_dataflow_outputs_for_node(pattern.raw_graph,
+                                                   node.raw_node);
 
   return map_values(raw_outputs,
                     [](KwargDataflowOutput<TensorSlotName> const &o) {

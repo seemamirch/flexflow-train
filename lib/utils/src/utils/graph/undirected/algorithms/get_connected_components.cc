@@ -11,8 +11,7 @@ std::set<std::set<Node>>
   std::set<Node> visited;
 
   for (Node const &node : get_nodes(g)) {
-    std::set<Node> component =
-        set_of(get_bfs_ordering(as_digraph(g), {node}));
+    std::set<Node> component = set_of(get_bfs_ordering(as_digraph(g), {node}));
     components.insert(component);
     visited = set_union(visited, component);
   }

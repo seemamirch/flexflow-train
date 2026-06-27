@@ -2,8 +2,8 @@
 #include "utils/containers/are_disjoint.h"
 #include "utils/containers/enumerate_vector.h"
 #include "utils/containers/extend.h"
-#include "utils/containers/transform.h"
 #include "utils/containers/set_of.h"
+#include "utils/containers/transform.h"
 #include "utils/graph/dataflow_graph/algorithms.h"
 #include "utils/graph/node/algorithms.h"
 #include "utils/graph/open_dataflow_graph/open_dataflow_edge.h"
@@ -73,8 +73,7 @@ std::set<DataflowOutput> UnorderedSetDataflowGraph::query_outputs(
   });
 }
 
-std::set<DataflowGraphInput>
-    UnorderedSetDataflowGraph::get_inputs() const {
+std::set<DataflowGraphInput> UnorderedSetDataflowGraph::get_inputs() const {
   return this->graph_inputs;
 }
 

@@ -252,8 +252,7 @@ TEST_SUITE(FF_TEST_SUITE) {
           MappedParallelComputationGraph mpcg =
               make_test_mpcg_for_device_type(DeviceType::CPU);
 
-          std::map<DynamicValueAttrs, DynamicTensorAccessor>
-              input_tensors;
+          std::map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
 
           OptimizerAttrs optimizer_attrs = OptimizerAttrs{
               SGDOptimizerAttrs{
@@ -317,8 +316,7 @@ TEST_SUITE(FF_CUDA_TEST_SUITE) {
               },
           };
 
-          std::map<DynamicValueAttrs, DynamicTensorAccessor>
-              input_tensors;
+          std::map<DynamicValueAttrs, DynamicTensorAccessor> input_tensors;
 
           DistributedFfHandle device_handle = create_distributed_ff_handle(
               ctx,

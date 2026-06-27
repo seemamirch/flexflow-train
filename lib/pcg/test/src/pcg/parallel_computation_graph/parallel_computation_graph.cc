@@ -562,7 +562,8 @@ TEST_SUITE(FF_TEST_SUITE) {
       DimDomain<operator_task_space_dim_idx_t> layer_2_task_space =
           layer_1_task_space;
 
-      auto make_coord = [](nonnegative_int x) -> DimCoord<operator_task_space_dim_idx_t> {
+      auto make_coord =
+          [](nonnegative_int x) -> DimCoord<operator_task_space_dim_idx_t> {
         return DimCoord{
             std::map<operator_task_space_dim_idx_t, nonnegative_int>{
                 {operator_task_space_dim_idx_t{0_n}, x},

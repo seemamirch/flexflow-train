@@ -1,6 +1,6 @@
 #include "utils/containers/at_idx.h"
-#include "utils/archetypes/value_type.h"
 #include "utils/archetypes/ordered_value_type.h"
+#include "utils/archetypes/value_type.h"
 
 namespace FlexFlow {
 

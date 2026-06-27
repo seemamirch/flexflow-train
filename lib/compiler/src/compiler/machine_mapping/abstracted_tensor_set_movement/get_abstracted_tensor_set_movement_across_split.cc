@@ -10,17 +10,17 @@
 #include "pcg/parallel_computation_graph/parallel_computation_graph.h"
 #include "pcg/parallel_computation_graph/parallel_computation_graph_edge.dtg.h"
 #include "pcg/parallel_computation_graph/parallel_computation_graph_edge.h"
+#include "utils/bidict/algorithms/unstructured_relation_from_bidict.h"
 #include "utils/containers/binary_cartesian_product.h"
 #include "utils/containers/flatmap.h"
 #include "utils/containers/get_only.h"
 #include "utils/containers/group_by.h"
 #include "utils/containers/map_from_pairs.h"
 #include "utils/containers/merge_maps_with.h"
-#include "utils/containers/transform.h"
 #include "utils/containers/multiset_of.h"
+#include "utils/containers/transform.h"
 #include "utils/containers/values.h"
 #include "utils/containers/vector_of.h"
-#include "utils/bidict/algorithms/unstructured_relation_from_bidict.h"
 
 namespace FlexFlow {
 
@@ -43,8 +43,8 @@ AbstractedSingleTensorMovement get_abstracted_single_tensor_movement_along_edge(
   bidict<TaskSpaceCoordinate, TaskSpaceCoordinate> coord_mapping =
       op_to_op_get_coord_mapping(mapping);
 
-  std::map<AbstractedSingleTensorCommunicationEdge, num_bytes_t>
-      single_comms = map_from_pairs(transform(
+  std::map<AbstractedSingleTensorCommunicationEdge, num_bytes_t> single_comms =
+      map_from_pairs(transform(
           unstructured_relation_from_bidict(coord_mapping),
           [&](std::pair<TaskSpaceCoordinate, TaskSpaceCoordinate> const &
                   src_dst) -> std::pair<AbstractedSingleTensorCommunicationEdge,
@@ -101,11 +101,10 @@ AbstractedTensorSetMovement get_abstracted_tensor_set_movement_across_split(
 
   return AbstractedTensorSetMovement{
       transform(edges_by_tensor.right_groups(),
-                [&](nonempty_set<ParallelComputationGraphEdge> const &edges)
-                {
-                  return merge_abstracted_single_tensor_movements(transform(
-                      multiset_of(edges.unwrap_as_set()),
-                      to_abstracted_single_tensor_movement));
+                [&](nonempty_set<ParallelComputationGraphEdge> const &edges) {
+                  return merge_abstracted_single_tensor_movements(
+                      transform(multiset_of(edges.unwrap_as_set()),
+                                to_abstracted_single_tensor_movement));
                 }),
   };
 }

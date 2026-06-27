@@ -2,11 +2,11 @@
 #include "utils/containers/all_of.h"
 #include "utils/containers/extend.h"
 #include "utils/containers/get_only.h"
+#include "utils/containers/multiset_of.h"
 #include "utils/containers/multiset_union.h"
 #include "utils/containers/set_union.h"
 #include "utils/containers/sum.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/multiset_of.h"
 #include "utils/containers/values.h"
 #include "utils/containers/vector_of.h"
 #include "utils/exception.h"
@@ -16,7 +16,6 @@
 #include "utils/nonnegative_int/nonnegative_int.h"
 #include "utils/variant.h"
 #include <set>
-#include "utils/containers/multiset_of.h"
 
 namespace FlexFlow {
 
@@ -59,8 +58,7 @@ SeriesParallelDecomposition to_final_ast(
 }
 
 std::multiset<Node> get_nodes(SeriesParallelDecomposition const &sp) {
-  return sp.visit<std::multiset<Node>>(
-      [](auto &&t) { return get_nodes(t); });
+  return sp.visit<std::multiset<Node>>([](auto &&t) { return get_nodes(t); });
 }
 
 std::multiset<Node> get_nodes(SeriesSplit const &serial) {
@@ -122,8 +120,7 @@ SeriesParallelDecomposition series_composition(
 }
 
 SeriesParallelDecomposition parallel_composition(
-    std::multiset<SeriesParallelDecomposition> const
-        &sp_compositions) {
+    std::multiset<SeriesParallelDecomposition> const &sp_compositions) {
 
   ASSERT(sp_compositions.size() > 0,
          "Cannot create parallel composition with zero elements");
@@ -132,13 +129,13 @@ SeriesParallelDecomposition parallel_composition(
     return get_only(sp_compositions);
   }
 
-  std::multiset<
-      std::variant<::FlexFlow::SeriesSplit, ::FlexFlow::Node>>
+  std::multiset<std::variant<::FlexFlow::SeriesSplit, ::FlexFlow::Node>>
       composition{};
   for (SeriesParallelDecomposition const &sp_comp : sp_compositions) {
     if (sp_comp.has<ParallelSplit>()) {
-      composition = multiset_union(composition,
-                                   multiset_of(sp_comp.get<ParallelSplit>().get_children()));
+      composition = multiset_union(
+          composition,
+          multiset_of(sp_comp.get<ParallelSplit>().get_children()));
     } else if (sp_comp.has<SeriesSplit>()) {
       composition.insert(sp_comp.get<SeriesSplit>());
     } else {

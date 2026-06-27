@@ -6,10 +6,9 @@
 namespace FlexFlow {
 
 std::set<DataflowEdge> get_outgoing_edges(DataflowGraphView const &,
-                                                    Node const &);
-std::set<DataflowEdge>
-    get_outgoing_edges(DataflowGraphView const &,
-                       std::set<Node> const &);
+                                          Node const &);
+std::set<DataflowEdge> get_outgoing_edges(DataflowGraphView const &,
+                                          std::set<Node> const &);
 
 } // namespace FlexFlow
 

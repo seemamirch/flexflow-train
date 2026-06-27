@@ -12,10 +12,9 @@
 namespace FlexFlow {
 
 template <typename K, typename V, typename F>
-std::map<K, V>
-    binary_merge_maps_with(std::map<K, V> const &lhs,
-                           std::map<K, V> const &rhs,
-                           F &&f) {
+std::map<K, V> binary_merge_maps_with(std::map<K, V> const &lhs,
+                                      std::map<K, V> const &rhs,
+                                      F &&f) {
 
   std::set<K> l_keys = keys(lhs);
   std::set<K> r_keys = keys(rhs);

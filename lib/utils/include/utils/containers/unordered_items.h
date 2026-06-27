@@ -1,8 +1,8 @@
 #ifndef _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_UNORDERED_ITEMS_H
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_CONTAINERS_UNORDERED_ITEMS_H
 
-#include <unordered_set>
 #include "utils/hash/pair.h"
+#include <unordered_set>
 
 namespace FlexFlow {
 

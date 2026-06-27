@@ -22,8 +22,7 @@ template DimDomain<T>
     dim_domain_from_minimal_dim_domain(MinimalDimDomain<T> const &,
                                        std::set<T> const &);
 
-template std::set<T>
-    get_minimal_domain_dims(MinimalDimDomain<T> const &);
+template std::set<T> get_minimal_domain_dims(MinimalDimDomain<T> const &);
 
 template MinimalDimDomain<T>
     restrict_minimal_domain_to_dims(MinimalDimDomain<T> const &,
@@ -33,9 +32,7 @@ template MinimalOrthotope
     minimal_orthotope_from_minimal_dim_domain(MinimalDimDomain<T> const &,
                                               DimOrdering<T> const &);
 
-template MinimalDimDomain<T>
-    minimal_dim_domain_from_minimal_orthotope(MinimalOrthotope const &,
-                                              std::set<T> const &,
-                                              DimOrdering<T> const &);
+template MinimalDimDomain<T> minimal_dim_domain_from_minimal_orthotope(
+    MinimalOrthotope const &, std::set<T> const &, DimOrdering<T> const &);
 
 } // namespace FlexFlow

@@ -2,6 +2,7 @@
 #define _FLEXFLOW_LIB_UTILS_INCLUDE_UTILS_ORTHOTOPE_DIM_DOMAIN_H
 
 #include "utils/containers/filter.h"
+#include "utils/containers/keys.h"
 #include "utils/containers/map_from_keys_and_values.h"
 #include "utils/containers/restrict_keys.h"
 #include "utils/containers/set_minus.h"
@@ -11,7 +12,6 @@
 #include "utils/orthotope/dim_domain.dtg.h"
 #include "utils/orthotope/dim_ordering.dtg.h"
 #include "utils/orthotope/orthotope.dtg.h"
-#include "utils/containers/keys.h"
 
 namespace FlexFlow {
 

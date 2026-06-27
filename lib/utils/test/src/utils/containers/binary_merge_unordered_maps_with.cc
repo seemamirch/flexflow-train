@@ -1,5 +1,5 @@
-#include "utils/containers/binary_merge_maps_with.h"
 #include "test/utils/doctest/fmt/map.h"
+#include "utils/containers/binary_merge_maps_with.h"
 #include <doctest/doctest.h>
 #include <libassert/assert.hpp>
 

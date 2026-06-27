@@ -5,6 +5,7 @@
 #include "op-attrs/parallel_tensor_dim_idx_t.dtg.h"
 #include "op-attrs/parallel_tensor_dim_idx_t.h"
 #include "op-attrs/parallel_tensor_space_coordinate.h"
+#include "utils/containers/binary_merge_disjoint_maps.h"
 #include "utils/containers/filtermap_keys.h"
 #include "utils/containers/filtrans.h"
 #include "utils/containers/generate_map.h"
@@ -12,14 +13,12 @@
 #include "utils/containers/map_keys.h"
 #include "utils/containers/map_values.h"
 #include "utils/containers/range.h"
+#include "utils/containers/set_of.h"
 #include "utils/containers/set_union.h"
 #include "utils/containers/transform.h"
-#include "utils/containers/set_of.h"
 #include "utils/nonnegative_int/nonnegative_range.h"
 #include "utils/nonnegative_int/num_elements.h"
 #include "utils/orthotope/minimal_dim_domain.h"
-#include "utils/containers/binary_merge_disjoint_maps.h"
-#include "utils/containers/generate_map.h"
 
 namespace FlexFlow {
 
@@ -88,13 +87,11 @@ positive_int get_degree_for_parallel_tensor_dim_idx(
 std::map<parallel_tensor_dim_idx_t, positive_int>
     get_parallel_tensor_degree_map(ParallelTensorDimDegrees const &degrees) {
 
-  std::map<parallel_tensor_dim_idx_t, positive_int>
-      replica_dim_degrees = {
-          {parallel_tensor_dim_idx_t{ReplicaType::SUM},
-           degrees.sum_degree.value},
-          {parallel_tensor_dim_idx_t{ReplicaType::DISCARD_COPY},
-           degrees.discard_copy_degree.value},
-      };
+  std::map<parallel_tensor_dim_idx_t, positive_int> replica_dim_degrees = {
+      {parallel_tensor_dim_idx_t{ReplicaType::SUM}, degrees.sum_degree.value},
+      {parallel_tensor_dim_idx_t{ReplicaType::DISCARD_COPY},
+       degrees.discard_copy_degree.value},
+  };
 
   std::map<ff_dim_t, positive_int> shard_dim_degrees =
       generate_map(get_idxs(degrees.shard_degrees), [&](ff_dim_t const &dim) {
@@ -108,23 +105,22 @@ std::map<parallel_tensor_dim_idx_t, positive_int>
       }));
 }
 
-std::set<ParallelTensorSpaceCoordinate>
-    get_parallel_tensor_space_coordinates(
-        ParallelTensorDimDegrees const &degrees) {
+std::set<ParallelTensorSpaceCoordinate> get_parallel_tensor_space_coordinates(
+    ParallelTensorDimDegrees const &degrees) {
 
   std::map<parallel_tensor_dim_idx_t, positive_int> degree_map =
       get_parallel_tensor_degree_map(degrees);
 
-  std::map<parallel_tensor_dim_idx_t,
-                     std::set<nonnegative_int>>
+  std::map<parallel_tensor_dim_idx_t, std::set<nonnegative_int>>
       possible_per_dim_coords = map_values(degree_map, [](positive_int degree) {
         return set_of(nonnegative_range(degree));
       });
 
   return transform(
       get_all_assignments(possible_per_dim_coords),
-      [](std::map<parallel_tensor_dim_idx_t, nonnegative_int> const
-             &m) { return parallel_tensor_space_coord_from_map(m); });
+      [](std::map<parallel_tensor_dim_idx_t, nonnegative_int> const &m) {
+        return parallel_tensor_space_coord_from_map(m);
+      });
 }
 
 DimDomain<parallel_tensor_dim_idx_t>

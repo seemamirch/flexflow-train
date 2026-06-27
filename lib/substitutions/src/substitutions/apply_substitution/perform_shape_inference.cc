@@ -1,6 +1,7 @@
 #include "substitutions/apply_substitution/perform_shape_inference.h"
 #include "op-attrs/get_incoming_tensor_roles.h"
 #include "op-attrs/shape_inference.h"
+#include "utils/containers/binary_merge_disjoint_maps.h"
 #include "utils/containers/filter_values.h"
 #include "utils/containers/filtrans.h"
 #include "utils/containers/is_subseteq_of.h"
@@ -19,7 +20,6 @@
 #include "utils/graph/open_dataflow_graph/algorithms/get_inputs.h"
 #include "utils/graph/open_kwarg_dataflow_graph/algorithms/get_incoming_open_kwarg_dataflow_values_for_node.h"
 #include "utils/nonnegative_int/num_elements.h"
-#include "utils/containers/binary_merge_disjoint_maps.h"
 
 namespace FlexFlow {
 
@@ -32,11 +32,10 @@ LabelledOpenKwargDataflowGraphView<ParallelLayerAttrs,
                                            std::monostate,
                                            int,
                                            TensorSlotName> const &g,
-        std::map<KwargDataflowGraphInput<int>,
-                           ParallelTensorShape> const &input_shapes) {
+        std::map<KwargDataflowGraphInput<int>, ParallelTensorShape> const
+            &input_shapes) {
 
-  std::map<OpenKwargDataflowValue<int, TensorSlotName>,
-                     ParallelTensorShape>
+  std::map<OpenKwargDataflowValue<int, TensorSlotName>, ParallelTensorShape>
       inferred =
           map_keys(input_shapes,
                    [](KwargDataflowGraphInput<int> const &i)
@@ -53,8 +52,8 @@ LabelledOpenKwargDataflowGraphView<ParallelLayerAttrs,
 
     ParallelLayerAttrs n_attrs = g.at(n);
 
-    std::map<TensorSlotName, IncomingTensorRole>
-        incoming_tensor_roles = get_incoming_tensor_roles(n_attrs.op_attrs);
+    std::map<TensorSlotName, IncomingTensorRole> incoming_tensor_roles =
+        get_incoming_tensor_roles(n_attrs.op_attrs);
 
     ASSERT(is_subseteq_of(keys(incoming_shapes), keys(incoming_tensor_roles)));
 
@@ -75,17 +74,16 @@ LabelledOpenKwargDataflowGraphView<ParallelLayerAttrs,
     ASSERT(binary_merge_disjoint_maps(input_shapes, weight_shapes) ==
            incoming_shapes);
 
-    std::map<TensorSlotName, ParallelTensorShape>
-        inferred_weight_shapes =
-            get_weight_shapes(n_attrs.op_attrs, input_shapes);
+    std::map<TensorSlotName, ParallelTensorShape> inferred_weight_shapes =
+        get_weight_shapes(n_attrs.op_attrs, input_shapes);
 
     ASSERT(weight_shapes == inferred_weight_shapes);
 
     std::map<TensorSlotName, ParallelTensorShape> output_shapes =
         get_output_shapes(n_attrs.op_attrs, input_shapes);
 
-    std::map<TensorSlotName, KwargDataflowOutput<TensorSlotName>>
-        outputs = get_outgoing_kwarg_dataflow_outputs_for_node(g, n);
+    std::map<TensorSlotName, KwargDataflowOutput<TensorSlotName>> outputs =
+        get_outgoing_kwarg_dataflow_outputs_for_node(g, n);
 
     for (auto const &[output, shape] :
          values(zip_values_strict(outputs, output_shapes))) {

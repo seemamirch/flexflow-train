@@ -3,21 +3,18 @@
 
 #include "utils/containers/cartesian_product.h"
 #include "utils/containers/keys.h"
-#include "utils/containers/transform.h"
 #include "utils/containers/map_from_pairs.h"
 #include "utils/containers/set_of.h"
+#include "utils/containers/transform.h"
+#include "utils/containers/unordered_keys.h"
+#include "utils/containers/unordered_map_from_pairs.h"
+#include "utils/containers/unordered_set_of.h"
 #include "utils/containers/vector_of.h"
 #include "utils/containers/zip.h"
 #include "utils/hash/unordered_map.h"
 #include <map>
 #include <set>
 #include <vector>
-#include "utils/containers/keys.h"
-#include "utils/containers/map_from_pairs.h"
-#include "utils/containers/set_of.h"
-#include "utils/containers/unordered_keys.h"
-#include "utils/containers/unordered_set_of.h"
-#include "utils/containers/unordered_map_from_pairs.h"
 
 namespace FlexFlow {
 
@@ -50,8 +47,8 @@ std::unordered_set<std::unordered_map<K, V>> get_all_assignments(
  * assignment is returned
  */
 template <typename K, typename V>
-std::set<std::map<K, V>> get_all_assignments(
-    std::map<K, std::set<V>> const &options_per_key) {
+std::set<std::map<K, V>>
+    get_all_assignments(std::map<K, std::set<V>> const &options_per_key) {
   if (options_per_key.empty()) {
     return {{}};
   }
@@ -60,15 +57,14 @@ std::set<std::map<K, V>> get_all_assignments(
   std::vector<std::set<V>> ordered_value_option_sets = transform(
       ordered_keys, [&](K const &k) { return options_per_key.at(k); });
 
-  std::set<std::map<K, V>> result = transform(
-      set_of(cartesian_product(ordered_value_option_sets)),
-      [&](std::vector<V> const &chosen_values) {
-        return map_from_pairs(zip(ordered_keys, chosen_values));
-      });
+  std::set<std::map<K, V>> result =
+      transform(set_of(cartesian_product(ordered_value_option_sets)),
+                [&](std::vector<V> const &chosen_values) {
+                  return map_from_pairs(zip(ordered_keys, chosen_values));
+                });
 
   return result;
 }
-
 
 } // namespace FlexFlow
 

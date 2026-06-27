@@ -7,7 +7,8 @@
 namespace FlexFlow {
 
 template <typename L, typename R>
-ManyToOne<L, R> require_binary_relation_is_right_unique(BinaryRelation<L, R> const &rel) {
+ManyToOne<L, R>
+    require_binary_relation_is_right_unique(BinaryRelation<L, R> const &rel) {
   ManyToOne<L, R> result;
 
   for (std::pair<L, R> const &p : rel.unwrap_as_set()) {

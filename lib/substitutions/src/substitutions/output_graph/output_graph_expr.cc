@@ -16,9 +16,9 @@ std::set<OutputGraphExprNode> get_nodes(OutputGraphExpr const &g) {
 
 std::map<TensorSlotName, OutputGraphExprNodeOutput>
     get_node_outputs(OutputGraphExpr const &g, OutputGraphExprNode const &n) {
-  std::map<TensorSlotName, KwargDataflowOutput<TensorSlotName>>
-      raw_outputs = get_outgoing_kwarg_dataflow_outputs_for_node(
-          g.raw_graph, n.raw_graph_node);
+  std::map<TensorSlotName, KwargDataflowOutput<TensorSlotName>> raw_outputs =
+      get_outgoing_kwarg_dataflow_outputs_for_node(g.raw_graph,
+                                                   n.raw_graph_node);
 
   return map_values(raw_outputs,
                     [](KwargDataflowOutput<TensorSlotName> const &o) {
