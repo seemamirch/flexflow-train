@@ -18,8 +18,7 @@
     flake-utils.url = "github:numtide/flake-utils";
 
     proj-repo = {
-      # url = "git+https://git.sr.ht/~lockshaw/proj";
-      url = "git+file:///home/lockshaw/x/ff/proj/proj";
+      url = "git+https://git.sr.ht/~lockshaw/proj";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };

@@ -73,11 +73,11 @@
         "rev": "f2bdddab299b98fb67612e3c04136949b2339d74",
         "revCount": 161,
         "type": "git",
-        "url": "file:///home/lockshaw/x/ff/proj/proj"
+        "url": "https://git.sr.ht/~lockshaw/proj"
       },
       "original": {
         "type": "git",
-        "url": "file:///home/lockshaw/x/ff/proj/proj"
+        "url": "https://git.sr.ht/~lockshaw/proj"
       }
     },
     "python38-nixpkgs": {
