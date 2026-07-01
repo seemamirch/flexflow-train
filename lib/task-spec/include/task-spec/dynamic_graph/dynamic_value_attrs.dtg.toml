@@ -30,7 +30,7 @@ type = "::FlexFlow::dynamic_tensor_guid_t"
 docstring = '''
 \brief The \ref tensor_guid_t or \ref parallel_tensor_guid_t of the (usually parallel) tensor this value originates from. Also allows representing tensors for computing the loss that lie outside of the scope of the \ref ComputationGraph or \ref ParallelComputationGraph, e.g., the label tensor.
 
-For a \ref DynamicOpenDataflowGraph originating from a \ref MapepdParallelComputationGraph, this field is filled in by \ref make_dynamic_open_dataflow_graph_from_mapped_pcg.h.
+For a \ref DynamicOpenDataflowGraph originating from a \ref MappedParallelComputationGraph, this field is filled in by \ref make_dynamic_open_dataflow_graph_from_mapped_pcg.h.
 '''
 
 [[fields]]
