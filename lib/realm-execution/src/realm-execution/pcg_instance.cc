@@ -25,8 +25,10 @@
 #include "utils/containers/transform.h"
 #include "utils/containers/try_at.h"
 #include "utils/containers/values.h"
+#include "utils/containers/vector_of.h"
 #include "utils/graph/digraph/algorithms/get_topological_ordering.h"
 #include "utils/optional.h"
+#include <vector>
 
 namespace FlexFlow {
 
@@ -171,6 +173,87 @@ PCGInstance create_pcg_instance(
   };
 }
 
+static Realm::Event
+    issue_p2p_copy(RealmContext &ctx,
+                   DynamicValueAttrs const &input,
+                   DynamicValueAttrs const &output,
+                   TensorInstanceBacking const &tensor_instance_backing,
+                   Realm::Event precondition) {
+  Realm::RegionInstance src_inst =
+      tensor_instance_backing.backing.at(input).first;
+  Realm::RegionInstance dst_inst =
+      tensor_instance_backing.backing.at(output).first;
+  return ctx.issue_copy(assert_unwrap(input.parallel_tensor_shape),
+                        src_inst,
+                        assert_unwrap(output.parallel_tensor_shape),
+                        dst_inst,
+                        Realm::ProfilingRequestSet{},
+                        precondition);
+}
+
+static Realm::Event
+    issue_p2p_reduction(RealmContext &ctx,
+                        DynamicValueAttrs const &input,
+                        DynamicValueAttrs const &output,
+                        TensorInstanceBacking const &tensor_instance_backing,
+                        redop_id_t redop_id,
+                        bool is_fold,
+                        bool exclusive,
+                        Realm::Event precondition) {
+  Realm::RegionInstance src_inst =
+      tensor_instance_backing.backing.at(input).first;
+  Realm::RegionInstance dst_inst =
+      tensor_instance_backing.backing.at(output).first;
+  return ctx.issue_reduction(assert_unwrap(input.parallel_tensor_shape),
+                             src_inst,
+                             assert_unwrap(output.parallel_tensor_shape),
+                             dst_inst,
+                             redop_id,
+                             is_fold,
+                             exclusive,
+                             Realm::ProfilingRequestSet{},
+                             precondition);
+}
+
+static Realm::Event issue_collective_broadcast(
+    RealmContext &ctx,
+    DynamicValueAttrs const &input,
+    std::vector<DynamicValueAttrs> const &outputs,
+    TensorInstanceBacking const &tensor_instance_backing,
+    Realm::Event precondition) {
+  // For now we just implement this as the naive set of N p2p copies.
+  std::vector<Realm::Event> result =
+      transform(outputs, [&](DynamicValueAttrs const &output) {
+        return issue_p2p_copy(
+            ctx, input, output, tensor_instance_backing, precondition);
+      });
+  return Realm::Event::merge_events(result);
+}
+
+static Realm::Event issue_collective_reduction(
+    RealmContext &ctx,
+    std::vector<DynamicValueAttrs> const &inputs,
+    DynamicValueAttrs const &output,
+    TensorInstanceBacking const &tensor_instance_backing,
+    redop_id_t redop_id,
+    Realm::Event precondition) {
+  // For now we just implement this as a naive set of N p2p reductions. Because
+  // we're launching them in parallel they cannot be exclusive (i.e., they need
+  // to use per-element atomics to update the output tensor)
+  std::vector<Realm::Event> result =
+      transform(inputs, [&](DynamicValueAttrs const &input) {
+        return issue_p2p_reduction(ctx,
+                                   input,
+                                   output,
+                                   tensor_instance_backing,
+                                   redop_id,
+                                   /*is_fold*/ false,
+                                   /*exclusive*/ false,
+                                   precondition);
+      });
+  return Realm::Event::merge_events(result);
+}
+
 /**
  * \brief Spawn the Realm operations (tasks, copies, etc.) for a given \ref
  * DynamicNodeInvocation, given the specified dependencies, instances, etc. Note
@@ -212,59 +295,26 @@ static Realm::Event spawn_dynamic_node_invocation(
   auto issue_copy = [&]() {
     DynamicValueAttrs const &input = get_only(invocation.inputs).second;
     DynamicValueAttrs const &output = get_only(invocation.outputs).second;
-    Realm::RegionInstance src_inst =
-        tensor_instance_backing.backing.at(input).first;
-    Realm::RegionInstance dst_inst =
-        tensor_instance_backing.backing.at(output).first;
-    return ctx.issue_copy(assert_unwrap(input.parallel_tensor_shape),
-                          src_inst,
-                          assert_unwrap(output.parallel_tensor_shape),
-                          dst_inst,
-                          Realm::ProfilingRequestSet{},
-                          precondition);
+    return issue_p2p_copy(
+        ctx, input, output, tensor_instance_backing, precondition);
   };
 
-  auto issue_replicate_bwd = [&]() {
-    DynamicValueAttrs output_grad = get_only(values(
-        filter_keys(invocation.inputs, [](DynamicTensorSlot const &s) -> bool {
-          return s.slot_tensor_role ==
-                 DynamicTensorRole{FwbTensorType::GRADIENT};
-        })));
+  auto issue_replicate = [&]() {
+    DynamicValueAttrs const &input = get_only(invocation.inputs).second;
+    std::vector<DynamicValueAttrs> outputs =
+        vector_of(values(invocation.outputs));
+    return issue_collective_broadcast(
+        ctx, input, outputs, tensor_instance_backing, precondition);
+  };
 
-    DynamicValueAttrs input_grad = get_only(values(invocation.outputs));
-
-    Realm::RegionInstance dst_inst =
-        tensor_instance_backing.backing.at(input_grad).first;
-
+  auto issue_reduction = [&]() {
+    std::vector<DynamicValueAttrs> inputs =
+        vector_of(values(invocation.inputs));
+    DynamicValueAttrs const &output = get_only(invocation.outputs).second;
     redop_id_t redop_id = get_sum_redop_id_for_data_type(
-        assert_unwrap(output_grad.parallel_tensor_shape).data_type);
-
-    // chain reductions sequentially to avoid write races on dst
-    Realm::Event result = precondition;
-    for (auto const &[p, d] : assert_unwrap(output_grad.mapping).raw) {
-      DynamicValueAttrs replica_key = output_grad;
-      replica_key.mapping = ParallelTensorMapping{
-          bidict<ParallelTensorSpaceCoordinate, global_device_id_t>{
-              {p, d},
-          },
-      };
-      replica_key.shard_coord = p;
-
-      Realm::RegionInstance src_inst =
-          tensor_instance_backing.backing.at(replica_key).first;
-
-      result = ctx.issue_reduction(
-          /*src_shape=*/assert_unwrap(output_grad.parallel_tensor_shape),
-          /*src_inst=*/src_inst,
-          /*dst_shape=*/assert_unwrap(input_grad.parallel_tensor_shape),
-          /*dst_inst=*/dst_inst,
-          /*redop_id=*/redop_id,
-          /*is_fold=*/false,
-          /*exlusive=*/false,
-          /*requests=*/Realm::ProfilingRequestSet{},
-          /*wait_on=*/result);
-    }
-    return result;
+        assert_unwrap(output.parallel_tensor_shape).data_type);
+    return issue_collective_reduction(
+        ctx, inputs, output, tensor_instance_backing, redop_id, precondition);
   };
 
   TrainingOperationAttrs op_attrs =
@@ -275,12 +325,16 @@ static Realm::Event spawn_dynamic_node_invocation(
             [&](InputAttrs const &) { return Realm::Event::NO_EVENT; },
             [&](WeightAttrs const &) { return Realm::Event::NO_EVENT; },
             [&](ReplicateAttrs const &) {
-              if (invocation.node_attrs.task_type.has_value() &&
-                  invocation.node_attrs.task_type.value() ==
-                      DynamicTaskType::BWD) {
-                return issue_replicate_bwd();
+              DynamicTaskType task_type =
+                  assert_unwrap(invocation.node_attrs.task_type);
+              switch (task_type) {
+                case DynamicTaskType::FWD:
+                  return issue_replicate();
+                case DynamicTaskType::BWD:
+                  return issue_reduction();
+                default:
+                  PANIC("Unhandled replicate task type ", task_type);
               }
-              return issue_copy(); // forward
             },
             [&](auto const &) { return spawn_task(); },
         });
