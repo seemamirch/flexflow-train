@@ -83,8 +83,7 @@ void require_value_is_copy_inserted(DynamicValueAttrs const &v) {
 // bindings (i.e. cannot form a valid bidict).
 static bool slot_name_has_dup_coords(DynamicNodeInvocation const &invocation,
                                      TensorSlotName const &slot_name) {
-  DynamicNodeMapping const &nm =
-      assert_unwrap(invocation.node_attrs.mapping);
+  DynamicNodeMapping const &nm = assert_unwrap(invocation.node_attrs.mapping);
   bidict<global_device_id_t, OperatorAtomicTaskShardBinding> const
       shard_bindings = dynamic_node_mapping_get_shard_bindings(nm);
   std::set<ParallelTensorSpaceCoordinate> seen;

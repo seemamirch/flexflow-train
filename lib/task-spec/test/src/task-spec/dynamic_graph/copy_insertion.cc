@@ -2558,7 +2558,8 @@ TEST_SUITE(FF_TEST_SUITE) {
       CHECK(result.at(repartition_out) == mk_single_mapping(mc3, 0_n));
     }
 
-    SUBCASE("repartition output missing from partial — resolved from adjacent") {
+    SUBCASE(
+        "repartition output missing from partial — resolved from adjacent") {
       // Gather-shaped RESHUFFLE resolves only INPUT from node mapping.
       // OUTPUT is resolved from adjacent values (the downstream relu2 sink).
       std::map<InternalDynamicSlotSite, ParallelTensorMapping> partial =

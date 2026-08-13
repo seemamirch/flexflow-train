@@ -151,7 +151,7 @@ __device__ __forceinline__ unsigned int
   unsigned int const shift = offset * 8;
   unsigned int const mask = 0xFFu << shift;
   unsigned int const byte_val = (static_cast<unsigned int>(value) & 0xFFu)
-                                 << shift;
+                                << shift;
   return (word & ~mask) | byte_val;
 }
 
@@ -159,14 +159,14 @@ __device__ __forceinline__ unsigned int
 // SumReduction<T> specialization, so factored into a macro rather than
 // repeated per type. Required by Realm::Cuda::add_cuda_redop_kernels to
 // build a GPU-resident reduction kernel for this redop.
-#define __LEGION_CUDA_REDOP_METHODS__                                        \
-  template <bool EXCLUSIVE>                                                  \
-  __device__ static void apply_cuda(LHS &lhs, RHS rhs) {                     \
-    apply<EXCLUSIVE>(lhs, rhs);                                              \
-  }                                                                          \
-  template <bool EXCLUSIVE>                                                  \
-  __device__ static void fold_cuda(RHS &rhs1, RHS rhs2) {                    \
-    fold<EXCLUSIVE>(rhs1, rhs2);                                             \
+#define __LEGION_CUDA_REDOP_METHODS__                                          \
+  template <bool EXCLUSIVE>                                                    \
+  __device__ static void apply_cuda(LHS &lhs, RHS rhs) {                       \
+    apply<EXCLUSIVE>(lhs, rhs);                                                \
+  }                                                                            \
+  template <bool EXCLUSIVE>                                                    \
+  __device__ static void fold_cuda(RHS &rhs1, RHS rhs2) {                      \
+    fold<EXCLUSIVE>(rhs1, rhs2);                                               \
   }
 #else
 #define __LEGION_CUDA_REDOP_METHODS__
@@ -613,17 +613,13 @@ void register_all_redops() {
   register_sum_redop<SumReduction<bool>>(
       rt, static_cast<::Realm::ReductionOpID>(redop_id_t::SUM_BOOL_REDOP_ID));
   register_sum_redop<SumReduction<int32_t>>(
-      rt,
-      static_cast<::Realm::ReductionOpID>(redop_id_t::SUM_INT32_REDOP_ID));
+      rt, static_cast<::Realm::ReductionOpID>(redop_id_t::SUM_INT32_REDOP_ID));
   register_sum_redop<SumReduction<int64_t>>(
-      rt,
-      static_cast<::Realm::ReductionOpID>(redop_id_t::SUM_INT64_REDOP_ID));
+      rt, static_cast<::Realm::ReductionOpID>(redop_id_t::SUM_INT64_REDOP_ID));
   register_sum_redop<SumReduction<float>>(
-      rt,
-      static_cast<::Realm::ReductionOpID>(redop_id_t::SUM_FLOAT_REDOP_ID));
+      rt, static_cast<::Realm::ReductionOpID>(redop_id_t::SUM_FLOAT_REDOP_ID));
   register_sum_redop<SumReduction<double>>(
-      rt,
-      static_cast<::Realm::ReductionOpID>(redop_id_t::SUM_DOUBLE_REDOP_ID));
+      rt, static_cast<::Realm::ReductionOpID>(redop_id_t::SUM_DOUBLE_REDOP_ID));
 }
 
 } // namespace FlexFlow
