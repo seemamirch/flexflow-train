@@ -1,9 +1,4 @@
 #include "realm-execution/redops/realm_redop_registry.h"
-// Deliberately raw Realm headers rather than
-// "realm-execution/redops/redop_id_t.h"/realm-execution/realm.h: those pull
-// in PRealm's prealm.h, which fails a static_assert when parsed by nvcc, and
-// we don't need any PRealm-specific behavior here anyway (redop registration
-// isn't something PRealm wraps/instruments).
 #include "realm-execution/redops/redop_id_t.dtg.h"
 #include <cassert>
 #include <realm.h>
@@ -580,20 +575,6 @@ __LEGION_CUDA_HD__ inline void SumReduction<double>::fold<false>(RHS &rhs1,
 }
 
 namespace {
-
-// Building the ReductionOpUntyped by hand (rather than via the
-// ::Realm::Runtime::register_reduction<REDOP> convenience template) lets us
-// call add_cuda_redop_kernels first, so the redop carries real GPU kernel
-// function pointers (REDOP::apply_cuda/fold_cuda) instead of just its CPU
-// apply/fold. Without this, Realm's GPUreduceChannel::supports_redop finds
-// no CUDA-capable redop and refuses to build any GPU reduction-copy path
-// (including same-device ones), aborting with "no path found ... (redop=N)"
-// the first time a Reduction op actually runs on a GPU.
-//
-// Fully qualified as ::Realm:: throughout (rather than the FlexFlow::Realm
-// alias to PRealm used elsewhere in this codebase) since this file
-// deliberately avoids depending on PRealm at all — see the comment on the
-// includes above.
 template <typename REDOP>
 void register_sum_redop(::Realm::Runtime &rt, ::Realm::ReductionOpID id) {
   ::Realm::ReductionOpUntyped *redop =
